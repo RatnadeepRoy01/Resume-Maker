@@ -18,7 +18,7 @@ import Interests from "@/app/TemplateComponent/Interests/page";
 import Languages from "@/app/TemplateComponent/Language/page";
 import MyContext from "@/app/components/Context/MyContext";
 import A4ResumeWrapper from "@/app/components/Zoom/page";
-import { stylesData } from "@/app/function/Styles";
+import { StylesData } from "@/app/function/Styles";
 import { set , get } from "idb-keyval";
 import { postData } from "@/app/function/postData";
 
@@ -30,15 +30,13 @@ import "@fontsource/roboto"
 import "@fontsource/roboto-mono"
 
 export default function Template1({ getValues, preview , save }) {
-  if (getValues?.length === 0) {
-    return null;
-  }
+  
 
   const {format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
     primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
     fontVariant, setFontVariant , fontSize, setFontSize , lineHeight, setLineHeight , hideIcons, setHideIcons , underlineLinks, setUnderlineLinks,
     } = useContext(MyContext)
-   
+  
      const savingData = {format, margin, showBreakLine, showPageNumbers,
       primaryColor, backgroundColor, textColor,fontFamily,fontSubset,
       fontVariant, fontSize, lineHeight, hideIcons,underlineLinks
@@ -46,60 +44,60 @@ export default function Template1({ getValues, preview , save }) {
     const [scale, setScale] = useState(1);
 
 
-        useEffect(()=>{
+        // useEffect(()=>{
          
-         const  insertCssdata = async() =>{
+        //  const  insertCssdata = async() =>{
 
-          if(save?.dataType == "oldData"){
+        //   if(save?.dataType == "oldData"){
 
-             const oldData =  await get(`${save.IdData}Css`);
-             console.log(oldData,"oldData")      
-            const update = (()=>{
+        //      const oldData =  await get(`${save.IdData}Css`);
+        //      console.log(oldData,"oldData")      
+        //     const update = (()=>{
 
-             setFormat(oldData.format); 
-             setMargin(oldData.margin);
-             setShowBreakLine(oldData.showBreakLine);
-             setShowPageNumbers(oldData.showPageNumbers),
-             setPrimaryColor(oldData.primaryColor);
-             setBackgroundColor(oldData.backgroundColor);
-             setTextColor(oldData.textColor);
-             setFontFamily(oldData.fontFamily);
-             setFontSubset(oldData.fontSubset);
-             setFontVariant(oldData.fontVariant);
-             setFontSize(oldData.fontSize);
-             setLineHeight(oldData.lineHeight);
-             setHideIcons(oldData.hideIcons);  
-             setUnderlineLinks(oldData.underlineLinks);
+        //      setFormat(oldData.format); 
+        //      setMargin(oldData.margin);
+        //      setShowBreakLine(oldData.showBreakLine);
+        //      setShowPageNumbers(oldData.showPageNumbers),
+        //      setPrimaryColor(oldData.primaryColor);
+        //      setBackgroundColor(oldData.backgroundColor);
+        //      setTextColor(oldData.textColor);
+        //      setFontFamily(oldData.fontFamily);
+        //      setFontSubset(oldData.fontSubset);
+        //      setFontVariant(oldData.fontVariant);
+        //      setFontSize(oldData.fontSize);
+        //      setLineHeight(oldData.lineHeight);
+        //      setHideIcons(oldData.hideIcons);  
+        //      setUnderlineLinks(oldData.underlineLinks);
       
-            });
+        //     });
 
-            update();
+        //     update();
 
-          }          
-          else if(save?.updateData == true){
+        //   }          
+        //   else if(save?.updateData == true){
                
-            if(!save?.IdData) return;
-            else savingData.key = save.IdData;
+        //     if(!save?.IdData) return;
+        //     else savingData.key = save.IdData;
 
-            const url = "../../api/insertCssData"     
-            set(`${save?.IdData}Css`,savingData)
-            const response = await postData({savingData,id:save?.IdData} , url)     
+        //     const url = "../../api/insertCssData"     
+        //     set(`${save?.IdData}Css`,savingData)
+        //     const response = await postData({savingData,id:save?.IdData} , url)     
             
-          }else{
+        //   }else{
 
-            if(!save?.IdData) return;
-            else savingData.key = save.IdData;
+        //     if(!save?.IdData) return;
+        //     else savingData.key = save.IdData;
 
-            const url = "../../api/insertCssData" 
-            const IdData = `${save.IdData}Css`    
-            set(IdData,savingData)
-            const response = await postData({savingData} , url)    
+        //     const url = "../../api/insertCssData" 
+        //     const IdData = `${save.IdData}Css`    
+        //     set(IdData,savingData)
+        //     const response = await postData({savingData} , url)    
 
-          }
-         }
-         insertCssdata();
+        //   }
+        //  }
+        //  insertCssdata();
 
-        },[save])
+        // },[save])
 
        
 
@@ -109,10 +107,10 @@ export default function Template1({ getValues, preview , save }) {
     setBackgroundColor("#ffffff");
     setTextColor("#000000") 
 
-   },[])
+   },[setBackgroundColor,setPrimaryColor,setTextColor])
 
   const pdfRef = useRef();
-  const styles = stylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )
+  const styles = StylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )
 
   const generatePDF = () => {
     const options = {

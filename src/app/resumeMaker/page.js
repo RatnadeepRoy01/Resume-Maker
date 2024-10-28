@@ -89,7 +89,7 @@ const Page = () => {
         if (data.template === "Template1") {
            const save = { IdData:data.savedData.key , dataType:"oldData" } 
             return (  
-          <div> 
+          <div key={index}> 
           <div onClick={()=>{ Router.push(`./ResumaForm?id=${data.key}&template=${data.template}`) }}>  <Template1 getValues={data.savedData}  /> </div> 
            <label>{`${data.savedData.personalInfo.fullName}`}</label> 
           </div> 

@@ -7,6 +7,7 @@ import { useInView } from 'framer-motion';
 import { Check, Mail, Lock, Eye, FileText, PenTool } from 'lucide-react';
 import FAQSection from './FAQ/page';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const useView = (options) => {
   const ref = useRef(null);
@@ -17,13 +18,15 @@ const useView = (options) => {
       setIsInView(entry.isIntersecting);
     }, options);
 
-    if (ref.current) {
+    const currentRef = ref.current;
+    
+    if (currentRef) {
       observer.observe(ref.current);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, [ref, options]);
@@ -199,7 +202,16 @@ const LandingPage = () => {
         transition={{ duration: 0.5 }}         // Transition effect
         viewport={{ once: true }}              // Animation triggers only once
       >
-        <img src="/Template1.webp" alt="Resume builder illustration" className="w-full h-auto rounded-lg shadow-lg" />
+
+
+       <Image 
+                src="/Template1.webp" 
+                alt="Resume builder illustration" 
+                layout="responsive" 
+                width={500} // Replace with the original width of the image
+                height={500} // Replace with the original height of the image
+                className="rounded-lg shadow-lg"
+            />
       </motion.div>
     </div>
   </div>
@@ -273,7 +285,7 @@ const LandingPage = () => {
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Build Your Perfect Resume?</h2>
               <p className="text-xl mb-8">Join thousands of job seekers who have successfully landed their dream jobs.</p>
               <button className="bg-white text-blue-600 px-8 py-3 rounded-md hover:bg-blue-50 transition duration-300 text-lg font-semibold">
-                Get Started Now - It's Free!
+                Get Started Now - It&apos;s Free!
               </button>
             </AnimatedSection>
           </div>

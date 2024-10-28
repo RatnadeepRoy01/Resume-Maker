@@ -3,8 +3,10 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image';
 import Template1 from "../Templates/Template1/page";
-//import Template2 from "../Templates/Template2/page";
+import Template2 from "../Templates/Template2/page";
+
 
 const SelectTemplate = () => {
 
@@ -20,12 +22,16 @@ const SelectTemplate = () => {
     TemplateData.map((template,index)=>{ 
 
       return (
-
-    <img key={index} src={`/${template}.webp`} 
-    alt="Resume builder illustration" 
+    
+    <div  key={index}>    
+    <Image  src={`/${template}.webp`} 
+    alt="Resume builder illustration"
+    width={500}
+    height={500}
     className=" w-auto h-auto rounded-lg shadow-lg mx-2 my-6 hover:cursor-pointer" 
     onClick={ ()=>{ Router.push(`./ResumaForm?template=${template}`) } }
     />
+    </div>
     )})}
     </div>
     </div>
