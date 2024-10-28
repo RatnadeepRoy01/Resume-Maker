@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+ @keyframes pop-up {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.pop-up {
+  animation: pop-up 0.5s forwards;
+}
+h1 {
+  font-size: 2.5em; 
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 2em; 
+  margin-bottom: 8px;
+}
+
+
+ul {
+  list-style-type: disc; 
+  margin-left: 20px; 
+}
+
+
+ol {
+  list-style-type: decimal; 
+  margin-left: 20px;
+}
+
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+.range-slider {
+  -webkit-appearance: none; 
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: transparent; 
+  border-radius: 9999px; 
+  outline: none; 
+}
+
+
+.range-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(to right, black var(--value), transparent var(--value)); /* Fill color */
+   border-radius: 9999px;  
+ }
+
+
+.range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px; 
+  height: 16px; 
+  background: white; 
+  border: 2px solid black; 
+  border-radius: 50%; 
+  cursor: pointer; 
+  margin-top: -4px; 
+}
+
+.range-slider:focus {
+  outline: none; 
+}  
