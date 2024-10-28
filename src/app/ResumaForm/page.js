@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useEffect , useContext, useState, useRef } from "react";
+import React, { useEffect , useContext, useState } from "react";
 import { Menu , X } from 'lucide-react';
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -253,7 +253,7 @@ const ResumeBuilder = () => {
  
    getUserData();
 
-  },[id])
+  },[id,template,reset])
 
   const onSubmit = async(data) => {
     //console.log(data);
@@ -299,7 +299,9 @@ removeSkill(0);
 removeVolunteering(0);
 removeWorkExperience(0);
 removePublication(0);
-},[])
+},[removeAward,removeCertification,removeEducation,
+  removeInterest,removeLanguage,removeProject,removePublication,
+  removeReference,removeVolunteering,removeSkill,removeWorkExperience])
 
   return (
 

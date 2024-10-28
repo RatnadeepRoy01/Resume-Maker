@@ -1,15 +1,17 @@
 "use client";
 import React, { useContext } from "react";
 import MyContext from "@/app/components/Context/MyContext";
+import Image from "next/image";
+
 export default function PersonalInfo({ personalInfo,styles }) {
 
   const{ profilePic } = useContext(MyContext)
-  return (  
+  return ( 
    <>
-      <img  src={profilePic} alt="Profile" className={styles.image}/>
 
-    
-      <div className={styles.sidebarSection}>
+      { profilePic && <Image  src={profilePic} alt="Profile" width={200} height={200} className={styles.image} /> }
+       <div className={styles.sidebarSection}>
+     
         <p className={styles.sidebarSectionTitle.sidebarTitle} style={{fontSize:styles.sidebarSectionTitle.sidebarTitleStyle}}>Contact</p>
          <p className={styles.sideText.sideText} style={{fontSize:styles.sideText.sideTextStyle}}> Phone: <p className={styles.small.small} style={{fontSize:styles.small.smallStyle}}>{personalInfo.phoneNumber}</p></p>
         <p className={styles.sideText.sideText} style={{fontSize:styles.sideText.sideTextStyle}} >Email: <p className={styles.small.small} style={{fontSize:styles.small.smallStyle}} > {personalInfo.email} </p></p>

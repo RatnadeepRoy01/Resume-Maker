@@ -6,6 +6,7 @@ import { AiOutlineUser, AiOutlineMail, AiOutlinePhone, AiOutlineHome, AiOutlineL
 import { BsCardText } from "react-icons/bs"; // For headline icon
 import { Editor } from "@/app/function/Editor/editor"; // Import the Editor component
 import MyContext from "../Context/MyContext";
+import Image from "next/image";
 
 const PersonalInfoComponent = ({ register, setValue, getValues,errors }) => {
   const {profilePic , setProfilePic} = useContext(MyContext);
@@ -34,7 +35,14 @@ const PersonalInfoComponent = ({ register, setValue, getValues,errors }) => {
       <div className="flex items-center space-x-4">
         <label className="w-32 md:h-32 h-20  bg-gray-200 border border-gray-300 rounded-full overflow-hidden cursor-pointer">
           {profilePic ? (
-            <img src={profilePic} alt="Profile" className="w-full h-full object-cover" />
+          <Image 
+           src={profilePic} 
+           alt="Profile"
+           width={500}
+           height={500}  
+           objectFit="cover"
+           className="rounded-lg" 
+       />
           ) : (
             <div className="flex items-center justify-center h-full">
               <AiOutlineUser className="text-6xl text-gray-400" />

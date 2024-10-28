@@ -17,9 +17,7 @@ import Interests from "@/app/TemplateComponent/Interests/page";
 import Languages from "@/app/TemplateComponent/Language/page";
 import MyContext from "@/app/components/Context/MyContext";
 import A4ResumeWrapper from "@/app/components/Zoom/page";
-import { stylesData } from "@/app/function/Styles";
-import { set , get } from "idb-keyval";
-import { postData } from "@/app/function/postData";
+import { StylesData } from "@/app/function/Styles";
 
 import "@fontsource/inter"
 import "@fontsource/open-sans"
@@ -29,9 +27,7 @@ import "@fontsource/roboto"
 import "@fontsource/roboto-mono"
 
 export default function Template1({ getValues, preview  }) {
-  if (getValues?.length === 0) {
-    return null;
-  }
+ 
 
   const {format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
     primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
@@ -46,10 +42,10 @@ export default function Template1({ getValues, preview  }) {
     setBackgroundColor("#ffffff");
     setTextColor("#000000") 
 
-   },[])
+   },[setPrimaryColor,setBackgroundColor,setTextColor])
 
   const pdfRef = useRef();
-  const styles = stylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )
+  const styles = StylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )
 
   const generatePDF = () => {
     const options = {
@@ -84,7 +80,7 @@ export default function Template1({ getValues, preview  }) {
      
     <div className="h-screen w-screen flex justify-center items-center mx-20 my-40 md:w-auto md:block md:m-0 md:overflow-y-hidden   "  >
     <A4ResumeWrapper   >
-      <div style={{ transform:`scale${scale}`,width:"210mm" , height:"297mm" }} ref={pdfRef} >
+      <div style={{ transform:`scale${scale}`, width:"212mm" , height:"297mm" }} ref={pdfRef} >
       <div className={styles.document}   >
         <div className={styles.page } style={{ fontFamily:fontFamily }}   >
          
@@ -128,7 +124,7 @@ export default function Template1({ getValues, preview  }) {
             )}
           </div>
 
-          <div className = {styles.sidebar} style={{backgroundColor:primaryColor ,padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
+          <div  className = {styles.sidebar} style={{backgroundColor:primaryColor ,padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
              <div className="text-white absolute ">{showPageNumbers && <p>Page:1</p>}</div>
             {/* Personal Info */}
             <PersonalInfo personalInfo={personalInfo} styles={styles} />
