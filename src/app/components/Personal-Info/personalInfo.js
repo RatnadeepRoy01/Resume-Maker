@@ -1,5 +1,4 @@
-
-"use client";
+"use client"
 
 import React, { useContext, useState } from "react";
 import { AiOutlineUser, AiOutlineMail, AiOutlinePhone, AiOutlineHome, AiOutlineLink, AiOutlineGithub, AiOutlineGlobal } from "react-icons/ai";

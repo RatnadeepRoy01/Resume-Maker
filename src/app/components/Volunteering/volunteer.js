@@ -1,23 +1,22 @@
-
-"use client";
+"use client"
 
 import React, { useState,useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { Editor } from '@/app/function/Editor/editor';
 
-const PublicationsComponent = ({ register, index, removePublication, setValue, getValues, errors }) => {
+const VolunteeringComponent = ({ register, index, removeVolunteering, setValue, getValues, errors }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const publicationTitle = getValues(`publications.${index}.title`) || "Unnamed Publication";
+  const volunteeringTitle = getValues(`volunteering.${index}.title`) || "Unnamed Volunteering";
 
   useEffect(() => {
     // Check for errors and set visibility accordingly
-    if (errors.publications?.[index]) {
+    if (errors.volunteering?.[index]) {
       setIsVisible(true);
     } 
-  }, [errors.publications, index]);
+  }, [errors.volunteering, index]);
 
   const handleSummaryChange = (value) => {
-    setValue(`publications.${index}.summary`, value);
+    setValue(`volunteering.${index}.summary`, value);
   };
 
   return (
@@ -27,29 +26,38 @@ const PublicationsComponent = ({ register, index, removePublication, setValue, g
         onClick={() => setIsVisible(!isVisible)}
       >
         <FaBars size={20} className="mr-2 text-gray-700" />
-        <h3 className="text-lg font-semibold text-gray-800">{publicationTitle}</h3>
+        <h3 className="text-lg font-semibold text-gray-800">{volunteeringTitle}</h3>
       </div>
 
       {isVisible && (
         <div className="border border-gray-200 p-4 rounded-md mt-2 bg-white shadow-sm">
-          <h3 className="text-xl font-semibold mb-3 text-gray-800">Publication Details</h3>
+          <h3 className="text-xl font-semibold mb-3 text-gray-800">Volunteering Details</h3>
 
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Title</label>
               <input
-                {...register(`publications.${index}.title`)}
+                {...register(`volunteering.${index}.title`)}
                 className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Publication Title"
+                placeholder="Enter Volunteering Title"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Publisher</label>
+              <label className="block text-sm font-medium text-gray-700">Organization</label>
               <input
-                {...register(`publications.${index}.publisher`)}
+                {...register(`volunteering.${index}.organization`)}
                 className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Publisher Name"
+                placeholder="Enter Organization Name"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Role</label>
+              <input
+                {...register(`volunteering.${index}.role`)}
+                className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter Your Role"
               />
             </div>
 
@@ -57,7 +65,7 @@ const PublicationsComponent = ({ register, index, removePublication, setValue, g
               <label className="block text-sm font-medium text-gray-700">Date</label>
               <input
                 type="text"
-                {...register(`publications.${index}.date`)}
+                {...register(`volunteering.${index}.date`)}
                 className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Date (e.g. YYYY-MM-DD)"
               />
@@ -66,7 +74,7 @@ const PublicationsComponent = ({ register, index, removePublication, setValue, g
             <div>
               <label className="block text-sm font-medium text-gray-700">Website</label>
               <input
-                {...register(`publications.${index}.website`)}
+                {...register(`volunteering.${index}.website`)}
                 className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Website URL"
               />
@@ -75,7 +83,7 @@ const PublicationsComponent = ({ register, index, removePublication, setValue, g
             <div>
               <label className="block text-sm font-medium text-gray-700">Summary</label>
               <Editor
-                value={getValues(`publications.${index}.summary`) ?? ""}
+                value={getValues(`volunteering.${index}.summary`) ?? ""}
                 onChange={handleSummaryChange}
               />
             </div>
@@ -83,10 +91,10 @@ const PublicationsComponent = ({ register, index, removePublication, setValue, g
 
           <button
             type="button"
-            onClick={() => removePublication(index)}
+            onClick={() => removeVolunteering(index)}
             className="mt-4 flex items-center justify-center w-full py-2 border border-red-500 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200"
           >
-            <span className="ml-2">Remove Publication</span>
+            <span className="ml-2">Remove Volunteering</span>
           </button>
         </div>
       )}
@@ -94,4 +102,4 @@ const PublicationsComponent = ({ register, index, removePublication, setValue, g
   );
 };
 
-export default PublicationsComponent;
+export default VolunteeringComponent;
