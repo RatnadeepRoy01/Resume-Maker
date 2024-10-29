@@ -1,5 +1,4 @@
-
-"use client";
+"use client"
 
 import React, { useState, useEffect, useRef } from 'react';
 import { FaBars } from 'react-icons/fa'; 

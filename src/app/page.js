@@ -207,7 +207,6 @@ const LandingPage = () => {
        <Image 
                 src="/Template1.webp" 
                 alt="Resume builder illustration" 
-                layout="responsive" 
                 width={500} // Replace with the original width of the image
                 height={500} // Replace with the original height of the image
                 className="rounded-lg shadow-lg"

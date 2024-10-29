@@ -1,23 +1,22 @@
-
-"use client";
+"use client"
 
 import React, { useState,useEffect } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { Editor } from '@/app/function/Editor/editor';
 
-const VolunteeringComponent = ({ register, index, removeVolunteering, setValue, getValues, errors }) => {
+const PublicationsComponent = ({ register, index, removePublication, setValue, getValues, errors }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const volunteeringTitle = getValues(`volunteering.${index}.title`) || "Unnamed Volunteering";
+  const publicationTitle = getValues(`publications.${index}.title`) || "Unnamed Publication";
 
   useEffect(() => {
     // Check for errors and set visibility accordingly
-    if (errors.volunteering?.[index]) {
+    if (errors.publications?.[index]) {
       setIsVisible(true);
     } 
-  }, [errors.volunteering, index]);
+  }, [errors.publications, index]);
 
   const handleSummaryChange = (value) => {
-    setValue(`volunteering.${index}.summary`, value);
+    setValue(`publications.${index}.summary`, value);
   };
 
   return (
@@ -27,38 +26,29 @@ const VolunteeringComponent = ({ register, index, removeVolunteering, setValue, 
         onClick={() => setIsVisible(!isVisible)}
       >
         <FaBars size={20} className="mr-2 text-gray-700" />
-        <h3 className="text-lg font-semibold text-gray-800">{volunteeringTitle}</h3>
+        <h3 className="text-lg font-semibold text-gray-800">{publicationTitle}</h3>
       </div>
 
       {isVisible && (
         <div className="border border-gray-200 p-4 rounded-md mt-2 bg-white shadow-sm">
-          <h3 className="text-xl font-semibold mb-3 text-gray-800">Volunteering Details</h3>
+          <h3 className="text-xl font-semibold mb-3 text-gray-800">Publication Details</h3>
 
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">Title</label>
               <input
-                {...register(`volunteering.${index}.title`)}
+                {...register(`publications.${index}.title`)}
                 className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Volunteering Title"
+                placeholder="Enter Publication Title"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">Organization</label>
+              <label className="block text-sm font-medium text-gray-700">Publisher</label>
               <input
-                {...register(`volunteering.${index}.organization`)}
+                {...register(`publications.${index}.publisher`)}
                 className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Organization Name"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Role</label>
-              <input
-                {...register(`volunteering.${index}.role`)}
-                className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Your Role"
+                placeholder="Enter Publisher Name"
               />
             </div>
 
@@ -66,7 +56,7 @@ const VolunteeringComponent = ({ register, index, removeVolunteering, setValue, 
               <label className="block text-sm font-medium text-gray-700">Date</label>
               <input
                 type="text"
-                {...register(`volunteering.${index}.date`)}
+                {...register(`publications.${index}.date`)}
                 className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Date (e.g. YYYY-MM-DD)"
               />
@@ -75,7 +65,7 @@ const VolunteeringComponent = ({ register, index, removeVolunteering, setValue, 
             <div>
               <label className="block text-sm font-medium text-gray-700">Website</label>
               <input
-                {...register(`volunteering.${index}.website`)}
+                {...register(`publications.${index}.website`)}
                 className="w-full mt-1 p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Website URL"
               />
@@ -84,7 +74,7 @@ const VolunteeringComponent = ({ register, index, removeVolunteering, setValue, 
             <div>
               <label className="block text-sm font-medium text-gray-700">Summary</label>
               <Editor
-                value={getValues(`volunteering.${index}.summary`) ?? ""}
+                value={getValues(`publications.${index}.summary`) ?? ""}
                 onChange={handleSummaryChange}
               />
             </div>
@@ -92,10 +82,10 @@ const VolunteeringComponent = ({ register, index, removeVolunteering, setValue, 
 
           <button
             type="button"
-            onClick={() => removeVolunteering(index)}
+            onClick={() => removePublication(index)}
             className="mt-4 flex items-center justify-center w-full py-2 border border-red-500 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-200"
           >
-            <span className="ml-2">Remove Volunteering</span>
+            <span className="ml-2">Remove Publication</span>
           </button>
         </div>
       )}
@@ -103,4 +93,4 @@ const VolunteeringComponent = ({ register, index, removeVolunteering, setValue, 
   );
 };
 
-export default VolunteeringComponent;
+export default PublicationsComponent;

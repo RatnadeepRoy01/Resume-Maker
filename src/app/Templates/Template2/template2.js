@@ -2,21 +2,21 @@
 
 import React, { useState , useRef , useContext , useEffect } from "react";
 import html2pdf from "html2pdf.js";
-import Button from "@/app/components/Button/page";
-import PersonalInfo from "@/app/TemplateComponent/personalInfo/page";
-import Education from "@/app/TemplateComponent/Education/page";
-import WorkExperience from "@/app/TemplateComponent/Work-Experience/page";
-import Skills from "@/app/TemplateComponent/Skills/page";
-import Certifications from "@/app/TemplateComponent/Certifications/page";
-import Projects from "@/app/TemplateComponent/Projects/page";
-import Volunteering from "@/app/TemplateComponent/Volunteering/page";
-import Publications from "@/app/TemplateComponent/Publications/page";
-import References from "@/app/TemplateComponent/Reference/page";
-import Awards from "@/app/TemplateComponent/Awards/page";
-import Interests from "@/app/TemplateComponent/Interests/page";
-import Languages from "@/app/TemplateComponent/Language/page";
+import Button from "@/app/components/Button/button";
+import PersonalInfo from "@/app/TemplateComponent/personalInfo/personalInfo";
+import Education from "@/app/TemplateComponent/Education/education";
+import WorkExperience from "@/app/TemplateComponent/Work-Experience/workExperience";
+import Skills from "@/app/TemplateComponent/Skills/skills";
+import Certifications from "@/app/TemplateComponent/Certifications/certification";
+import Projects from "@/app/TemplateComponent/Projects/project";
+import Volunteering from "@/app/TemplateComponent/Volunteering/voluntering";
+import Publications from "@/app/TemplateComponent/Publications/publication";
+import References from "@/app/TemplateComponent/Reference/reference";
+import Awards from "@/app/TemplateComponent/Awards/awards";
+import Interests from "@/app/TemplateComponent/Interests/interest";
+import Languages from "@/app/TemplateComponent/Language/language";
 import MyContext from "@/app/components/Context/MyContext";
-import A4ResumeWrapper from "@/app/components/Zoom/page";
+import A4ResumeWrapper from "@/app/components/Zoom/zoom";
 import { StylesData } from "@/app/function/Styles";
 
 import "@fontsource/inter"

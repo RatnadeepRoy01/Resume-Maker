@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useContext } from "react";
 import MyContext from "@/app/components/Context/MyContext";
 import Image from "next/image";

@@ -1,23 +1,22 @@
+"use client"
 
-"use client";
-
-import React, { useEffect , useContext, useState } from "react";
+import React, { useEffect , useContext, useState , Suspense } from "react";
 import { Menu , X } from 'lucide-react';
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import PersonalInfoComponent from "../components/Personal-Info/page";
-import EducationComponent from "../components/Education/page";
-import WorkExperienceComponent from "../components/Work-experience/page";
-import SkillsComponent from "../components/Skills/page";
-import ProjectsComponent from "../components/Projects/page";
-import PublicationsComponent from "../components/Publication/page";
-import VolunteeringComponent from "../components/Volunteering/page";
-import ReferencesComponent from "../components/Reference/page";
-import LanguagesComponent from "../components/Languages/page";
-import InterestsComponent from "../components/Interest/page";
-import CertificationsComponent from "../components/Certifications/page";
-import AwardsComponent from "../components/Awards/page";
+import PersonalInfoComponent from "../components/Personal-Info/personalInfo";
+import EducationComponent from "../components/Education/education";
+import WorkExperienceComponent from "../components/Work-experience/workExperience";
+import SkillsComponent from "../components/Skills/skills";
+import ProjectsComponent from "../components/Projects/projects";
+import PublicationsComponent from "../components/Publication/publication";
+import VolunteeringComponent from "../components/Volunteering/volunteer";
+import ReferencesComponent from "../components/Reference/reference";
+import LanguagesComponent from "../components/Languages/languages";
+import InterestsComponent from "../components/Interest/interest";
+import CertificationsComponent from "../components/Certifications/certification";
+import AwardsComponent from "../components/Awards/awards";
 import ResumeTemplate from "../ResumeTemplates/page";
 import SettingsPage from "../customizeResume/page";
 import { postData } from "../function/postData";
@@ -304,7 +303,7 @@ removePublication(0);
   removeReference,removeVolunteering,removeSkill,removeWorkExperience])
 
   return (
-
+    
     <div className=" flex md:flex-row-reverse flex-col h-screen w-screen " >
       <div className="fixed h-[110vh]  z-10 top-2 left-2 "><SettingsPage/></div>
     <div className="h-full w-full md:w-[50%]  overflow-y-auto md:fixed " onClick={()=>{setIsOpen(false) , setOpen(false) }}> <ResumeTemplate getValues={watch()} template={template} save={save}/> </div>
@@ -617,7 +616,16 @@ removePublication(0);
         />
       )}
     </div>
+    
   );
 };
 
-export default ResumeBuilder;
+const ResumeFormSuspense = () => {
+  return (
+    <Suspense fallback={<div>You are being redirected...</div>}>
+      <ResumeBuilder />
+    </Suspense>
+  );
+};
+
+export default ResumeFormSuspense;
