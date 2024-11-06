@@ -1,18 +1,23 @@
-
 "use client"
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState,useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { Check, Mail, Lock, Eye, FileText, PenTool } from 'lucide-react';
 import FAQSection from './FAQ/page';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import MyContext from './components/Context/MyContext';
+import SelectParser from './Features/selectParser/features';
 
 const useView = (options) => {
   const ref = useRef(null);
   const [isInView, setIsInView] = useState(false);
-
+  const { userData1 } =  useContext(MyContext);
+  
+  useEffect(()=>{
+  console.log("userDataPage",userData1)
+    },[userData1])
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
       setIsInView(entry.isIntersecting);
@@ -159,13 +164,19 @@ const LandingPage = () => {
 
   const Router = useRouter();
 
+  const [showSelectParser, setShowSelectParser] = useState(false);
+
+  const handleClick = () => {
+    setShowSelectParser(true);
+  };
+
   return (
 
    
     <div className="min-h-screen flex flex-col bg-gray-50 relative">
-
+ 
+ { showSelectParser &&  <div className=' z-40 w-screen fixed h-screen flex justify-center items-center'> <SelectParser /> </div> }
              {/* header */}
-
       <header className="bg-transparent shadow-sm absolute w-full">
         <div className="container mx-auto px-4 py-4">
           <nav className="flex justify-between items-center">
@@ -178,21 +189,27 @@ const LandingPage = () => {
           </nav>
         </div>
       </header>
-
+      
            {/* main */}
 
       <main className="flex-grow">
        
-<section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20">
+<section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 flex flex-col">
   <div className="container mx-auto px-4">
     <div className="flex flex-col md:flex-row items-center">
       <AnimatedSection>
         <div className="md:w-1/2 mb-8 md:mb-0">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Create Your Perfect Resume in Minutes</h1>
           <p className="hidden md:block text-xl mb-6">Professional templates, easy customization, and instant PDF download. Get noticed by employers today!</p>
-          <button className="bg-white text-blue-600 px-6 py-3 rounded-md hover:bg-blue-50 transition duration-300 text-lg font-semibold" onClick={()=>{ Router.push("./SelectTemplate") } }>
+         
+          <button className="bg-white text-blue-600 px-6 py-3 rounded-md hover:bg-blue-50 transition duration-300 text-lg font-semibold" onClick={handleClick }>
+          {/* Router.push("./SelectTemplate") */}
             Create Your Resume
           </button>
+         
+     
+
+
         </div>
       </AnimatedSection>
       <motion.div
@@ -215,7 +232,7 @@ const LandingPage = () => {
     </div>
   </div>
 </section>
-
+<div className='h-10 w-10 bg-pink-600' onClick={()=>{Router.push("./Features/selectParser")}}></div>
            {/* Users */}
 
         <section className="py-16 bg-white">

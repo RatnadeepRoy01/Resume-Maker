@@ -145,39 +145,45 @@ const schema = z.object({
 
 const ResumeBuilder = () => {
 
-  const{ setIsOpen } = useContext(MyContext);
+  const{ setIsOpen , userData1} = useContext(MyContext);
   const searchParams = useSearchParams();
    const template = searchParams.get('template');
      const id = searchParams.get("id");  
    //const template = "Template1"
 
+  const initialFormData = {
+    personalInfo: {
+      fullName: "",
+      headline:"",
+      email:"",
+      phoneNumber: "",
+      website:"",
+      address: "",
+      linkedIn: "",
+      github: "",
+      summary: "",
+    },
+    education: [{ institution: "", degree: "", startYear: "", endYear: "",score:"", summary: "" }],
+    workExperience: [{ company: "", role: "", startDate: "", endDate: "", website: "", summary: "" }],
+    skills: [{ name: "", level: "" }],
+    projects: [{ title: "", startDate:"", endDate:"", website:"",summary: "" }],
+    publications: [{ title: "", publisher: "", date:"",website:"",summary:"" }],
+    volunteering: [{ title:"",organization: "", role: "", date:"", website:"", summary: "" }],
+    references: [{ name: "", email: "", position: "",summary:"" }],
+    languages: [{ name: "", level: "" }],
+    interests: [{ title: "" }],
+    certifications: [{ certification: "", issuer: "", issueDate: "" }],
+    awards: [{  award: "", organization: "", year: "", summary:"" }],
+  }
+
+   const [formData1, setFormData1] = useState(initialFormData);
+  
+
   const { register, handleSubmit, control, getValues, watch,setValue, formState: { errors } ,reset} = useForm({
     resolver: zodResolver(schema),
-    defaultValues: {
-      personalInfo: {
-        fullName: "",
-        headline:"",
-        email:"",
-        phoneNumber: "",
-        website:"",
-        address: "",
-        linkedIn: "",
-        github: "",
-        summary: "",
-      },
-      education: [{ institution: "", degree: "", startYear: "", endYear: "",score:"", summary: "" }],
-      workExperience: [{ company: "", role: "", startDate: "", endDate: "", website: "", summary: "" }],
-      skills: [{ name: "", level: "" }],
-      projects: [{ title: "", startDate:"", endDate:"", website:"",summary: "" }],
-      publications: [{ title: "", publisher: "", date:"",website:"",summary:"" }],
-      volunteering: [{ title:"",organization: "", role: "", date:"", website:"", summary: "" }],
-      references: [{ name: "", email: "", position: "",summary:"" }],
-      languages: [{ name: "", level: "" }],
-      interests: [{ title: "" }],
-      certifications: [{ certification: "", issuer: "", issueDate: "" }],
-      awards: [{  award: "", organization: "", year: "", summary:"" }],
-    },
+    defaultValues:formData1
   });
+
 
   const { fields: fieldsEducation, append: appendEducation, remove: removeEducation } = useFieldArray({
     control,
@@ -247,15 +253,22 @@ const ResumeBuilder = () => {
       reset(Data)   
       setSave({IdData:id , dataType:"oldData"})
 
+   }else if(userData1){
+
+    console.log("userData12:-",userData1)
+    setFormData1(userData1) 
    }
+
   }
- 
    getUserData();
 
-  },[id,template,reset])
+  },[id,template,reset , userData1 , setFormData1])
+  
 
+  useEffect(()=>{ console.log(formData1,"server");reset(userData1) },[reset,formData1])
+  
   const onSubmit = async(data) => {
-    //console.log(data);
+    
     const url="../api/insertData"
     let response;
     let IdData;
@@ -301,6 +314,8 @@ removePublication(0);
 },[removeAward,removeCertification,removeEducation,
   removeInterest,removeLanguage,removeProject,removePublication,
   removeReference,removeVolunteering,removeSkill,removeWorkExperience])
+
+  console.log(watch(),"watch")
 
   return (
     

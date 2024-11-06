@@ -9,7 +9,8 @@ export default function PersonalInfo({ personalInfo,styles }) {
   return ( 
    <>
 
-      { profilePic && <Image  src={profilePic} alt="Profile" width={200} height={200} className={styles.image} /> }
+      { profilePic && 
+    <Image  src={profilePic} alt="Profile" width={100} height={100} className="rounded-full" />}
        <div className={styles.sidebarSection}>
      
         <p className={styles.sidebarSectionTitle.sidebarTitle} style={{fontSize:styles.sidebarSectionTitle.sidebarTitleStyle}}>Contact</p>

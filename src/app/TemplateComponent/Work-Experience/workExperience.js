@@ -10,7 +10,7 @@ const WorkExperience = ({ workExperience , styles ,bar}) => {
           <p className={styles.sectionTitle.sectionTitle} style={{fontSize:styles.sectionTitle.sectionTitleStyle}}>Experience</p>
           {bar}
           {workExperience.map((workExperienceData) => (
-            <div className={styles.experienceItem} key={workExperienceData.company}>
+            <div className={styles. experienceItem} key={workExperienceData.company}>
               <p className={styles.experienceTitle.experienceTitle} style={{fontSize:styles.experienceTitle.experienceTitleStyle}}>{workExperienceData.role}</p>
               <p className={styles.experienceDate.experienceDate} style={{fontSize:styles.experienceDate.experienceDateStyle}}>{workExperienceData.company}</p>
               <p className={styles.text.text} style={{fontSize:styles.text.textStyle}}>

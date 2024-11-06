@@ -11,7 +11,7 @@ const ResumeTemplate = ({ getValues, template: Component , save }) => {
   if (!Component) {
     return <div>No template provided</div>;
   }
-
+console.log("from select",getValues)
 
   return (
     <div className="h-full">

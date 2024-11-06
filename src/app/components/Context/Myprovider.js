@@ -32,11 +32,15 @@ const MyProvider = ({ children }) => {
 
     const [profilePic, setProfilePic] = useState(null);
 
+    //transformed User data
+
+    const[userData1 , setUserData1] = useState(null)
+
   return (
     <MyContext.Provider value={{format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
       primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
       fontVariant, setFontVariant , fontSize, setFontSize , lineHeight, setLineHeight , hideIcons, setHideIcons , underlineLinks, setUnderlineLinks,
-      isOpen,setIsOpen,profilePic , setProfilePic
+      isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1       
     }} >
       {children}
     </MyContext.Provider>

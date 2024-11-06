@@ -110,7 +110,7 @@ export default function Template1({ getValues, preview , save }) {
 
   const pdfRef = useRef();
   const styles = StylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )
-
+   console.log("styledata",styles)
   const generatePDF = () => {
     const options = {
       margin: 0,
@@ -144,25 +144,25 @@ export default function Template1({ getValues, preview , save }) {
      
     <div className="h-screen w-screen flex justify-center items-center mx-20 my-40 md:w-auto md:block md:m-0 md:overflow-y-hidden   "  >
     <A4ResumeWrapper   >
-      <div style={{ transform:`scale${scale}`,width:"210mm" , height:"297mm" }} ref={pdfRef} >
+      <div style={{ width:"210mm" , height:"297mm" }} ref={pdfRef} >
       <div className={styles.document}   >
         <div className={styles.page } style={{ fontFamily:fontFamily }}   >
           <div className = {styles.sidebar} style={{backgroundColor:primaryColor ,padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
              <div className="text-white absolute ">{showPageNumbers && <p>Page:1</p>}</div>
             {/* Personal Info */}
-            <PersonalInfo personalInfo={personalInfo} styles={styles} />
+            <PersonalInfo personalInfo={personalInfo} styles={styles} /> 
 
             {/* Education */}
-            <Education education={education} styles={styles} />
+           { education?.length>0 && <Education education={education} styles={styles} /> }
 
             {/* Skills */}
-            <Skills skills={skills} styles={styles} />
+           { skills?.length>0 &&  <Skills skills={skills} styles={styles} /> }
 
             {/* Languages */}
-            <Languages languages={languages} styles={styles} />
+           { languages?.length>0 && <Languages languages={languages} styles={styles} /> }
 
             {/* Interests */}
-            <Interests interests={interests} styles={styles} />
+           { interests?.length>0 && <Interests interests={interests} styles={styles} /> }
           </div>
           
 
@@ -171,7 +171,7 @@ export default function Template1({ getValues, preview , save }) {
             <p className={styles.title.title} style={{fontSize:styles.title.tileStyle}}>{personalInfo.headline}</p>
 
             {/* Work Experience */}
-            {workExperience.length > 0 && (
+            {workExperience?.length > 0 && (
               <WorkExperience
                 workExperience={workExperience}
                 styles={styles}
@@ -180,28 +180,28 @@ export default function Template1({ getValues, preview , save }) {
             )}
 
             {/* Projects */}
-            {projects.length > 0 && <Projects projects={projects} styles={styles} bar={<div className={styles.line}></div>} />}
+            {projects?.length > 0 && <Projects projects={projects} styles={styles} bar={<div className={styles.line}></div>} />}
 
             {/* Volunteering */}
-            {volunteering.length > 0 && (
+            {volunteering?.length > 0 && (
               <Volunteering volunteering={volunteering} styles={styles} bar={<div className={styles.line}></div>} />
             )}
 
             {/* Publications */}
-            {publications.length > 0 && (
+            {publications?.length > 0 && (
               <Publications publications={publications} styles={styles} bar={<div className={styles.line}></div>}/>
             )}
 
             {/* Awards */}
-            {awards.length > 0 && <Awards awards={awards} styles={styles} bar={<div className={styles.line}></div>}/>}
+            {awards?.length > 0 && <Awards awards={awards} styles={styles} bar={<div className={styles.line}></div>}/>}
 
             {/* Certifications */}
-            {certifications.length > 0 && (
+            {certifications?.length > 0 && (
               <Certifications certifications={certifications} styles={styles} bar={<div className={styles.line}></div>}/>
             )}
 
             {/* References */}
-            {references.length > 0 && (
+            {references?.length > 0 && (
               <References references={references} styles={styles} bar={<div className={styles.line}></div>}/>
             )}
           </div>
