@@ -109,7 +109,11 @@ const SelectParser = () => {
               className="group relative bg-gray-50 rounded-lg p-6 flex flex-col items-center 
                          border border-gray-200 hover:shadow-lg transition-all duration-300 
                          ease-in-out transform hover:-translate-y-1 cursor-pointer"
-              onClick={() => (option.title === "Import resume from LinkedIn" || option.title === "Import my resume") && ref.current.click()} // Click to upload
+              onClick={() => {
+              option.title === "Import resume from LinkedIn" || option.title === "Import my resume" && ref.current.click()
+              option.title === "Create a new resume" && Router.push("./SelectTemplate")  
+            }} // Click to upload
+              
             >
               {/* Icon Container */}
               <div

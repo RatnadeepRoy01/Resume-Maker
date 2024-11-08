@@ -42,6 +42,8 @@ const keyMap = {
 
   //language mappings
   "languages_known": "languages",
+  "language":"name",
+  "proficiency":"level",
   
   // Skills mappings
   "soft_skills": "softSkills",
@@ -74,13 +76,28 @@ return data;
   
 }
 
+
+export function refineLanguageData (refinedata){
+
+let refineLanguage
+
+
+
+}
+
+
+
+
+
 export async function  getUserData (userData) {
   let updatedSkills = [];
 
  const data = await mapKeys(userData)
 
  function traverse(obj) {
+
   const {skills,...data} = obj ;
+  if(!skills) return data;
    for(const key in skills){
         skills[key].forEach(element => {
 

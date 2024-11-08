@@ -232,7 +232,6 @@ const LandingPage = () => {
     </div>
   </div>
 </section>
-<div className='h-10 w-10 bg-pink-600' onClick={()=>{Router.push("./Features/selectParser")}}></div>
            {/* Users */}
 
         <section className="py-16 bg-white">

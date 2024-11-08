@@ -6,7 +6,7 @@ const Languages = ({ languages , styles }) => {
       <div className={styles.sidebarSection}>
         <p className={styles.sidebarSectionTitle.sidebarTitle} style={{fontSize:styles.sidebarSectionTitle.sidebarTitleStyle}}>Languages</p>
         {languages.map((languagesData) => {      
-         const data =  ( typeof languagesData == "string" ) ? languagesData : languagesData.name
+          let data = typeof languagesData == "string" ? languagesData:languagesData.name
           return (
           <p key={data} className={styles.sideText.sideText} style={{fontSize:styles.sideText.sideTextStyle}}>• {data}</p>
         )})}
