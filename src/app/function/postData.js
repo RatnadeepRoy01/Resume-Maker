@@ -1,15 +1,14 @@
-export const postData = async(data,url,headerData) =>{
+export const postData = async(data,url) =>{
 
     if(!data){
         return;
     }
-     let header = 'application/json';
-     if(headerData) header = headerData
+    
     try {
         const response = await fetch(url, {
           method: 'POST', 
           headers: {
-            'Content-Type': {header},
+            'Content-Type':'application/json',
             
           },
           body: JSON.stringify(data),

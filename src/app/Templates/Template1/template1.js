@@ -115,8 +115,8 @@ export default function Template1({ getValues, preview , save }) {
     const options = {
       margin: 0,
       filename: "my-document.pdf",
-      image: { type: "pdf", quality: 0.5 },
-      html2canvas: { scale: 1 },
+      image: { type: "pdf", quality: 1 },
+      html2canvas: { scale: 3 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };
 

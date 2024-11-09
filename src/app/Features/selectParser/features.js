@@ -1,16 +1,45 @@
 "use client";
-import React, { useState,useRef , useContext,useEffect} from "react";
-import { Upload, PlusCircle } from "lucide-react";
+import React, { useState,useRef , useContext} from "react";
+import { Upload, PlusCircle  } from "lucide-react";
 import Image from "next/image";
 import { getUserData } from "@/app/function/matching";
 import MyContext from "@/app/components/Context/MyContext";
 import { useRouter } from "next/navigation";
+import { postData } from "@/app/function/postData";
+
 
 const SelectParser = () => {
   const [file, setFile] = useState(null); // State to hold the uploaded file
+  const[show,setShow] = useState(false)
+  const [urlData,setUrlData] = useState("https://www.linkedin.com/in/")
   const { userData1 , setUserData1 }= useContext(MyContext);
   const Router = useRouter();
   const ref = useRef();
+
+
+  const handleImport = async() =>{
+
+     Router.push("./SelectTemplate")
+     const response = await postData({urlData},"../../api/resumeParser")
+
+     function collectPersonalInfo(obj) {
+      const personalInfo = {};
+    
+      for (const key in obj) {
+        if (typeof obj[key] !== 'object' || obj[key] === null) {
+          personalInfo[key] = obj[key];
+          delete obj[key];
+        }
+      }
+    
+      obj.personalInfo = personalInfo;
+      return obj;
+    }
+
+    const filteredData = await collectPersonalInfo(response)
+     setUserData1(filteredData)
+
+  }
 
   const options = [
     {
@@ -30,6 +59,23 @@ const SelectParser = () => {
       ),
       title: "Import resume from LinkedIn",
       description: "We will reformat and fill in your information to save your time.",
+      input: (
+        <div className="flex flex-col mt-4">
+          <input
+            type="text"
+            placeholder="Enter your LinkedIn profile URL"
+            onChange={(e) => setUrlData(e.target.value)}
+            value={urlData}
+            className="border border-gray-300 rounded-md p-2 mb-2 w-full"
+          />
+          <button
+            className="bg-blue-600 text-white rounded-md px-4 py-2 hover:bg-blue-700"
+            onClick={handleImport} 
+          >
+            Import from LinkedIn
+          </button>
+        </div>
+      ),
     },
     {
       icon: <PlusCircle className="w-8 h-8 text-blue-500" />,
@@ -90,8 +136,11 @@ const SelectParser = () => {
   };
 
   
+
   return (
+    
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6 md:bg-transparent ">
+  
       {/* Centered Card Container with shadow */}
       <div className="bg-white rounded-lg shadow-2xl border border-gray-200 p-8 max-w-3xl w-full space-y-8">
         <div className="text-center space-y-2">
@@ -104,17 +153,20 @@ const SelectParser = () => {
         {/* Options as grid on mobile, single column on larger screens */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {options.map((option, index) => (
+        
+        <div key={index} className="p-6"> 
             <div
-              key={index}
-              className="group relative bg-gray-50 rounded-lg p-6 flex flex-col items-center 
-                         border border-gray-200 hover:shadow-lg transition-all duration-300 
-                         ease-in-out transform hover:-translate-y-1 cursor-pointer"
+              className="group relative bg-gray-50 rounded-lg flex flex-col items-center 
+              border border-gray-200 hover:shadow-lg transition-all duration-300 
+              ease-in-out transform hover:-translate-y-1 cursor-pointer"
+             
               onClick={() => {
-              option.title === "Import resume from LinkedIn" || option.title === "Import my resume" && ref.current.click()
-              option.title === "Create a new resume" && Router.push("./SelectTemplate")  
+                option.title === "Import my resume" && ref.current.click()
+                option.title === "Create a new resume" && Router.push("./SelectTemplate")  
+                option.title === "Import resume from LinkedIn" && setShow((prev)=>!prev)
             }} // Click to upload
-              
             >
+          
               {/* Icon Container */}
               <div
                 className="p-4 bg-blue-50 rounded-full group-hover:bg-blue-100
@@ -124,10 +176,23 @@ const SelectParser = () => {
               </div>
 
               {/* Text Content */}
-              <div className="text-center space-y-3 mt-4">
+          {
+            option.title !== "Import resume from LinkedIn" &&
+               <div className="text-center space-y-3 mt-4">
                 <h3 className="text-xl font-medium">{option.title}</h3>
                 <p className="text-gray-500 text-sm">{option.description}</p>
               </div>
+          }
+
+           </div>
+       
+           { option.title === "Import resume from LinkedIn" && !show ? 
+
+             <div className="text-center space-y-3 mt-4">
+                <h3 className="text-xl font-medium">{option.title}</h3>
+                <p className="text-gray-500 text-sm">{option.description}</p>
+              </div>:
+              <div >{option.input}</div> }
             </div>
           ))}
         </div>
