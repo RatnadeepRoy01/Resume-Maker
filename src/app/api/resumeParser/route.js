@@ -6,19 +6,28 @@ export async function POST(request) {
 
     if(request.headers.get("content-type").includes("multipart/form-data")){         
        
+      console.log("inside")
+      
       const data=await request.formData();
+      console.log(data)
       console.log(data.get("file"))
 
     try {
 
-        const response = await postData("http://parser.api.mybizzz.com/upload",data); 
-       
-        if(response.status == 200){
-        return NextResponse.json(response,{status:200})
-        }
-        else
-        return NextResponse.json({state:"Failed"},{status:404})
+        const response = await fetch("http://parser.api.mybizzz.com/upload",{
 
+          method:"POST",
+          body:data
+          }); 
+       
+        if(!response.ok){
+          throw new Error(`Error: ${response.status}`);
+        }
+        const response1 = await response.json();  
+        console.log(response1,"response")
+        return NextResponse.json(response1,{status:200})
+        
+      
       } catch (error) {
         console.error('Error:', error);
         return NextResponse.json({state:"Failed"},{status:404})
