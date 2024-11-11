@@ -7,7 +7,7 @@ const A4ResumeWrapper = ({ children }) => {
   const [isMobile, setIsMobile] = useState(false);
 
   // A4 constants (in pixels at 96 DPI)
-  const A4_WIDTH_PX = 729;  // 210mm * 3.779528
+  const A4_WIDTH_PX = 784;  // 210mm * 3.779528
   const A4_HEIGHT_PX = 1123; // 297mm * 3.779528
 
   useEffect(() => {

@@ -141,7 +141,7 @@ export default function Template1({ getValues, preview , save }) {
 
   return (
     <>
-     
+    
     <div  className="h-screen w-auto  m-0 overflow-hidden " >
     <A4ResumeWrapper   >
       <div style={{ width:"210mm" , height:"297mm" }} ref={pdfRef} >

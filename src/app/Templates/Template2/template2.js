@@ -77,10 +77,10 @@ export default function Template1({ getValues, preview  }) {
 
   return (
     <>
-     
-    <div className="h-screen w-auto m-0 overflow-hidden   "  >
+    
+    <div className="h-screen w-auto m-0 overflow-hidden"  >
     <A4ResumeWrapper   >
-      <div style={{ transform:`scale${scale}`, width:"212mm" , height:"297mm" }} ref={pdfRef} >
+      <div style={{ width:"210mm" , height:"297mm" }} ref={pdfRef} >
       <div className={styles.document}   >
         <div className={styles.page } style={{ fontFamily:fontFamily }}   >
          
