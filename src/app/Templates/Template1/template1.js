@@ -142,7 +142,7 @@ export default function Template1({ getValues, preview , save }) {
   return (
     <>
      
-    <div className="h-screen w-screen flex justify-center items-center mx-20 my-40 md:w-auto md:block md:m-0 md:overflow-y-hidden   "  >
+    <div  className="h-screen w-auto  m-0 overflow-hidden " >
     <A4ResumeWrapper   >
       <div style={{ width:"210mm" , height:"297mm" }} ref={pdfRef} >
       <div className={styles.document}   >

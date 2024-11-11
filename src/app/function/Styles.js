@@ -1,33 +1,6 @@
-import React , {useEffect} from "react";
 
 export const StylesData = (pdfRef , setScale , fontVariant , fontSubset , fontSize , underlineLinks ) =>{
 
-    useEffect(() => {
-        const handleResize = () => {
-          const screenWidth =  pdfRef.current.offsetWidth;
-          const screenHeight = window.innerHeight;
-          const A4_WIDTH_MM = 210;
-          const A4_HEIGHT_MM = 297;
-    
-          // Convert A4 size to pixels assuming 96 PPI (pixels per inch)
-          const A4_WIDTH_PX = (A4_WIDTH_MM / 25.4) * 96;
-          const A4_HEIGHT_PX = (A4_HEIGHT_MM / 25.4) * 96;
-    
-          // Calculate scaling factor based on screen dimensions
-          const scaleX = screenWidth / A4_WIDTH_PX;
-          const scaleY = screenHeight / A4_HEIGHT_PX;
-          const scale = Math.min(scaleX, scaleY);
-    
-          setScale(scale);
-        };
-    
-        // Initial scaling
-        handleResize();
-    
-        // Recalculate on window resize
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-      }, [pdfRef , setScale]);
      
 const styles = {
   page: `flex flex-row h-[297mm] w-[210mm] bg-white font-roboto  font-${fontVariant} `,
