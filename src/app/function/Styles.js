@@ -34,7 +34,7 @@ const styles = {
   document: `bg-white h-[297mm] w-[210mm] md:h-full overflow-hidden w-full absolute left-0  `,
   sidebar: `w-1/3  p-5 text-white break-words `,
   main: `w-2/3 p-5 `,
-  image: `  w-[100%] h-auto  mx-auto ${fontSubset} flex justify-center items-center my-10 `,
+  image: ` mx-auto ${fontSubset}   `,
   name: { name:"text-2xl font-medium mb-1", nameStyle:`${fontSize+1.5}rem`},
   title: {title:" text-xl mb-5" , tileStyle : `${fontSize+1.125}rem `},
   sectionTitle: { sectionTitle:" text-2xl font-bold mb-2 mt-10 ", sectionTitleStyle:`${fontSize+1.25}rem` },

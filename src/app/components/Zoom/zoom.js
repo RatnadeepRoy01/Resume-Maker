@@ -32,6 +32,7 @@ const A4ResumeWrapper = ({ children }) => {
     return () => window.removeEventListener('resize', updateScale);
   }, []);
 
+
   return (
     <div className="min-h-screen bg-gray-100 p-6" ref={containerRef}>
       <div className="flex justify-center">
