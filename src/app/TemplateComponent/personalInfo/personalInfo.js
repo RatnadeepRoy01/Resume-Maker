@@ -1,33 +1,11 @@
 "use client"
-import React, { useContext , useRef , useEffect , useState} from "react";
+import React, { useContext } from "react";
 import MyContext from "@/app/components/Context/MyContext";
-import Image from "next/image";
 
 export default function PersonalInfo({ personalInfo,styles }) {
   
-  const imageRef = useRef(null);
   const{ profilePic } = useContext(MyContext)
-  const [width, setWidth] = useState(0);
 
-  useEffect(()=>{
-
-    if (imageRef.current) {
-      setWidth(imageRef.current.offsetWidth);
-    }
-
-   
-    const handleResize = () => {
-      if (imageRef.current) {
-        setWidth(imageRef.current.offsetWidth);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-
-
-  },[])
-console.log(width)
   return ( 
   <div>
            
