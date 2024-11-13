@@ -585,10 +585,10 @@ const LandingPage = () => {
 
 
 
-      <section onClick={handleClick } className="bg-gray-100 landingSection mt-25 lg:pt-45 lg:pb-34 5xl:pt-40 5xl:pb-36 bg-specialSand pb-22 flex w-full flex-col items-center lg:max-w-none">
+      <section  className="bg-gray-100 landingSection mt-25 lg:pt-45 lg:pb-34 5xl:pt-40 5xl:pb-36 bg-specialSand pb-22 flex w-full flex-col items-center lg:max-w-none">
   <h2 className="mt-10 w-[300px] text-center text-[72px] leading-none sm:w-[500px] lg:w-auto lg:text-[96px] lg:tracking-[-3px]">Start building your future</h2>
   <p className="mt-8 text-center text-2xl text-gray-500 lg:mt-11 lg:w-[890px] lg:text-3xl">Unveil your full potential with our user-friendly, non-scammy resume maker and career tools. Start for free and enhance with premium options.</p>
-  <a className=" bg-black mb-4 border-none cursor-pointer appearance-none touch-manipulation flex items-center justify-center focus-visible:outline-blue-600 bg-primaryBlack text-white h-16 mt-8 w-auto rounded-xl pl-4 pr-7 text-xl font-bold lg:mt-11" >
+  <a onClick={handleClick } className=" bg-black mb-4 border-none cursor-pointer appearance-none touch-manipulation flex items-center justify-center focus-visible:outline-blue-600 bg-primaryBlack text-white h-16 mt-8 w-auto rounded-xl pl-4 pr-7 text-xl font-bold lg:mt-11" >
     <span>
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 49 49" className="mr-[9px] h-12 w-12">
         <path fill="currentColor" stroke="currentColor" stroke-linejoin="round" stroke-width="0.8" d="M36.561 12.178a.4.4 0 00-.4-.4h-24a.4.4 0 00-.4.4v4c0 .22.18.4.4.4h16.206L11.05 33.895a.4.4 0 000 .565l2.828 2.829a.4.4 0 00.566 0L31.76 19.97v16.207c0 .22.18.4.4.4h4a.4.4 0 00.4-.4v-24z"></path>
