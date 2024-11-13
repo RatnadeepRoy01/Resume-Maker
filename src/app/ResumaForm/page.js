@@ -265,7 +265,7 @@ const ResumeBuilder = () => {
   },[id,template,reset , userData1 , setFormData1])
   
 
-  useEffect(()=>{ console.log(formData1,"server");reset(userData1) },[reset,formData1])
+  useEffect(()=>{ console.log(formData1,"server");reset(userData1) },[reset,formData1,userData1])
   
   const onSubmit = async(data) => {
     
