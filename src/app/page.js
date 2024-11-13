@@ -211,7 +211,7 @@ const LandingPage = () => {
           <p className="mt-6 w-full max-w-[600px] text-xl lg:mt-10 lg:w-[500px] xl:w-full xl:text-2xl hidden md:block mb-2">Professional templates, easy customization, and instant PDF download. Get noticed by employers today!</p>
          
           <button className="bg-white text-blue-600 px-6 py-3 rounded-md hover:bg-blue-50 transition duration-300 text-lg font-semibold" onClick={handleClick }>
-          {/* Router.push("./SelectTemplate") */}
+          
             Create Your Resume
           </button>
          
@@ -411,6 +411,8 @@ const LandingPage = () => {
             
              <button 
   className="border-none cursor-pointer flex items-center justify-center focus:outline-none mt-6 text-white bg-black h-[72px] w-auto rounded-xl px-4 py-2 text-2xl font-bold lg:mt-8"
+  onClick={handleClick }
+
 >
   <span className="flex items-center">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 49 49" className="mr-3 h-10 w-10">
@@ -424,6 +426,7 @@ const LandingPage = () => {
     </svg>
     See all templates
   </span>
+  
 </button>
 
 </div>  </section>
@@ -492,7 +495,7 @@ const LandingPage = () => {
       <p className="text-xl mb-8 max-w-lg">
         Join thousands of job seekers who have successfully landed their dream jobs.
       </p>
-      <button className="bg-white text-blue-600 px-8 py-3 rounded-md hover:bg-blue-50 transition duration-300 md:text-lg font-semibold mt-4 md:mt-0">
+      <button onClick={handleClick } className="bg-white text-blue-600 px-8 py-3 rounded-md hover:bg-blue-50 transition duration-300 md:text-lg font-semibold mt-4 md:mt-0">
         Get Started Now - It&apos;s Free!
       </button>
     </AnimatedSection>
@@ -582,7 +585,7 @@ const LandingPage = () => {
 
 
 
-      <section className="bg-gray-100 landingSection mt-25 lg:pt-45 lg:pb-34 5xl:pt-40 5xl:pb-36 bg-specialSand pb-22 flex w-full flex-col items-center lg:max-w-none">
+      <section onClick={handleClick } className="bg-gray-100 landingSection mt-25 lg:pt-45 lg:pb-34 5xl:pt-40 5xl:pb-36 bg-specialSand pb-22 flex w-full flex-col items-center lg:max-w-none">
   <h2 className="mt-10 w-[300px] text-center text-[72px] leading-none sm:w-[500px] lg:w-auto lg:text-[96px] lg:tracking-[-3px]">Start building your future</h2>
   <p className="mt-8 text-center text-2xl text-gray-500 lg:mt-11 lg:w-[890px] lg:text-3xl">Unveil your full potential with our user-friendly, non-scammy resume maker and career tools. Start for free and enhance with premium options.</p>
   <a className=" bg-black mb-4 border-none cursor-pointer appearance-none touch-manipulation flex items-center justify-center focus-visible:outline-blue-600 bg-primaryBlack text-white h-16 mt-8 w-auto rounded-xl pl-4 pr-7 text-xl font-bold lg:mt-11" >
