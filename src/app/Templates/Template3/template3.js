@@ -104,8 +104,7 @@ export default function Template3({ getValues, preview , save }) {
 
     setPrimaryColor("inherit");
     setBackgroundColor("inherit");
-    setTextColor("inherit") 
-    styles.sectionTitle.sectionTitle = styles.sectionTitle.sectionTitle + "border-l-4 border-blue-600"
+    setTextColor("inherit")  
 
    },[setBackgroundColor,setPrimaryColor,setTextColor])
 

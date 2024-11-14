@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 import { getData } from "../function/getData";
 import { postData } from "../function/postData";
 
-import Template1 from "../Templates/Template1/template1";
-import Template2 from "../Templates/Template2/template2"
-import Template3 from "../Templates/Template3/template3"
+const Template1 = dynamic(() => import("../Templates/Template1/template1"), { ssr: false });
+const Template2 = dynamic(() => import("../Templates/Template2/template2"), { ssr: false });
+const Template3 = dynamic(() => import("../Templates/Template3/template3"), { ssr: false });
+const Template4 = dynamic(() => import("../Templates/Template4/template4"), { ssr: false });
 
 const Page = () => {
   const [templatesData1, setTemplatesData] = useState([]); // State to hold fetched templates and data
