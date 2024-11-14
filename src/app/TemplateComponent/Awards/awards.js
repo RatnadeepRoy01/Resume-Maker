@@ -2,12 +2,13 @@
 
 import React from 'react';
 
-const Awards = ({ awards, styles }) => {
+const Awards = ({ awards, styles , customCss}) => {
     console.log(awards)
   
     return (
     <div>
       <p className={styles.sectionTitle.sectionTitle} style={{fontSize:styles.sectionTitle.sectionTitleStyle}}>Awards</p>
+      <div className={customCss}>
       {awards.map((award, index) => (
         <div key={index} className={styles.experienceItem}>
           <p className={styles.experienceTitle.experienceTitle} style={{fontSize:styles.experienceTitle.experienceTitleStyle}}>{award.award}</p>
@@ -16,6 +17,7 @@ const Awards = ({ awards, styles }) => {
         </div>
       ))}
     </div>
+   </div>
   );
 };
 

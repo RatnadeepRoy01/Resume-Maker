@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const SelectTemplate = () => {
 
-  const TemplateData = [ "Template1" , "Template2" ];
+  const TemplateData = [ "Template1" , "Template2" , "Template3" , "Template4" ];
   const Router = useRouter();
 
   return (

@@ -4,13 +4,13 @@ import "../../Css/animateTemplate.css"; // Include your styles here
 import Image from "next/image";
 
 const resumes = [
-  { id: 1, title: "Resume 1", url: "/Template3.webp" },
+  { id: 1, title: "Resume 1", url: "/Template31.webp" },
   { id: 2, title: "Resume 2", url: "/Template2.webp" },
   { id: 3, title: "Resume 3", url: "/Template1.webp" },
-  { id: 4, title: "Resume 5", url: "/Template4.webp" },
+  { id: 4, title: "Resume 5", url: "/Template41.webp" },
   { id: 5, title: "Resume 4", url: "/Template5.webp" },
 ];
-
+ 
 const ResumeCarousel = () => {
   const [spread, setSpread] = useState(false);
   const carouselRef = useRef(null);

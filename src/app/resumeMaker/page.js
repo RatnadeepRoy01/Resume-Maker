@@ -8,6 +8,7 @@ import { postData } from "../function/postData";
 
 import Template1 from "../Templates/Template1/template1";
 import Template2 from "../Templates/Template2/template2"
+import Template3 from "../Templates/Template3/template3"
 
 const Page = () => {
   const [templatesData1, setTemplatesData] = useState([]); // State to hold fetched templates and data

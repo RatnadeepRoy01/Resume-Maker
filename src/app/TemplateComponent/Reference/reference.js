@@ -2,12 +2,13 @@
 import React from "react";
 
 
-const References = ({ references , styles ,bar}) => {
+const References = ({ references , styles ,bar, customCss}) => {
     return (
       references.length > 0 && (
         <div>
           <p className={styles.sectionSecondTitle.sectionSecondTitle} style={{fontSize:styles.sectionSecondTitle.sectionSecondTitleStyle}}>References</p>
           {bar}
+          <div className={customCss}>
           {references.map((referencesData, index) => {
             return (
               <>
@@ -24,6 +25,7 @@ const References = ({ references , styles ,bar}) => {
               </>
             );
           })}
+        </div>
         </div>
       )
     );

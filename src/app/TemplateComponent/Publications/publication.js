@@ -2,12 +2,13 @@
 import React from "react";
 
 
-const Publications = ({ publications , styles , bar }) => {
+const Publications = ({ publications , styles , bar, customCss }) => {
     return (
       publications.length > 0 && (
         <div>
           <p className={styles.sectionSecondTitle.sectionSecondTitle} style={{fontSize:styles.sectionSecondTitle.sectionSecondTitleStyle}}>Publications</p>
           {bar}
+          <div className={customCss}>
           {publications.map((publicationsData) => (
             <div className={styles.experienceItem} key={publicationsData.title}>
               <p className={styles.experienceTitle.experienceTitle} style={{fontSize:styles.experienceTitle.experienceTitleStyle}}>{publicationsData.title}</p>
@@ -17,6 +18,7 @@ const Publications = ({ publications , styles , bar }) => {
               <div className={styles.text.text} style={{fontSize:styles.text.textStyle}} dangerouslySetInnerHTML={{ __html: publicationsData.summary }}></div>
             </div>
           ))}
+        </div>
         </div>
       )
     );

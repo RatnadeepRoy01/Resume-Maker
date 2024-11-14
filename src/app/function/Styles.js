@@ -3,10 +3,10 @@ export const StylesData = (pdfRef , setScale , fontVariant , fontSubset , fontSi
 
      
 const styles = {
-  page: `flex flex-row h-[297mm] w-[210mm] bg-white font-roboto  font-${fontVariant} `,
-  document: `bg-white h-[297mm] w-[210mm] md:h-full overflow-hidden w-full absolute left-0  `,
+  page: `flex flex-row h-[297mm] w-[210mm]  font-roboto  font-${fontVariant}  `,
+  document: ` h-[297mm] w-[210mm] md:h-full overflow-hidden w-full absolute left-0  `,
   sidebar: `w-1/3  p-5 text-white break-words `,
-  main: `w-2/3 p-5 `,
+  main: `w-2/3 p-5  `,
   image: ` mx-auto ${fontSubset}   `,
   name: { name:"text-2xl font-medium mb-1", nameStyle:`${fontSize+1.5}rem`},
   title: {title:" text-xl mb-5" , tileStyle : `${fontSize+1.125}rem `},
