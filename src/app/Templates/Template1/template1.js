@@ -45,7 +45,7 @@ export default function Template1({ getValues, preview , save }) {
         // useEffect(()=>{
          
         //  const  insertCssdata = async() =>{
-
+        //      console.log("savingCssData1111111111111111111111111111111111111111111111111")
         //   if(save?.dataType == "oldData"){
 
         //      const oldData =  await get(`${save.IdData}Css`);

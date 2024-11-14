@@ -286,6 +286,7 @@ const ResumeBuilder = () => {
    
     const uniqueId=  `${template}@`+Math.random().toString(36).slice(2,12);
     data.key = uniqueId;
+    console.log("dataInside:-",data)
     response= await postData(data,url)
     IdData = uniqueId;
 
