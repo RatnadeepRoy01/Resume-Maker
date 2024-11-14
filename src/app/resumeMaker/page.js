@@ -5,6 +5,7 @@ import { get, set , keys } from "idb-keyval";
 import { useRouter } from "next/navigation";
 import { getData } from "../function/getData";
 import { postData } from "../function/postData";
+import dynamic from "next/dynamic";
 
 const Template1 = dynamic(() => import("../Templates/Template1/template1"), { ssr: false });
 const Template2 = dynamic(() => import("../Templates/Template2/template2"), { ssr: false });
