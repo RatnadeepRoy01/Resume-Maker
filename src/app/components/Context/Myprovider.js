@@ -25,22 +25,22 @@ const MyProvider = ({ children }) => {
     const [underlineLinks, setUnderlineLinks] = useState(false);
 
     //Menu Open
-
     const [isOpen, setIsOpen] = useState(false);
 
     //Image
-
     const [profilePic, setProfilePic] = useState(null);
 
     //transformed User data
-
     const[userData1 , setUserData1] = useState(null)
+
+    //Template Name
+    const[templeName , setTemplateName] = useState(null)
 
   return (
     <MyContext.Provider value={{format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
       primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
       fontVariant, setFontVariant , fontSize, setFontSize , lineHeight, setLineHeight , hideIcons, setHideIcons , underlineLinks, setUnderlineLinks,
-      isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1       
+      isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1 ,  templeName ,  setTemplateName      
     }} >
       {children}
     </MyContext.Provider>

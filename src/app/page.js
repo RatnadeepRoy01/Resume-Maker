@@ -5,6 +5,7 @@ import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { Check, Mail, Lock, Eye, FileText, PenTool } from 'lucide-react';
 import FAQSection from './FAQ/page';
+import Footer from '@/components/footer';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import MyContext from './components/Context/MyContext';
@@ -603,43 +604,7 @@ const LandingPage = () => {
 
 
    {/* footer */}
-      <footer className="bg-gray-800 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">ResumeBuilder</h3>
-              <p className="text-sm">Create professional resumes with ease.</p>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Features</h3>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-blue-300">Templates</a></li>
-                <li><a href="#" className="hover:text-blue-300">Customization</a></li>
-                <li><a href="#" className="hover:text-blue-300">PDF Export</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Resources</h3>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-blue-300">Resume Tips</a></li>
-                <li><a href="#" className="hover:text-blue-300">Career Advice</a></li>
-                <li><a href="#" className="hover:text-blue-300">FAQ</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Connect</h3>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="hover:text-blue-300">Twitter</a></li>
-                <li><a href="#" className="hover:text-blue-300">LinkedIn</a></li>
-                <li><a href="#" className="hover:text-blue-300">GitHub</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-12 pt-8 border-t border-gray-700 text-center text-sm">
-            <p>&copy; 2024 ResumeBuilder. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
 
 
     </div>

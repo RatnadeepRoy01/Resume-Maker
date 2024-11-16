@@ -145,7 +145,7 @@ const schema = z.object({
 
 const ResumeBuilder = () => {
 
-  const{ setIsOpen , userData1} = useContext(MyContext);
+  const{ setIsOpen , userData1 , setTemplateName } = useContext(MyContext);
   const searchParams = useSearchParams();
    const template = searchParams.get('template');
      const id = searchParams.get("id");  
@@ -248,6 +248,7 @@ const ResumeBuilder = () => {
     const getUserData = async() =>{
    if(template && id){
  
+    setTemplateName(template)
       const Data = await get(id);
       console.log(Data,"aaaaaaa")
       reset(Data)   
