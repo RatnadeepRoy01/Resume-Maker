@@ -18,11 +18,13 @@ export default function PersonalInfo1({ personalInfo, styles , fontSubset}) {
         ></div>
       )}
 
-      <div>
-        <div>
+      <div className="w-[80%]">
+        <div className=" break-words mb-2 ">
           <p className={styles.name.name} style={{ fontSize: styles.name.nameStyle }}>{personalInfo.fullName}</p>
           <p className={styles.title.title} style={{ fontSize: styles.title.tileStyle }}>{personalInfo.headline}</p>
+          <div className={styles.text.text} style={{fontSize:styles.text.textStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
         </div>
+       
         {/* Right: Contact Information */}
         <div className="flex-1 grid grid-cols-2 gap-x-2 gap-y-1 text-sm">
           <div className="flex items-center gap-1">

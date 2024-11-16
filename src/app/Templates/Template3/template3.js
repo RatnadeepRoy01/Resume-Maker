@@ -173,6 +173,7 @@ export default function Template3({ getValues, preview , save }) {
            <div className="flex flex-col break-words">
             <p className={styles.name.name} style={{fontSize:styles.name.nameStyle ,color:"white"}}>{personalInfo.fullName}</p>
             <p className={styles.title.title} style={{fontSize:styles.title.tileStyle,color:"white"}}>{personalInfo.headline}</p>
+            <div className={styles.text.text} style={{fontSize:styles.text.textStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
             </div>
 
             {/* Work Experience */}

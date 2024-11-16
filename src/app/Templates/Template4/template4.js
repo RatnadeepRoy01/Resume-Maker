@@ -150,6 +150,9 @@ export default function Template1({ getValues, preview , save }) {
              <div className="text-white absolute ">{showPageNumbers && <p>Page:1</p>}</div>
             {/* Personal Info */}
             <PersonalInfo1 personalInfo={personalInfo} styles={styles} fontSubset={fontSubset} /> 
+        <div>
+          
+        </div>
          </div>
           
 

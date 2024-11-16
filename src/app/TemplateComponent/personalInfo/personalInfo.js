@@ -11,7 +11,7 @@ export default function PersonalInfo({ personalInfo,styles }) {
            
           {profilePic && (
         <div
-         className={`w-[225px] h-[225px] overflow-hidden bg-cover bg-center ${styles.image}`}
+         className={`w-[200px] h-[200px] overflow-hidden bg-cover bg-center ${styles.image}`}
          style={{
          backgroundImage: profilePic ? `url(${profilePic})` : 'none' // Dynamically set the background image
       }}
@@ -28,6 +28,7 @@ export default function PersonalInfo({ personalInfo,styles }) {
         {personalInfo.website && <p className={styles.sideText.sideText} style={{fontSize:styles.sideText.sideTextStyle}}>Website:<p className={styles.small.small} style={{fontSize:styles.small.smallStyle , textDecoration:styles.small.smallStyle1}}> {personalInfo.website} </p> </p>}
         {personalInfo.linkedIn && <p className={styles.sideText.sideText} style={{fontSize:styles.sideText.sideTextStyle}}>LinkedIn: <p className={styles.small.small} style={{fontSize:styles.small.smallStyle , textDecoration:styles.small.smallStyle1}}> {personalInfo.linkedIn} </p></p>}
         {personalInfo.github && <p className={styles.sideText.sideText} style={{fontSize:styles.sideText.sideTextStyle}}>GitHub: <p className={styles.small.small} style={{fontSize:styles.small.smallStyle , textDecoration:styles.small.smallStyle1}}> {personalInfo.github} </p></p>}
+        
       </div>
       </div>
   );

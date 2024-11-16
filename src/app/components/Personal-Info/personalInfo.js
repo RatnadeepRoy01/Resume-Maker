@@ -187,7 +187,7 @@ const PersonalInfoComponent = ({ register, setValue, getValues,errors }) => {
 
       {/* summary with Editor */}
       <div>
-        <label className="block text-sm font-medium">address</label>
+        <label className="block text-sm font-medium">summary</label>
         <Editor
          value={getValues("personalInfo.summary") ?? ""} // Use nullish coalescing operator
          onChange={handleaddressChange}
