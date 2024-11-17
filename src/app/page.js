@@ -144,6 +144,7 @@ const TestimonialCard = ({ name, feedback, designation,index }) => {
       animate={{ opacity: 1, translateY: 0 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.05 }} // Adds a hover scale effect
+      whileTap={{ scale: 0.95 }} 
     >
       <div className={`content h-[330px]`} style={{background: `linear-gradient(to right,${fromColor[index]}, ${toColor[index]} )`,}}>
         <svg
