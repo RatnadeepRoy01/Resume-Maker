@@ -8,51 +8,59 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: ProfileNxT
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to EC2
       env:
         PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
         HOST: ${{ secrets.EC2_HOST }}
         USER: ${{ secrets.EC2_USER }}
       run: |
         echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
-        ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} '
-        echo "Current directory: $(pwd)"
-        echo "Listing home directory:"
-        ls -la ~
 
-        echo "Installing Node.js..."
-        if ! command -v nvm &> /dev/null; then
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-        fi
-        nvm install node
+        # SSH into EC2 and deploy
+        ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
+          echo "Current directory: $(pwd)"
+          echo "Listing home directory:"
+          ls -la ~
 
-        echo "Installing PM2..."
-        if ! command -v pm2 &> /dev/null; then
-        npm install -g pm2
-        fi
+          # Install Node Version Manager (NVM) if not present
+          echo "Installing Node.js using NVM..."
+          if ! command -v nvm &> /dev/null; then
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Load nvm
+          fi
+          nvm install 22  # Install Node.js version 22
 
-        REPO_URL="https://github.com/RatnadeepRoy01/Resume-Maker.git"
-        BRANCH="main"
-        REPO_DIR="$HOME/ProfileNxT"
+          # Install PM2 if not installed
+          echo "Installing PM2..."
+          if ! command -v pm2 &> /dev/null; then
+            npm install -g pm2
+          fi
 
-        if [ -d "$REPO_DIR/.git" ]; then
-          cd "$REPO_DIR"
-          git pull origin "$BRANCH"
-        else
-          git clone "$REPO_URL" "$REPO_DIR"
-          cd "$REPO_DIR"
-        fi
+          # Setup repository directory
+          REPO_URL="https://github.com/RatnadeepRoy01/Resume-Maker.git"
+          REPO_DIR="$HOME/ProfileNxT"
+          BRANCH="main"
 
-        cd "$REPO_DIR"
-        npm install
+          # Clone or pull repository
+          if [ -d "$REPO_DIR/.git" ]; then
+            cd "$REPO_DIR"
+            git pull origin "$BRANCH"
+          else
+            git clone "$REPO_URL" "$REPO_DIR"
+            cd "$REPO_DIR"
+          fi
 
-        echo "Building Next.js application..."
-        npm run build  # Builds the Next.js application
+          # Install dependencies and build the app
+          npm install
+          echo "Building Next.js application..."
+          npm run build  # Builds the Next.js application
 
-        echo "Starting/restarting application..."
-        pm2 restart npm -- start || pm2 start npm -- start  # Runs the Next.js production server
-        '
+          # Restart the application using PM2
+          echo "Starting/restarting application..."
+          pm2 restart npm -- start || pm2 start npm -- start  # Runs the Next.js production server
+
+        EOF
