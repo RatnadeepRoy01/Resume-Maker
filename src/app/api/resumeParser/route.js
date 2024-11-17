@@ -6,7 +6,7 @@ export async function POST(request) {
 
     if(request.headers.get("content-type").includes("multipart/form-data")){         
        
-      console.log("inside")
+      console.log("inside1")
       
       const data=await request.formData();
       console.log(data)
