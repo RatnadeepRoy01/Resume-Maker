@@ -25,7 +25,7 @@ const Name = ({name}) => {
     }, 2000);
     
     return () => clearInterval(interval);
-  }, []);
+  }, [phrases.length]);
 
   const handleSubmit = () => {
     Router.push(`./ResumaForm?template=${name}`) 

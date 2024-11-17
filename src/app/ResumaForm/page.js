@@ -263,7 +263,7 @@ const ResumeBuilder = () => {
   }
    getUserData();
 
-  },[id,template,reset , userData1 , setFormData1])
+  },[id,template,reset , userData1 , setFormData1 , setTemplateName ])
   
 
   useEffect(()=>{ console.log(formData1,"server");reset(userData1) },[reset,formData1,userData1])
