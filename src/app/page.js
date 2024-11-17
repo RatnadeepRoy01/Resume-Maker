@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState,useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { Check, Mail, Lock, Eye, FileText, PenTool } from 'lucide-react';
-import FAQSection from './FAQ/page';
+import FAQSection from './FAQ/faq';
 import Footer from '@/components/footer';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
