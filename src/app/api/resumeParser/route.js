@@ -14,7 +14,7 @@ export async function POST(request) {
 
     try {
 
-        const response = await fetch("http://parser.api.mybizzz.com/upload",{
+        const response = await fetch(process.env.RESUME_PARSER,{
 
           method:"POST",
           body:data
@@ -38,12 +38,12 @@ export async function POST(request) {
         const data=await request.json();
         console.log("inside server", data)
         try {
-          const url = `https://nubela.co/proxycurl/api/v2/linkedin?url=${encodeURIComponent(data.urlData)}`;
+          const url = `${process.env.LINKEDIN_PARSER}=${encodeURIComponent(data.urlData)}`;
 
           const response = await fetch(url, {
             method:"GET",
               headers: {
-             'Authorization': `Bearer FNEfptqVbGd1-B-CkjXEFA`
+             'Authorization': `Bearer ${process.env.LINKEDIN_BEARER_TOKEN}`
               }
             });
           if(response.ok){

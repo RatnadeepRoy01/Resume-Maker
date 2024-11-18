@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-const uri = "mongodb+srv://Ratnadeep:Ratna%4001@cluster0.za7aq.mongodb.net/userData";
+const uri = process.env.MONGODB_URL;
 let client;
 
 // Function to connect to the database
