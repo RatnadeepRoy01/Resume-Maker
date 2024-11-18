@@ -17,7 +17,7 @@ const SelectTemplate = () => {
    Select template
   </p>
 
-    <div className='flex md:flex-wrap flex-col md:grid md:grid-cols-2 space-x-2  '>
+    <div className='grid grid-cols-2 space-x-2  '>
       {
     TemplateData.map((template,index)=>{ 
 
@@ -28,7 +28,7 @@ const SelectTemplate = () => {
     alt="Resume builder illustration"
     width={500}
     height={500}
-    className="   rounded-lg shadow-lg  my-6 w-[150px] h-[200px]" 
+    className="   rounded-lg shadow-lg  my-6 md:w-[150px] md:h-[200px] w-[120px] h-[160px]" 
     onClick={ ()=>{ 
       
       setSelectTemplate(template)
