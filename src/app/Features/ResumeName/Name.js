@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import MyContext from '@/app/components/Context/MyContext';
 
 const Name = ({name}) => {
   const [text, setText] = useState('');
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const { setTemplateName } = useContext(MyContext)
   const Router = useRouter();
-
+  
   const phrases = [
     "Create your professional resume ✨",
     "Stand out from the crowd 🌟",
@@ -28,6 +30,8 @@ const Name = ({name}) => {
   }, [phrases.length]);
 
   const handleSubmit = () => {
+    setTemplateName(text)
+    console.log(text,"text")
     Router.push(`./ResumaForm?template=${name}`) 
   };
 

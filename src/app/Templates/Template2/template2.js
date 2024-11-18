@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState , useRef , useContext , useEffect } from "react";
-import html2pdf from "html2pdf.js";
 import Button from "@/app/components/Button/button";
 import PersonalInfo from "@/app/TemplateComponent/personalInfo/personalInfo";
 import Education from "@/app/TemplateComponent/Education/education";
@@ -47,17 +46,7 @@ export default function Template1({ getValues, preview  }) {
   const pdfRef = useRef();
   const styles = StylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )
 
-  const generatePDF = () => {
-    const options = {
-      margin: 0,
-      filename: "my-document.pdf",
-      image: { type: "pdf", quality: 0.5 },
-      html2canvas: { scale: 1 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-
-    html2pdf().from(pdfRef.current).set(options).save();
-  };
+  
 
   const {
     personalInfo,
@@ -149,7 +138,7 @@ export default function Template1({ getValues, preview  }) {
       
        </A4ResumeWrapper>
        </div>
-       {!preview && <div onClick={generatePDF}><Button /></div>}
+       {!preview && <div ><Button pdfRef={pdfRef}/></div>}
     </>
   );
 }

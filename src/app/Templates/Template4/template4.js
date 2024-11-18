@@ -1,6 +1,5 @@
 "use client";
 import React, { useState , useRef , useContext , useEffect } from "react";
-import html2pdf from "html2pdf.js";
 import Button from "@/app/components/Button/button";
 import PersonalInfo1 from "@/app/TemplateComponent/personalInfo1/personalinfo1";
 import Education from "@/app/TemplateComponent/Education/education";
@@ -109,18 +108,6 @@ export default function Template1({ getValues, preview , save }) {
 
   const pdfRef = useRef();
   const styles = StylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )
-   console.log("styledata",styles)
-  const generatePDF = () => {
-    const options = {
-      margin: 0,
-      filename: "my-document.pdf",
-      image: { type: "pdf", quality: 1 },
-      html2canvas: { scale: 3 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-
-    html2pdf().from(pdfRef.current).set(options).save();
-  };
 
   const {
     personalInfo,
@@ -137,7 +124,7 @@ export default function Template1({ getValues, preview , save }) {
     awards,
   } = getValues;
 
-
+  
   return (
     <>
     
@@ -145,18 +132,18 @@ export default function Template1({ getValues, preview , save }) {
     <A4ResumeWrapper   >
       <div style={{ width:"210mm" , height:"297mm" }} ref={pdfRef} >
       <div className={styles.document}   >
-        <div className={`${styles.page} flex flex-col` } style={{ fontFamily:fontFamily }}   >
+        <div className={`${styles.page} flex flex-col p-5 ` } style={{ fontFamily:fontFamily , backgroundColor:primaryColor , color:textColor , padding:margin  }}   >
           <div className ="w-full" style={{backgroundColor:primaryColor ,padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
              <div className="text-white absolute ">{showPageNumbers && <p>Page:1</p>}</div>
             {/* Personal Info */}
-            <PersonalInfo1 personalInfo={personalInfo} styles={styles} fontSubset={fontSubset} /> 
+            <PersonalInfo1 personalInfo={personalInfo} styles={styles} fontSubset={fontSubset} stylesExtra = {{ backgroundColor:primaryColor  ,color:textColor  }} /> 
         <div>
           
         </div>
          </div>
           
 
-          <div className="w-full px-4" style={{backgroundColor:backgroundColor , color:textColor , padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
+          <div style={{ display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
             
 
             {/* Work Experience */}
@@ -217,7 +204,7 @@ export default function Template1({ getValues, preview , save }) {
       
        </A4ResumeWrapper>
        </div>
-       {!preview && <div onClick={generatePDF}><Button /></div>}
+       {!preview && <div ><Button pdfRef={pdfRef} /></div>}
     </>
   );
 }

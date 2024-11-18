@@ -2,16 +2,16 @@
 import React, { useContext } from "react";
 import MyContext from "@/app/components/Context/MyContext";
 
-export default function PersonalInfo({ personalInfo,styles }) {
+export default function PersonalInfo({ personalInfo,styles,Zindex }) {
   
   const{ profilePic } = useContext(MyContext)
 
   return ( 
-  <div>
+  <div style={{zIndex:Zindex}} >
            
           {profilePic && (
         <div
-         className={`w-[200px] h-[200px] overflow-hidden bg-cover bg-center ${styles.image}`}
+         className={`w-[200px] h-[200px] overflow-hidden bg-cover bg-center ${styles.image} `}
          style={{
          backgroundImage: profilePic ? `url(${profilePic})` : 'none' // Dynamically set the background image
       }}

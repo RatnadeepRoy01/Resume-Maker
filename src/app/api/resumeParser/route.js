@@ -30,7 +30,7 @@ export async function POST(request) {
       
       } catch (error) {
         console.error('Error:', error);
-        return NextResponse.json({state:"Failed"},{status:404})
+        return NextResponse.json({state:"Failed"},{status:504})
       }
     }else{
          

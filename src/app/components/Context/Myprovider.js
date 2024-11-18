@@ -35,12 +35,14 @@ const MyProvider = ({ children }) => {
 
     //Template Name
     const[templeName , setTemplateName] = useState(null)
-
+    
+    //customize Template
+    const[selectTemplate , setSelectTemplate] = useState(null)
   return (
     <MyContext.Provider value={{format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
       primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
       fontVariant, setFontVariant , fontSize, setFontSize , lineHeight, setLineHeight , hideIcons, setHideIcons , underlineLinks, setUnderlineLinks,
-      isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1 ,  templeName ,  setTemplateName      
+      isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1 ,  templeName ,  setTemplateName  , selectTemplate , setSelectTemplate    
     }} >
       {children}
     </MyContext.Provider>

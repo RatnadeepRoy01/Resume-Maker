@@ -1,6 +1,5 @@
 "use client";
 import React, { useState , useRef , useContext , useEffect } from "react";
-import html2pdf from "html2pdf.js";
 import Button from "@/app/components/Button/button";
 import PersonalInfo from "@/app/TemplateComponent/personalInfo/personalInfo";
 import Education from "@/app/TemplateComponent/Education/education";
@@ -102,7 +101,7 @@ export default function Template3({ getValues, preview , save }) {
 
   useEffect(()=>{
 
-    setPrimaryColor("inherit");
+    setPrimaryColor("#2596be");
     setBackgroundColor("inherit");
     setTextColor("inherit")  
 
@@ -110,18 +109,6 @@ export default function Template3({ getValues, preview , save }) {
 
   const pdfRef = useRef();
   const styles = StylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )
-   console.log("styledata",styles)
-  const generatePDF = () => {
-    const options = {
-      margin: 0,
-      filename: "my-document.pdf",
-      image: { type: "pdf", quality: 1 },
-      html2canvas: { scale: 3 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-
-    html2pdf().from(pdfRef.current).set(options).save();
-  };
 
   const {
     personalInfo,
@@ -146,13 +133,19 @@ export default function Template3({ getValues, preview , save }) {
     <A4ResumeWrapper   >
       <div style={{ width:"210mm" , height:"297mm" }} ref={pdfRef} >
       <div className={`${styles.document}`}   >
-        <div className="w-full h-[100px] bg-[#2596be] absolute z-[-10] text-white"></div>
-        <div className={styles.page } style={{ fontFamily:fontFamily }}   >
-          <div className = {styles.sidebar} style={{backgroundColor:primaryColor ,padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem`,color:"black" }}>
+        <div className="w-full h-[100px] bg-[#2596be] absolute z-[30] text-white flex" style={{backgroundColor:primaryColor }} >
+      
+        <div className={ `${styles.main} w-[2/3]  ml-[33%] ` }>
+        <p className={styles.name.name} style={{fontSize:styles.name.nameStyle ,color:"white"}}>{personalInfo.fullName}</p>
+        <p className={styles.title.title} style={{fontSize:styles.title.tileStyle,color:"white"}}>{personalInfo.headline}</p>
+        </div>
+        </div>
+        <div className={ styles.page } style={{ fontFamily:fontFamily }}   >
+          <div className = {styles.sidebar} style={{ backgroundColor:backgroundColor , padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem`,color:textColor }}>
              <div className="text-white absolute ">{showPageNumbers && <p>Page:1</p>}</div>
             {/* Personal Info */}
             
-            <PersonalInfo personalInfo={personalInfo} styles={styles} /> 
+            <PersonalInfo personalInfo={personalInfo} styles={styles} Zindex={40} /> 
             
             {/* Education */}
            { education?.length>0 && <Education education={education} styles={styles} /> }
@@ -168,11 +161,10 @@ export default function Template3({ getValues, preview , save }) {
           </div>
           
 
-          <div className={styles.main} style={{backgroundColor:backgroundColor , color:textColor , padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
+          <div className={`${styles.main} pt-[100px] `} style={{backgroundColor:backgroundColor , color:textColor , padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
            
-           <div className="flex flex-col break-words">
-            <p className={styles.name.name} style={{fontSize:styles.name.nameStyle ,color:"white"}}>{personalInfo.fullName}</p>
-            <p className={styles.title.title} style={{fontSize:styles.title.tileStyle,color:"white"}}>{personalInfo.headline}</p>
+           <div className="flex flex-col break-words "  >
+           
             <div className={styles.text.text} style={{fontSize:styles.text.textStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
             </div>
 
@@ -218,7 +210,7 @@ export default function Template3({ getValues, preview , save }) {
       
        </A4ResumeWrapper>
        </div>
-       {!preview && <div onClick={generatePDF}><Button /></div>}
+       {!preview && <div ><Button pdfRef={pdfRef} /></div>}
     </>
   );
 }

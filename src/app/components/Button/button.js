@@ -1,11 +1,31 @@
 "use client"
 import React from 'react'
+import html2pdf from "html2pdf.js";
+import MyContext from '../Context/MyContext';
+import { useContext } from "react";
 
-const Button = () => {
+ const generatePDF = (pdfRef,templateName) => {
+    const options = {
+      margin: 0,
+      filename: templateName,
+      image: { type: "pdf", quality: 1 },
+      html2canvas: { scale: 3 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+
+    html2pdf().from(pdfRef.current).set(options).save();
+  };
+
+const Button = ({pdfRef}) => {
+
+ const {templeName} = useContext(MyContext)
+ console.log(templeName)
+
   return (
     <div>
       <button 
   className="fixed h-20 w-20 right-4 bottom-4 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-transform duration-300 ease-in-out flex items-center justify-center"
+  onClick= {()=>{generatePDF(pdfRef , templeName)}}
 >
   <span className="relative">
     <svg 

@@ -24,6 +24,7 @@ import { set , get } from "idb-keyval"
 import { useSearchParams } from "next/navigation";
 import MyContext from "../components/Context/MyContext";
 
+
 // Zod Schema for form validation
 
 const schema = z.object({
@@ -145,11 +146,10 @@ const schema = z.object({
 
 const ResumeBuilder = () => {
 
-  const{ setIsOpen , userData1 , setTemplateName } = useContext(MyContext);
+  const{ setIsOpen , userData1 , setTemplateName , selectTemplate , setSelectTemplate} = useContext(MyContext);
   const searchParams = useSearchParams();
-   const template = searchParams.get('template');
-     const id = searchParams.get("id");  
-   //const template = "Template1"
+  const template = searchParams.get('template');
+  const id = searchParams.get("id");  
 
   const initialFormData = {
     personalInfo: {
@@ -245,10 +245,17 @@ const ResumeBuilder = () => {
 
   useEffect(()=>{
 
+   
+    setSelectTemplate(template)
+   
+
+  },[setSelectTemplate])
+
+  useEffect(()=>{
+
     const getUserData = async() =>{
    if(template && id){
- 
-    setTemplateName(template)
+      //to retrive resume form database
       const Data = await get(id);
       console.log(Data,"aaaaaaa")
       reset(Data)   
@@ -256,6 +263,7 @@ const ResumeBuilder = () => {
 
    }else if(userData1){
 
+      //to set deafult value for rhf when used linkedin and resume parser
     console.log("userData12:-",userData1)
     setFormData1(userData1) 
    }
@@ -277,20 +285,23 @@ const ResumeBuilder = () => {
 
   if(id){
  
+    //for updating the already made resume
       response = await postData({data,updateData:id},url);
       data.key = id;
       IdData = id;
       updateData = true;
-
+      
+      
     }
  else {
    
+  //for first time submit
     const uniqueId=  `${template}@`+Math.random().toString(36).slice(2,12);
     data.key = uniqueId;
     console.log("dataInside:-",data)
     response= await postData(data,url)
     IdData = uniqueId;
-
+    
   }
    if(response.state == "success"){
     
@@ -323,7 +334,7 @@ removePublication(0);
     
     <div className=" flex md:flex-row-reverse flex-col h-screen w-screen " >
       <div className="fixed h-[110vh]  z-10 top-2 left-2 "><SettingsPage/></div>
-    <div className="h-full w-full md:w-[50%]  overflow-y-auto md:fixed " onClick={()=>{setIsOpen(false) , setOpen(false) }}> <ResumeTemplate getValues={watch()} template={template} save={save}/> </div>
+    <div className="h-full w-full md:w-[50%]  overflow-y-auto md:fixed " onClick={()=>{setIsOpen(false) , setOpen(false) }}> <ResumeTemplate getValues={watch()} template={selectTemplate} save={save} /> </div>
   
     
 
