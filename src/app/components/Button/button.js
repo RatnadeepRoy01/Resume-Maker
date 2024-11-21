@@ -7,7 +7,7 @@ import { useContext } from "react";
  const generatePDF = (pdfRef,templateName) => {
     const options = {
       margin: 0,
-      filename: templateName,
+      filename: "Mydocument",
       image: { type: "pdf", quality: 1 },
       html2canvas: { scale: 3 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },

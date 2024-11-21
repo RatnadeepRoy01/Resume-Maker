@@ -7,14 +7,16 @@ import Footer from '@/components/footer';
 import LoadingProgress from '@/components/loading';
 import MyContext from '../components/Context/MyContext';
 import { useSearchParams } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 const SelectTemplate = () => {
-  
+
   const[ displayName  , setDisplayName ] = useState(null)
   const [showLoading, setShowLoading] = useState(true);
   const { userData1 } = useContext(MyContext);
   const TemplateData = [ "Template1" , "Template2" , "Template3" , "Template4" ];
   
+  const Router = useRouter();
   const searchParams = useSearchParams();
   const Parser = searchParams.get('parser');
   useEffect(() => {
@@ -59,7 +61,7 @@ const SelectTemplate = () => {
     className="  w-[400px] h-[500px] rounded-lg shadow-lg mx-2 my-6 hover:cursor-pointer" 
     onClick={ ()=>{ 
       
-      setDisplayName(template)
+      Router.push(`./ResumaForm?template=${template}`)
   } }
     />
     </div>
