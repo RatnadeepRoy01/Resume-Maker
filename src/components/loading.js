@@ -123,15 +123,15 @@ const LoadingProgress = ({loaded}) => {
     <div className="flex items-center justify-center min-h-screen  p-4">
       <div className="bg-white rounded-2xl p-4 flex flex-col items-center w-full max-w-4xl">
         {/* Image at the top */}
-        <div className="mb-6">
-       <Image
-          src="/hire22.webp"
-          alt="Top Placeholder"
-          width={500} 
-          height={500} 
-       className="w-full max-w-sm mx-auto"
-       />
-     </div>
+        <div className="mb-6 w-[60%] md:w-[30%]  ">
+             <Image
+             src="/hire22.webp"
+             alt="Top Placeholder"
+             width={500} 
+             height={500} 
+
+            />
+        </div>
 
         {/* Icon and Progress Bar */}
         <div className="flex  w-full ">
