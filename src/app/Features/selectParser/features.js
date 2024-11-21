@@ -7,7 +7,6 @@ import MyContext from "@/app/components/Context/MyContext";
 import { useRouter } from "next/navigation";
 import { postData } from "@/app/function/postData";
 
-
 const SelectParser = () => {
   const [file, setFile] = useState(null); // State to hold the uploaded file
   const[show,setShow] = useState(false)
@@ -35,10 +34,12 @@ const SelectParser = () => {
       obj.personalInfo = personalInfo;
       return obj;
     }
-
-    const filteredData = await collectPersonalInfo(response)
+   
+    if(response.state == "success" ){
+   const filteredData = await collectPersonalInfo(response)
+    
      setUserData1(filteredData)
-
+    }
   }
 
   const options = [
@@ -88,7 +89,8 @@ const SelectParser = () => {
 
   const handleFileChange = async (event) => {
     
-     Router.push("./SelectTemplate")
+    setUserData1(null);
+    Router.push("./SelectTemplate?parser=resumeParser")
 
     const selectedFile = event.target.files[0];
 
@@ -109,6 +111,8 @@ const SelectParser = () => {
         const response1 = await response.json();
        
         const data = await getUserData(response1);
+
+         
 
         function collectPersonalInfo(obj) {
           const personalInfo = {};

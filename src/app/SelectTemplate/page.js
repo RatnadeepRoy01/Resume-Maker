@@ -1,18 +1,36 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useContext , useState , useEffect, Suspense } from 'react'
 import Name from '../Features/ResumeName/Name';
 import Image from 'next/image';
 import Footer from '@/components/footer';
+import LoadingProgress from '@/components/loading';
+import MyContext from '../components/Context/MyContext';
+import { useSearchParams } from "next/navigation";
 
 const SelectTemplate = () => {
-
+  
   const[ displayName  , setDisplayName ] = useState(null)
+  const [showLoading, setShowLoading] = useState(true);
+  const { userData1 } = useContext(MyContext);
   const TemplateData = [ "Template1" , "Template2" , "Template3" , "Template4" ];
   
+  const searchParams = useSearchParams();
+  const Parser = searchParams.get('parser');
+  useEffect(() => {
+    if (userData1) {
+      const timer = setTimeout(() => {
+        setShowLoading(false); 
+      }, 400); 
+
+      return () => clearTimeout(timer);
+    }
+  }, [userData1]);
+
 
   return (
     <>
+    { Parser == "resumeParser" && showLoading ? <LoadingProgress loaded={userData1} /> : <div>
     { displayName && <div className='flex w-screen justify-center h-screen  items-center fixed ' > <Name name={displayName} /> </div>}
     <div className='flex flex-col md:px-20 px-8 bg-gray-100 ' >
     <div className="mt-8">
@@ -54,8 +72,18 @@ const SelectTemplate = () => {
 
     </div>
     <Footer/>
+    </div>
+    }
     </>
   )
 }
 
-export default SelectTemplate;
+const Select = () => {
+  return (
+    <Suspense fallback={<div>You are being redirected...</div>}>
+      <SelectTemplate/>
+    </Suspense>
+  );
+};
+
+export default Select;

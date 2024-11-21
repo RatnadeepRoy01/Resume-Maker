@@ -14,10 +14,7 @@ export const postData = async(data,url) =>{
           body: JSON.stringify(data),
         });
     
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Request failed with status ${response.status}: ${errorText}`);
-        }
+        
     
         const responseData = await response.json();
         console.log('Success:', responseData);

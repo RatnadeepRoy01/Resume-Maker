@@ -51,12 +51,12 @@ export async function POST(request) {
             const responseJSON = await response.json()
             
             const responseData = await getUserData(responseJSON,"linkedin")
-            return NextResponse.json(responseData,{status:200})
+            return NextResponse.json(responseData,{status:200},{state:"success"})
           }
-          console.log(response)
+          
           return NextResponse.json({state:"Failed"},{status:500})
         } catch (error) {
-         return NextResponse.json({ message: 'Failed to fetch LinkedIn data', error: error.message } , {status:200});
+         return NextResponse.json({ message: 'Failed to fetch LinkedIn data', error: error.message } , {status:500});
         }
 
     }

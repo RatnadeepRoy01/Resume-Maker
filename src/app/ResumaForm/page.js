@@ -249,7 +249,7 @@ const ResumeBuilder = () => {
     setSelectTemplate(template)
    
 
-  },[setSelectTemplate])
+  },[setSelectTemplate , template ])
 
   useEffect(()=>{
 
