@@ -35,13 +35,13 @@ const LoadingProgress = ({loaded}) => {
   const [status, setStatus] = useState("loading");
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [currentIconIndex, setCurrentIconIndex] = useState(0);
-  const [ warningTime , setWarningTime ] = useState(20000)
-  const [  retryTime , setRetryTime ] = useState(25000)   
+  const [ warningTime , setWarningTime ] = useState(40000)
+  const [  retryTime , setRetryTime ] = useState(45000)   
   const Router = useRouter();
   useEffect(()=>{ if(loaded?.personalInfo ) { setWarningTime(35000) ; setRetryTime(35000) ; setProgress(100) } },[loaded])
 
   useEffect(() => {
-    const maxDuration = 30000; // 30 seconds
+    const maxDuration = 50000; // 30 seconds
 
     // Progress Interval
     const progressInterval = setInterval(() => {

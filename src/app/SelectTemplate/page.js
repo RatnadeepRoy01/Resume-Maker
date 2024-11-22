@@ -32,7 +32,8 @@ const SelectTemplate = () => {
 
   return (
     <>
-    { Parser == "resumeParser" && showLoading ? <LoadingProgress loaded={userData1} /> : <div>
+    { Parser == "resumeParser" && showLoading && <LoadingProgress loaded={userData1} />}  
+    {!showLoading && <div>
     { displayName && <div className='flex w-screen justify-center h-screen  items-center fixed ' > <Name name={displayName} /> </div>}
     <div className='flex flex-col md:px-20 px-8 bg-gray-100 ' >
     <div className="mt-8">
