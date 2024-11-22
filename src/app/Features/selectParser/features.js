@@ -35,11 +35,11 @@ const SelectParser = () => {
       return obj;
     }
    
-    if(response.state == "success" ){
+    
    const filteredData = await collectPersonalInfo(response)
     
      setUserData1(filteredData)
-    }
+    
   }
 
   const options = [
