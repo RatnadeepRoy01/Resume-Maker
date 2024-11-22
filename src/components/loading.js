@@ -38,7 +38,7 @@ const LoadingProgress = ({loaded}) => {
   const [ warningTime , setWarningTime ] = useState(20000)
   const [  retryTime , setRetryTime ] = useState(25000)   
   const Router = useRouter();
-  useEffect(()=>{ if(loaded?.personalInfo ) { setWarningTime(35000) ; setRetryTime(35000) ; setProgress(100) } },[loaded])
+  useEffect(()=>{ if(loaded ) { setWarningTime(35000) ; setRetryTime(35000) ; setProgress(100) } },[loaded])
 
   useEffect(() => {
     const maxDuration = 30000; // 30 seconds
