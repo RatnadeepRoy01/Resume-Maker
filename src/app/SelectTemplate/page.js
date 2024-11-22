@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 const SelectTemplate = () => {
 
   const[ displayName  , setDisplayName ] = useState(null)
-  const [showLoading, setShowLoading] = useState(true);
+  const [showLoading, setShowLoading] = useState(false);
   const { userData1 } = useContext(MyContext);
   const TemplateData = [ "Template1" , "Template2" , "Template3" , "Template4" ];
   
@@ -27,13 +27,17 @@ const SelectTemplate = () => {
 
       return () => clearTimeout(timer);
     }
-  }, [userData1]);
+
+    else if(Parser == "resumeParser"){
+      setShowLoading(true)
+    }
+  }, [userData1,Parser]);
 
 
   return (
     <>
-    { Parser == "resumeParser" && showLoading && <LoadingProgress loaded={userData1} />}  
-    {!showLoading && <div>
+    { showLoading ? <LoadingProgress loaded={userData1} />:  
+      <div>
     { displayName && <div className='flex w-screen justify-center h-screen  items-center fixed ' > <Name name={displayName} /> </div>}
     <div className='flex flex-col md:px-20 px-8 bg-gray-100 ' >
     <div className="mt-8">
