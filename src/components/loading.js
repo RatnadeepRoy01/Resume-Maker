@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import "../style.css"
 import {
   Diamond,
   Star,
@@ -121,20 +121,25 @@ const LoadingProgress = ({loaded}) => {
 
   return (
     <div className="flex items-center justify-center min-h-screen  p-4">
-      <div className="bg-white rounded-2xl p-4 flex flex-col items-center w-full max-w-4xl">
+      <div className="bg-white rounded-2xl p-4 flex flex-col items-center w-full max-w-4xl ">
         {/* Image at the top */}
         <div className="mb-6 w-[60%] md:w-[30%]  ">
-             <Image
-             src="/hire22.webp"
-             alt="Top Placeholder"
-             width={500} 
-             height={500} 
+          
+           <div className="wrapper">
+    <div className="box-wrap">
+        <div className="box one"></div>
+        <div className="box two"></div>
+        <div className="box three"></div>
+        <div className="box four"></div>
+        <div className="box five"></div>
+        <div className="box six"></div>
+    </div>
+</div>
 
-            />
         </div>
 
         {/* Icon and Progress Bar */}
-        <div className="flex  w-full ">
+        <div className="flex w-full relative top-28">
           {/* Icon at the left */}
           <div className="mr-4 ">
             <CurrentIcon className="text-purple-600" size={32} />
@@ -155,9 +160,12 @@ const LoadingProgress = ({loaded}) => {
             </div>
 
             <div className="text-center text-gray-700 font-medium">
+             
+           
+
               <motion.p
                 key={currentTextIndex}
-                className="text-lg"
+                className="text-lg "
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -165,9 +173,11 @@ const LoadingProgress = ({loaded}) => {
               >
                 {animatedTexts[currentTextIndex]}
               </motion.p>
+             
               <p className="text-sm text-gray-500 mt-2">
                 {Math.floor(progress)}% Completed
               </p>
+
             </div>
 
             {status === "warning" && (
