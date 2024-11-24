@@ -1,14 +1,28 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useRouter } from 'next/navigation';
 import MyContext from '@/app/components/Context/MyContext';
+import { useSession } from "next-auth/react";
+import SignIn from '@/app/TwoStepSignin/page';
+const Name = () => {
+  
+  const {showComponent , setShowComponent} = useContext(MyContext)
 
-const Name = ({name}) => {
+  const{data: session}=useSession({
+
+         required:true,
+         refetchInterval: 0,
+         onUnauthenticated(){
+         setShowComponent(true)
+
+    }})
+
+
+
   const [text, setText] = useState('');
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const { setTemplateName } = useContext(MyContext)
-  const Router = useRouter();
-  
+    
+    
   const phrases = [
     "Create your professional resume ✨",
     "Stand out from the crowd 🌟",
@@ -32,10 +46,12 @@ const Name = ({name}) => {
   const handleSubmit = () => {
     setTemplateName(text)
     console.log(text,"text")
-    Router.push(`./ResumaForm?template=${name}`) 
+   // Router.push(`./ResumaForm?template=${name}`) 
   };
 
   return (
+    <>
+    { showComponent ? < SignIn fromName = { true }/> : 
     <div className="flex flex-col items-center justify-center min-h-[400px] md:w-[50%] bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-4 md:p-12 rounded-xl shadow-2xl">
       <div className="w-full md:w-3/4 lg:w-2/3 xl:w-1/2 max-w-4xl space-y-8">
         <div className="text-center mb-8">
@@ -97,6 +113,8 @@ const Name = ({name}) => {
         </button>
       </div>
     </div>
+          }
+        </>  
   );
 };
 

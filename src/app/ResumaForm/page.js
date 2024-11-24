@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect , useContext, useState , Suspense } from "react";
+import React, { useEffect , useContext, useState , Suspense, useRef, useCallback } from "react";
 import { Menu , X } from 'lucide-react';
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,11 +19,12 @@ import CertificationsComponent from "../components/Certifications/certification"
 import AwardsComponent from "../components/Awards/awards";
 import ResumeTemplate from "../ResumeTemplates/page";
 import SettingsPage from "../customizeResume/page";
+import Name from "../Features/ResumeName/Name";
 import { postData } from "../function/postData";
 import { set , get } from "idb-keyval"
 import { useSearchParams } from "next/navigation";
 import MyContext from "../components/Context/MyContext";
-
+import { useSession } from "next-auth/react";
 
 // Zod Schema for form validation
 
@@ -146,11 +147,23 @@ const schema = z.object({
 
 const ResumeBuilder = () => {
 
+
+  const{data: session , status }=useSession({
+
+    required:true,
+    refetchInterval: 0,
+    onUnauthenticated(){
+
+}})
+ console.log(status,"status here")
+ 
   const{ setIsOpen , userData1 , setTemplateName , selectTemplate , setSelectTemplate} = useContext(MyContext);
   const searchParams = useSearchParams();
   const template = searchParams.get('template');
   const id = searchParams.get("id");  
+ 
 
+ 
   const initialFormData = {
     personalInfo: {
       fullName: "",
@@ -242,13 +255,15 @@ const ResumeBuilder = () => {
 
   const [Open,setOpen] = useState(false)
   const [save,setSave] = useState(null)
+  const[show,setShow] = useState(false)
+  const [ Error , setError ] = useState(Object.keys(errors).length === 0,)
+  const [ tempData , setTempData ] = useState(null)
+  
 
-  useEffect(()=>{
+  useEffect(()=>{ setError( Object.keys(errors).length === 0, ) },[errors])
 
-   
-    setSelectTemplate(template)
-   
-
+  useEffect(()=>{  
+  setSelectTemplate(template)
   },[setSelectTemplate , template ])
 
   useEffect(()=>{
@@ -276,8 +291,17 @@ const ResumeBuilder = () => {
 
   useEffect(()=>{ console.log(formData1,"server");reset(userData1) },[reset,formData1,userData1])
   
-  const onSubmit = async(data) => {
+  
+  const onSubmit = useCallback(async(data) => {
     
+    if( status != "authenticated") 
+    {
+    
+      setTempData(data)
+      return ;
+    
+    }
+
     const url="../api/insertData"
     let response;
     let IdData;
@@ -310,7 +334,9 @@ const ResumeBuilder = () => {
     })
     setSave({IdData , updateData})
   }
-};
+},[status , id , template ]);
+
+useEffect(()=>{ if(show && Error ) { onSubmit(tempData) }},[ status , onSubmit , show , Error , tempData ])
 
 useEffect(()=>{
 removeEducation(0);
@@ -333,7 +359,8 @@ removePublication(0);
   return (
     
     <div className=" flex md:flex-row-reverse flex-col h-screen w-screen " >
-      <div className="fixed h-[110vh]  z-10 top-2 left-2 "><SettingsPage/></div>
+     { show && Error && <div className="z-40 w-screen fixed h-screen flex justify-center items-center"><Name/></div> }
+    <div className="fixed h-[110vh]  z-10 top-2 left-2 "><SettingsPage/></div>
     <div className="h-full w-full md:w-[50%]  overflow-y-auto md:fixed " onClick={()=>{setIsOpen(false) , setOpen(false) }}> <ResumeTemplate getValues={watch()} template={selectTemplate} save={save} /> </div>
   
     
@@ -508,7 +535,6 @@ removePublication(0);
           >
             + Add Volunteering
           </button>
-        </div>
 
         {/* References Section */}
         <div>
@@ -627,14 +653,21 @@ removePublication(0);
 
         {/* Submit Button */}
        <button
-          type="submit"
-          className="bg-green-500 text-white py-2 px-6 rounded-md mt-8"
-        >
+          type="submit"  
+          className="bg-green-500 text-white py-2 px-6 rounded-md mt-8 flex justify-center"
+          onClick={()=>{   setShow( true ) }} 
+       >
           Submit
         </button>
+
+      
+          
+        </div>
+
+
       </form>
     </div>
-    </div>
+    </div> 
 
       {/* Semi-transparent overlay - only shows when menu is open */}
       {Open && (

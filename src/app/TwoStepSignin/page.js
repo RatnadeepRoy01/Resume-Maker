@@ -1,35 +1,51 @@
-
-
 "use client";
 
-import { useState } from "react";
+import { useState , useEffect, useContext } from "react";
 import { signIn } from "next-auth/react";
 import CryptoJS from "crypto-js";
-import Image from "next/image"; // Import Image from next/image for optimized image loading
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import MyContext from "../components/Context/MyContext";
+import dynamic from "next/dynamic";
 
-export default function SignIn() {
+export default function SignIn({fromName}) {
   const [email, setEmail] = useState("");
   const [verificationCode, setVerificationCode] = useState("");
   const [password, setPassword] = useState("");
-  const [step, setStep] = useState(1); // Track the step in the process
-
+  const [step, setStep] = useState(1);
+  const [error , setError ] =useState(null);
+  const { showComponent1 , setShowComponent1 , setShowComponent } = useContext(MyContext)
+  const Router = useRouter();
   const SECRET_KEY = process.env.NEXT_PUBLIC_SECRET_KEY;
+  const [DynamicSignIn, setDynamicSignIn] = useState(null);
+
+  useEffect(() => {
+    if (showComponent1 && !DynamicSignIn) {
+     
+      const loadComponent = async () => {
+        const Component = dynamic(() => import('@/app/Login/page'), {
+          loading: () => <p>Loading Sign In...</p>,
+          ssr: false,
+        });
+        setDynamicSignIn(() => Component);
+      };
+      loadComponent();
+    }
+  }, [showComponent1, DynamicSignIn]);
+
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch("/api/send-verification", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
     });
 
     if (res.ok) {
       const data = await res.json();
-      // Store the encrypted code in local storage
       localStorage.setItem(email, data.encryptedCode);
-      setStep(2); // Move to the next step
+      setStep(2);
     }
   };
 
@@ -39,7 +55,7 @@ export default function SignIn() {
     const decryptedCode = CryptoJS.AES.decrypt(storedCode, SECRET_KEY).toString(CryptoJS.enc.Utf8);
 
     if (decryptedCode === verificationCode) {
-      setStep(3); // Move to password entry
+      setStep(3);
     } else {
       alert("Invalid verification code");
     }
@@ -47,120 +63,196 @@ export default function SignIn() {
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
+    
     const res = await signIn("credentials", {
       redirect: false,
       email,
       password,
+      type:"signin"
     });
-
-    if (res.ok) {
-      window.location.href = "/";
+    if (res.error) {
+       setError("User already exist")
+    
     } else {
-      alert("Invalid credentials");
+      if(fromName)
+      setShowComponent(false)
+    else
+      window.location.href = "/";
     }
+
   };
 
   return (
-    <div className=" fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-70 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-96 overflow-hidden transform transition-all duration-500 scale-95 hover:scale-100">
-        <div className="p-6 space-y-6">
-          
-           {/* Step Indicator */}
-           <div className="flex justify-center space-x-2 mb-4">
+    <>
+    {showComponent1 ? DynamicSignIn && < DynamicSignIn fromName = { true }/> : 
+    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br bg-black">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-white/10 rounded-full blur-xl animate-pulse delay-700"></div>
+        <div className="absolute top-1/2 left-1/2 w-36 h-36 bg-white/10 rounded-full blur-xl animate-pulse delay-500"></div>
+      </div>
+
+      <div className="relative w-96 bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden border border-white/20">
+        <div className="p-8 space-y-6">
+          {/* Animated Progress Bar */}
+          <div className="relative h-1 bg-white/20 rounded-full overflow-hidden mb-8">
+            <div 
+              className="absolute h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-500 ease-out"
+              style={{ width: `${(step / 3) * 100}%` }}
+            ></div>
+          </div>
+
+          {/* Step Indicators */}
+          <div className="flex justify-center space-x-4 mb-8">
             {[1, 2, 3].map((dot) => (
               <div
                 key={dot}
-                className={`h-2 w-2 bg-gray-400 rounded-full transition-all duration-300 ${
-                  step === dot ? 'h-3 w-3 bg-blue-500' : ''
-                }`}
-              ></div>
+                className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300
+                  ${step === dot 
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white scale-110' 
+                    : 'bg-white/20 text-white/60'
+                  }`}
+              >
+                {dot}
+              </div>
             ))}
           </div>
 
-
-          {/* Step 1: Email Input */}
+          {/* Step 1: Email */}
           {step === 1 && (
-            <div className="transition-transform duration-500 ease-in-out transform opacity-100">
-              <h2 className="text-2xl font-bold text-center text-gray-700">Enter Your Email</h2>
-              <form onSubmit={handleEmailSubmit} className="mt-4">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className="border border-gray-300 rounded-md p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <button type="submit" className="bg-blue-500 text-white rounded-md px-4 py-2 w-full hover:bg-blue-600 transition duration-300">
-                  Send Verification Code
+            <div className="space-y-6 animate-fadeIn">
+              <h2 className="text-3xl font-bold text-white text-center">Welcome Back</h2>
+              <form onSubmit={handleEmailSubmit} className="space-y-4">
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                    required
+                  />
+                </div>
+                <button 
+                  type="submit"
+                  className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                >
+                  Continue
                 </button>
               </form>
-              
             </div>
           )}
 
-          {/* Step 2: Verification Code Input */}
+          {/* Step 2: Verification */}
           {step === 2 && (
-            <div className="transition-transform duration-500 ease-in-out transform opacity-100">
-              <h2 className="text-2xl font-bold text-center text-gray-700">Verify Your Code</h2>
-              <form onSubmit={handleVerificationSubmit} className="mt-4">
-                <input
-                  type="text"
-                  value={verificationCode}
-                  onChange={(e) => setVerificationCode(e.target.value)}
-                  placeholder="Enter verification code"
-                  className="border border-gray-300 rounded-md p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <button type="submit" className="bg-blue-500 text-white rounded-md px-4 py-2 w-full hover:bg-blue-600 transition duration-300">
+            <div className="space-y-6 animate-fadeIn">
+              <h2 className="text-3xl font-bold text-white text-center">Verify Email</h2>
+              <form onSubmit={handleVerificationSubmit} className="space-y-4">
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value)}
+                    placeholder="Enter verification code"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                    required
+                  />
+                </div>
+                <button 
+                  type="submit"
+                  className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                >
                   Verify Code
                 </button>
               </form>
-             
             </div>
           )}
 
-          {/* Step 3: Password Input */}
+          {/* Step 3: Password */}
           {step === 3 && (
-            <div className="transition-transform duration-500 ease-in-out transform opacity-100">
-              <h2 className="text-2xl font-bold text-center text-gray-700">Enter Your Password</h2>
-              <form onSubmit={handlePasswordSubmit} className="mt-4">
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                  className="border border-gray-300 rounded-md p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <button type="submit" className="bg-blue-500 text-white rounded-md px-4 py-2 w-full hover:bg-blue-600 transition duration-300">
+            <div className="space-y-6 animate-fadeIn">
+              <h2 className="text-3xl font-bold text-white text-center">Enter Password</h2>
+              <form onSubmit={handlePasswordSubmit} className="space-y-4">
+                <div className="relative">
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                    required
+                  />
+                </div>
+                <div className="text-red-500 ">{error && error}</div>
+                <button 
+                  type="submit"
+                  className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg font-medium transform transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                >
                   Sign In
                 </button>
               </form>
-             
             </div>
           )}
 
-       
-
-
-          {/* Logo Section */}
-          <div className="flex flex-col justify-center space-y-2">
-            <button onClick={() => signIn("google")} className="flex items-center border border-gray-300 rounded-md p-2 hover:bg-gray-100 transition duration-300 shadow-lg">
-              <Image src="/Google.webp" alt="Google" width={20} height={20} />
-              <span className="ml-2 text-gray-700">Login with Google</span>
-            </button>
-            <button onClick={() => signIn("github")} className="flex items-center border border-gray-300 rounded-md p-2 hover:bg-gray-100 transition duration-300 shadow-lg">
-              <Image src="/Github.webp" alt="GitHub" width={20} height={20} />
-              <span className="ml-2 text-gray-700">Login with GitHub</span>
-            </button>
+          {/* Social Login Section */}
+         { !fromName &&
+          <div className="mt-8 space-y-4">
+            <div className="relative flex items-center gap-4">
+              <div className="flex-grow border-t border-white/20"></div>
+              <span className="text-white/60 text-sm">Or continue with</span>
+              <div className="flex-grow border-t border-white/20"></div>
+            </div>
+            
+            <div className="space-y-3">
+              <button 
+                onClick={() => signIn("google")} 
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white flex items-center justify-center space-x-3 transform transition-all duration-300 hover:bg-white/20"
+              >
+                <Image src="/Google.webp" alt="Google" width={20} height={20} />
+                <span>Continue with Google</span>
+              </button>
+              
+              <button 
+                onClick={() => signIn("github")} 
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white flex items-center justify-center space-x-3 transform transition-all duration-300 hover:bg-white/20"
+              >
+                <Image src="/Github.webp" alt="GitHub" width={20} height={20} />
+                <span>Continue with GitHub</span>
+              </button>
+            </div>
           </div>
-
-          {step == 1 &&  <p className="text-center text-gray-500 mt-4">Already have an account? <button onClick={() => setStep(1)} className="text-blue-500">Log in</button></p>}
-          {step == 2 &&  <p className="text-center text-gray-500 mt-4">Need help? <span className="text-blue-500 cursor-pointer">Resend Code</span></p>}
-          {step == 3 &&  <p className="text-center text-gray-500 mt-4">Forgot your password? <span className="text-blue-500 cursor-pointer">Reset it</span></p>}
+          }
+          {/* Footer Text */}
+          <div className="text-center text-white/60">
+            {step === 1 && (
+              <p>
+                Already have an account?{' '}
+                <button onClick={() => fromName ? setShowComponent1(true) : Router.push("./Login")} className="text-white hover:text-purple-200 transition-colors">
+                  Log in
+                </button>
+              </p>
+            )}
+            {step === 2 && (
+              <p>
+              Already have an account?{' '}
+              <button onClick={() => fromName ? setShowComponent1(true) : Router.push("./Login")} className="text-white hover:text-purple-200 transition-colors">
+                Log in
+              </button>
+            </p>
+            )}
+            {step === 3 && (
+             <p>
+             Already have an account?{' '}
+             <button onClick={() => fromName ? setShowComponent1(true) : Router.push("./Login")} className="text-white hover:text-purple-200 transition-colors">
+               Log in
+             </button>
+           </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
+    }</>
   );
 }

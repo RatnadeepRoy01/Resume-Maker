@@ -21,21 +21,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "Email", type: "text", placeholder: "suma@gmail.com" },
         password: { label: "Password", type: "password" },
         twoFACode: { label: "2FA Code", type: "text" },
+       type:{label:"type" , type:"text" }
       },
       async authorize(credentials) {
 
-
         const url = "http://localhost:3000/api/getUser";
-        console.log(credentials, "ggggggggggg");
-        const response = await postData(credentials, url);
+          console.log("credentials",credentials)
+        const response = await postData(credentials,url);
         console.log(response,"ffffff")
+
         if (response.email)
         {
          console.log(credentials.email,"dddddddddddd")
           return response;
         }
-          else throw new Error("Invalid password");
+        else if (response.state == "No entry found" ) {
+          throw new Error("No entry found");
+        }
+        else if (response.state == "User already exist" ) {
+          throw new Error("User already exist");
+        }
+        else throw new Error("Invalid password");
       },
+
     }),
   ],
 
@@ -53,11 +61,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const response = await postData(user, url);
 
       if(response.state == "success")
-      return true;
-      else 
-      throw new Error("Invalid")
-      }
-         return true;  
+          return true;
+    }
+    
+    return true;
     },
 
     async jwt({ token, user }) {
@@ -72,6 +79,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
-
   secret: process.env.NEXT_PUBLIC_SECRET_KEY,
 });

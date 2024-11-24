@@ -10,29 +10,38 @@ export async function POST(request){
     let Userdata = await User.findOne({email:credentials.email})
     console.log(Userdata,"userdata")
 
+
 if(credentials.image ){
 
-  try{
-   if(!Userdata){
+  if(!Userdata){
 
+  try{
+  
   await User.insertOne({
     email: credentials.email,
     password: "", 
     image: credentials.image,
   });
-}
   return NextResponse.json({state:"success"} , { status:200 })
+
 }catch(err){
 
   console.log(err);
   return NextResponse.json({state:"failed"} , { status:500 })
 
 }
+
+}else{
+
+  return NextResponse.json({state:"success"} , { status:200 })
+
+}
    
 }
 else{
-  if (!Userdata) {
-  // If user does not exist, create a new user
+  
+  if(!Userdata && credentials.type == "signin"){
+
    const data = await User.insertOne({
     email: credentials.email,
     password: credentials.password, // Hash this password before saving
@@ -41,14 +50,25 @@ else{
   const userData = { id:data.insertedId , email:credentials.email }
   return NextResponse.json( userData , { status:200 })
  
-} else {
-  // User exists, verify password (should be hashed)
-  const isPasswordValid = Userdata.password === credentials.password; // Replace with proper hash check
-  if (!isPasswordValid) {
-    return NextResponse.json({state:"Invalid Password"} , { status:404 })
-  }
-  return NextResponse.json(Userdata , { status:200 })
-}
+  }else if( Userdata && credentials.type == "login" ){
 
+    const isPasswordValid = Userdata.password === credentials.password; 
+    if (!isPasswordValid) {
+
+      return NextResponse.json({state:"Invalid Password"} , { status:401 })
+    }
+    return NextResponse.json(Userdata , { status:200 })
+
+  }
+  else if(Userdata && credentials.type == "signin"){
+
+    return NextResponse.json({state:"User already exist"} , { status:404 })
+
+  }
+  else{
+
+    return NextResponse.json({state:"No entry found"} , { status:404 })
+
+  }
 }
 }

@@ -38,11 +38,19 @@ const MyProvider = ({ children }) => {
     
     //customize Template
     const[selectTemplate , setSelectTemplate] = useState(null)
+
+    //show Login 
+    const [showComponent, setShowComponent] = useState(false);
+    
+    //show signup
+    const[showComponent1 , setShowComponent1] = useState(false)
+
   return (
     <MyContext.Provider value={{format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
       primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
       fontVariant, setFontVariant , fontSize, setFontSize , lineHeight, setLineHeight , hideIcons, setHideIcons , underlineLinks, setUnderlineLinks,
-      isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1 ,  templeName ,  setTemplateName  , selectTemplate , setSelectTemplate    
+      isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1 ,  templeName ,  setTemplateName  , selectTemplate , setSelectTemplate ,
+      showComponent, setShowComponent , showComponent1 , setShowComponent1
     }} >
       {children}
     </MyContext.Provider>
