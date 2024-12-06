@@ -150,11 +150,10 @@ const ResumeBuilder = () => {
 
   const{data: session , status }=useSession({
 
-    required:true,
+    required:false,
     refetchInterval: 0,
-    onUnauthenticated(){
-
-}})
+    refetchOnWindowFocus: false,
+    })
  console.log(status,"status here")
  
   const{ setIsOpen , userData1 , setTemplateName , selectTemplate , setSelectTemplate} = useContext(MyContext);
@@ -336,7 +335,7 @@ const ResumeBuilder = () => {
   }
 },[status , id , template ]);
 
-useEffect(()=>{ if(show && Error ) { onSubmit(tempData) }},[ status , onSubmit , show , Error , tempData ])
+useEffect(()=>{ if(show && Error && status == "authenticated" && tempData ) { onSubmit(tempData) }},[ status , onSubmit , show , Error , tempData ])
 
 useEffect(()=>{
 removeEducation(0);
@@ -359,7 +358,7 @@ removePublication(0);
   return (
     
     <div className=" flex md:flex-row-reverse flex-col h-screen w-screen " >
-     { show && Error && <div className="z-40 w-screen fixed h-screen flex justify-center items-center"><Name/></div> }
+     { show && Error && <div className="z-40 w-screen fixed h-screen flex justify-center items-center"><Name /></div> }
     <div className="fixed h-[110vh]  z-10 top-2 left-2 "><SettingsPage/></div>
     <div className="h-full w-full md:w-[50%]  overflow-y-auto md:fixed " onClick={()=>{setIsOpen(false) , setOpen(false) }}> <ResumeTemplate getValues={watch()} template={selectTemplate} save={save} /> </div>
   

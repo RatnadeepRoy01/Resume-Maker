@@ -1,11 +1,11 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import html2pdf from "html2pdf.js";
 import MyContext from '../Context/MyContext';
 import { useContext } from "react";
 
- const generatePDF = (pdfRef,templateName) => {
-    const options = {
+ const generatePDF = (pdfRef) => {
+    const options = { 
       margin: 0,
       filename: "Mydocument",
       image: { type: "pdf", quality: 1 },
@@ -18,7 +18,9 @@ import { useContext } from "react";
 
 const Button = ({pdfRef}) => {
 
- const {templeName} = useContext(MyContext)
+ const { templeName , setSaveRef } = useContext(MyContext)
+
+ useEffect(()=>{ if( pdfRef.current ) { setSaveRef(pdfRef.current) }},[ setSaveRef , pdfRef ])
  console.log(templeName)
 
   return (

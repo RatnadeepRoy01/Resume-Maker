@@ -1,4 +1,3 @@
-
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
@@ -21,29 +20,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "Email", type: "text", placeholder: "suma@gmail.com" },
         password: { label: "Password", type: "password" },
         twoFACode: { label: "2FA Code", type: "text" },
-       type:{label:"type" , type:"text" }
+        type: { label: "type", type: "text" },
       },
       async authorize(credentials) {
-
         const url = "http://localhost:3000/api/getUser";
-          console.log("credentials",credentials)
-        const response = await postData(credentials,url);
-        console.log(response,"ffffff")
+        console.log("credentials", credentials);
+        
+        const response = await postData(credentials, url);
+        console.log(response, "Response from database");
+   
 
-        if (response.email)
-        {
-         console.log(credentials.email,"dddddddddddd")
-          return response;
-        }
-        else if (response.state == "No entry found" ) {
+        if ( response && response.email ) {
+          return { email: response.email, id: response._id }; // Return email and id
+        } else if (response.state === "No entry found") {
           throw new Error("No entry found");
-        }
-        else if (response.state == "User already exist" ) {
+        } else if (response.state === "User already exist") {
           throw new Error("User already exist");
+        } else {
+          throw new Error("Invalid password");
         }
-        else throw new Error("Invalid password");
       },
-
     }),
   ],
 
@@ -52,30 +48,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       if (account.provider === "google" || account.provider === "github") {
-        const email = user.email;
-
         const url = "http://localhost:3000/api/getUser";
-        console.log(user, "gggh");
+        console.log(user, "OAuth user");
+
         const response = await postData(user, url);
 
-      if(response.state == "success")
+        if (response.state === "success") {
           return true;
-    }
-    
-    return true;
+        }
+      }
+      return true;
     },
 
     async jwt({ token, user }) {
       if (user) {
-        token.email = user.email; // Add email to JWT token
+        token.email = user.email;
+        token.id = user.id; // Store the user's ID in the token
       }
       return token;
     },
 
     async session({ session, token }) {
-      session.user.email = token.email; // Add user email to session
+      session.user.email = token.email;
+      session.user.id = token.id; // Add ID to the session
       return session;
     },
   },

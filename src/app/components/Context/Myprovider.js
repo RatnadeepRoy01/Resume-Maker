@@ -36,6 +36,9 @@ const MyProvider = ({ children }) => {
     //Template Name
     const[templeName , setTemplateName] = useState(null)
     
+    //Template Password
+    const[templePassword , setTemplatePassword] = useState(null)
+
     //customize Template
     const[selectTemplate , setSelectTemplate] = useState(null)
 
@@ -45,12 +48,15 @@ const MyProvider = ({ children }) => {
     //show signup
     const[showComponent1 , setShowComponent1] = useState(false)
 
+    //saveTemplateRef
+    const[ saveRef , setSaveRef ] = useState(null)
+
   return (
     <MyContext.Provider value={{format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
       primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
       fontVariant, setFontVariant , fontSize, setFontSize , lineHeight, setLineHeight , hideIcons, setHideIcons , underlineLinks, setUnderlineLinks,
       isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1 ,  templeName ,  setTemplateName  , selectTemplate , setSelectTemplate ,
-      showComponent, setShowComponent , showComponent1 , setShowComponent1
+      showComponent, setShowComponent , showComponent1 , setShowComponent1 , templePassword , setTemplatePassword , saveRef , setSaveRef
     }} >
       {children}
     </MyContext.Provider>

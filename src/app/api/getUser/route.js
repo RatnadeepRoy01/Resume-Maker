@@ -17,12 +17,12 @@ if(credentials.image ){
 
   try{
   
-  await User.insertOne({
+  let userInsert =  await User.insertOne({
     email: credentials.email,
     password: "", 
     image: credentials.image,
   });
-  return NextResponse.json({state:"success"} , { status:200 })
+  return NextResponse.json({state:"success"} , { Userdata:userInsert} , { status:200 })
 
 }catch(err){
 
@@ -33,7 +33,7 @@ if(credentials.image ){
 
 }else{
 
-  return NextResponse.json({state:"success"} , { status:200 })
+  return NextResponse.json({state:"success"} , Userdata , { status:200 })
 
 }
    
@@ -47,8 +47,8 @@ else{
     password: credentials.password, // Hash this password before saving
   });
 
-  const userData = { id:data.insertedId , email:credentials.email }
-  return NextResponse.json( userData , { status:200 })
+  const Userdata = { _id:data.insertedId , email:credentials.email }
+  return NextResponse.json(  Userdata  , { status:200 })
  
   }else if( Userdata && credentials.type == "login" ){
 
