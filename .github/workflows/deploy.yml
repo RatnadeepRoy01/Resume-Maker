@@ -33,11 +33,26 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
 
-        # SSH into EC2 and deploy
-        ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
-          echo "Current directory: $(pwd)"
-          echo "Listing home directory:"
-          ls -la ~
+        # Debugging: Print out all environment variables related to DOMAIN_NAME
+        echo "Debugging DOMAIN_NAME locally:"
+        echo "GitHub Secrets DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}"
+        echo "Env var DOMAIN_NAME: $DOMAIN_NAME"
+
+        # SSH into EC2 and deploy with extensive debugging
+        ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOSSH'
+          # Extensive debugging for environment variables
+          echo "=== DOMAIN_NAME Debugging ==="
+          echo "1. Direct shell environment:"
+          env | grep -i domain_name
+
+          echo "2. Printenv output:"
+          printenv | grep -i domain_name
+
+          echo "3. Echo current environment variables:"
+          echo "DOMAIN_NAME from shell: $DOMAIN_NAME"
+
+          # Ensure bash is used and variables are expanded
+          bash -c 'echo "4. Bash expansion of DOMAIN_NAME: $DOMAIN_NAME"'
 
           # Install Node Version Manager (NVM) if not present
           echo "Installing Node.js using NVM..."
@@ -68,27 +83,30 @@ jobs:
             cd "$REPO_DIR"
           fi
 
-          # Write environment variables to a .env file
-          echo "Writing environment variables to .env file..."
-          echo "The domain name is: ${DOMAIN_NAME}"
-          echo "The domain name is: $DOMAIN_NAME"
-          echo "The domain name is: ${{ secrets.DOMAIN_NAME }}"
-          cat <<EOT > .env
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY }}
-          GITHUB_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          GITHUB_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          MONGODB_URL: ${{ secrets.MONGODB_URL }}
-          RESUME_PARSER: ${{ secrets.RESUME_PARSER }}
-          LINKEDIN_PARSER: ${{ secrets.LINKEDIN_PARSER }}
-          LINKEDIN_BEARER_TOKEN: ${{ secrets.LINKEDIN_BEARER_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
-          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
-          EOT
+          # Write environment variables to a .env file with additional debugging
+          echo "=== Creating .env file ==="
+          echo "DOMAIN_NAME before writing: $DOMAIN_NAME"
+          
+          cat > .env << EOT
+EMAIL_USER=${EMAIL_USER}
+EMAIL_PASS=${EMAIL_PASS}
+NEXT_PUBLIC_SECRET_KEY=${NEXT_PUBLIC_SECRET_KEY}
+GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+MONGODB_URL=${MONGODB_URL}
+RESUME_PARSER=${RESUME_PARSER}
+LINKEDIN_PARSER=${LINKEDIN_PARSER}
+LINKEDIN_BEARER_TOKEN=${LINKEDIN_BEARER_TOKEN}
+AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+AWS_REGION=${AWS_REGION}
+AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+DOMAIN_NAME=${DOMAIN_NAME}
+EOT
+
+          # Verify .env file contents
+          echo "=== .env file contents ==="
+          cat .env | grep DOMAIN_NAME
 
           # Install dependencies and build the app
           npm install
@@ -99,4 +117,4 @@ jobs:
           echo "Starting/restarting application..."
           pm2 restart npm -- start || pm2 start npm -- start  # Runs the Next.js production server
 
-        EOF
+        EOSSH
