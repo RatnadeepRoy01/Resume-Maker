@@ -19,8 +19,8 @@ jobs:
          EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
         NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY }}
-        GITHUB_CLIENT_ID: ${{ secrets.GITHUB_CLIENT_ID }}
-        GITHUB_CLIENT_SECRET: ${{ secrets.GITHUB_CLIENT_SECRET }}
+        GITHUB_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        GITHUB_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         MONGODB_URL: ${{ secrets.MONGODB_URL }}
         RESUME_PARSER: ${{ secrets.RESUME_PARSER }}
         LINKEDIN_PARSER: ${{ secrets.LINKEDIN_PARSER }}
