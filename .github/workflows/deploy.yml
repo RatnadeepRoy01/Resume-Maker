@@ -26,12 +26,20 @@ jobs:
           # Create the SSH private key file
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
 
-          # SSH into EC2 and pass environment variables explicitly
-          ssh -o StrictHostKeyChecking=no -i github-ec2.pem -o SendEnv=DOMAIN_NAME -o SendEnv=EMAIL_USER -o SendEnv=EMAIL_PASS ${USER}@${HOST} << 'EOF'
+          # SSH into EC2 and pass environment variables via .env file
+          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
+            # Write the environment variables to a .env file
+            echo "DOMAIN_NAME=${DOMAIN_NAME}" > ~/.env
+            echo "EMAIL_USER=${EMAIL_USER}" >> ~/.env
+            echo "EMAIL_PASS=${EMAIL_PASS}" >> ~/.env
+
+            # Source the .env file to load the environment variables
+            source ~/.env
+
             # Check if environment variables are available
             echo "Domain Name: $DOMAIN_NAME"
             echo "Email User: $EMAIL_USER"
             echo "Email Pass: $EMAIL_PASS"
 
-            # You can check other environment variables or run deployment steps here
+            # Proceed with further testing or deployment steps
           EOF
