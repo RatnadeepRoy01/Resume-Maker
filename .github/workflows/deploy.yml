@@ -70,6 +70,7 @@ jobs:
 
           # Write environment variables to a .env file
           echo "Writing environment variables to .env file..."
+          echo "The email user is: ${EMAIL_USER}"
           cat <<EOT > .env
           EMAIL_USER=${EMAIL_USER}
           EMAIL_PASS=${EMAIL_PASS}
