@@ -70,7 +70,9 @@ jobs:
 
           # Write environment variables to a .env file
           echo "Writing environment variables to .env file..."
-          echo "The email user is: ${EMAIL_USER}"
+          echo "The domain name is: ${DOMAIN_NAME}"
+          echo "The domain name is: $DOMAIN_NAME"
+          echo "The domain name is: ${{ secrets.DOMAIN_NAME }}"
           cat <<EOT > .env
           EMAIL_USER=${EMAIL_USER}
           EMAIL_PASS=${EMAIL_PASS}
