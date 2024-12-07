@@ -9,11 +9,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout the repository (even though we don't need to build anything, we may need the code in some cases)
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Step 2: Set environment variables using secrets and deploy to EC2 for testing
+      # Step 2: Test passing environment variables to EC2
       - name: Test Env Vars on EC2
         env:
           DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
@@ -26,22 +26,12 @@ jobs:
           # Create the SSH private key file
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
 
-          # SSH into EC2 instance and pass environment variables explicitly
-          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
-            # Export the environment variables inside the SSH session
-            export DOMAIN_NAME="${DOMAIN_NAME}"
-            export EMAIL_USER="${EMAIL_USER}"
-            export EMAIL_PASS="${EMAIL_PASS}"
-
-            # Check current directory and environment variables
-            echo "Current directory: $(pwd)"
-            echo "Listing home directory:"
-            ls -la ~
-
-            # Print out the passed environment variables for testing
+          # SSH into EC2 and pass environment variables explicitly
+          ssh -o StrictHostKeyChecking=no -i github-ec2.pem -o SendEnv=DOMAIN_NAME -o SendEnv=EMAIL_USER -o SendEnv=EMAIL_PASS ${USER}@${HOST} << 'EOF'
+            # Check if environment variables are available
             echo "Domain Name: $DOMAIN_NAME"
             echo "Email User: $EMAIL_USER"
             echo "Email Pass: $EMAIL_PASS"
 
-            # You can add other commands for further testing, but no deployment is needed
+            # You can check other environment variables or run deployment steps here
           EOF
