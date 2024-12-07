@@ -38,6 +38,8 @@ jobs:
           # Print the current directory and list the files
           echo "Current directory: $(pwd)"
           echo "Listing home directory:"
+          echo "your domain is : ${DOMAIN_NAME}"
+
           ls -la ~
 
           # Export environment variables to make them available within the SSH session
@@ -87,7 +89,7 @@ jobs:
 
           # Write environment variables to a .env file
           echo "Writing environment variables to .env file..."
-          echo "your domain is :${DOMAIN_NAME}"
+          echo "your domain is : \$DOMAIN_NAME"
           cat <<EOT > .env
           EMAIL_USER=${EMAIL_USER}
           EMAIL_PASS=${EMAIL_PASS}
