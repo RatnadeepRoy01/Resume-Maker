@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Test Env Vars on EC2
 
 on:
   push:
@@ -9,12 +9,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout the repository
+      # Step 1: Checkout the repository (even though we don't need to build anything, we may need the code in some cases)
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Step 2: Set environment variables using secrets and deploy to EC2
-      - name: Deploy to EC2
+      # Step 2: Set environment variables using secrets and deploy to EC2 for testing
+      - name: Test Env Vars on EC2
         env:
           DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
@@ -26,36 +26,17 @@ jobs:
           # Create the SSH private key file
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
 
-          # SSH into EC2 instance
+          # SSH into EC2 instance and test the environment variables
           ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
             # Check current directory and environment variables
             echo "Current directory: $(pwd)"
             echo "Listing home directory:"
             ls -la ~
 
-            # Print out the passed environment variable
+            # Print out the passed environment variables for testing
             echo "Domain Name: $DOMAIN_NAME"
             echo "Email User: $EMAIL_USER"
             echo "Email Pass: $EMAIL_PASS"
 
-            # Your deployment steps can go here, e.g., installing dependencies, building the app
-            # Example: Installing Node.js if needed
-            echo "Installing Node.js..."
-            if ! command -v node &> /dev/null; then
-              curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-              sudo apt install -y nodejs
-            fi
-
-            # Example: Installing npm packages
-            echo "Installing npm dependencies..."
-            npm install
-
-            # Example: Build the application
-            echo "Building the app..."
-            npm run build
-
-            # Restart or start your application (e.g., using PM2 or other tools)
-            echo "Starting/restarting the app using PM2..."
-            pm2 restart app || pm2 start app  # Adjust this to your specific setup
+            # You can add other commands for further testing, but no deployment is needed
           EOF
-
