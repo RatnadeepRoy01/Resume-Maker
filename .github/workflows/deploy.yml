@@ -3,43 +3,55 @@ name: Test Env Vars on EC2
 on:
   push:
     branches:
-      - main  # Trigger on push to main branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Step 2: Test passing environment variables to EC2
       - name: Test Env Vars on EC2
         env:
           DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-          PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}  # EC2 private key (e.g., PEM file)
-          HOST: ${{ secrets.EC2_HOST }}  # EC2 host/IP
-          USER: ${{ secrets.EC2_USER }}  # EC2 user (e.g., ubuntu)
+          PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+          HOST: ${{ secrets.EC2_HOST }}
+          USER: ${{ secrets.EC2_USER }}
         run: |
           # Create the SSH private key file
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
-
-          # SSH into EC2 and pass environment variables via .env file
-          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
-            # Write the environment variables to a .env file
-            echo "DOMAIN_NAME=${DOMAIN_NAME}" > ~/.env
-            echo "EMAIL_USER=${EMAIL_USER}" >> ~/.env
-            echo "EMAIL_PASS=${EMAIL_PASS}" >> ~/.env
-
-            # Source the .env file to load the environment variables
-            source ~/.env
-
-            # Check if environment variables are available
-            echo "Domain Name: $DOMAIN_NAME"
-            echo "Email User: $EMAIL_USER"
-            echo "Email Pass: $EMAIL_PASS"
-
-            # Proceed with further testing or deployment steps
-          EOF
+          
+          # SSH into EC2 with environment variables explicitly passed
+          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} \
+            DOMAIN_NAME="$DOMAIN_NAME" \
+            EMAIL_USER="$EMAIL_USER" \
+            EMAIL_PASS="$EMAIL_PASS" \
+            bash -c '
+              # Print out environment variables to verify
+              echo "Debugging Environment Variables:"
+              echo "DOMAIN_NAME from SSH: $DOMAIN_NAME"
+              echo "EMAIL_USER from SSH: $EMAIL_USER"
+              
+              # Create .env file
+              cat > ~/.env << EOT
+              DOMAIN_NAME=$DOMAIN_NAME
+              EMAIL_USER=$EMAIL_USER
+              EMAIL_PASS=$EMAIL_PASS
+              EOT
+              
+              # Verify .env file contents
+              echo "Contents of .env file:"
+              cat ~/.env
+              
+              # Source the .env file
+              source ~/.env
+              
+              # Final verification
+              echo "After sourcing .env:"
+              echo "Domain Name: $DOMAIN_NAME"
+              echo "Email User: $EMAIL_USER"
+              echo "Email Pass: $EMAIL_PASS"
+            '
