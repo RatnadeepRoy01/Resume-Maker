@@ -1,82 +1,32 @@
-name: ProfileNxT
+name: Java CI with Maven
+
+env:
+  NAME: 'Snyk Demo'
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
+  build:
+    env:
+        JAVA_VERSION: '21'
+
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Deploy to EC2
+    - uses: actions/checkout@v3
+    - name: Set up JDK ${{env.JAVA_VERSION}}
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{env.JAVA_VERSION}}
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    - name: Print name
+      run: echo "Hello $NAME. $BUILD. Using Java Version $JAVA_VERSION"
       env:
-        PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
-        HOST: ${{ secrets.EC2_HOST }}
-        USER: ${{ secrets.EC2_USER }}
-        EMAIL_USER: ${{ secrets.EMAIL_USER }}
-        EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY }}
-        GITHUB_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        GITHUB_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        MONGODB_URL: ${{ secrets.MONGODB_URL }}
-        RESUME_PARSER: ${{ secrets.RESUME_PARSER }}
-        LINKEDIN_PARSER: ${{ secrets.LINKEDIN_PARSER }}
-        LINKEDIN_BEARER_TOKEN: ${{ secrets.LINKEDIN_BEARER_TOKEN }}
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
-        DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
-      run: |
-        echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
-
-        # SSH into EC2 and deploy
-        ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << EOF
-          # Setup repository directory
-          REPO_DIR="$HOME/ProfileNxT"
-          BRANCH="main"
-
-          # Clone or pull repository
-          if [ -d "$REPO_DIR/.git" ]; then
-            cd "$REPO_DIR"
-            git pull origin "$BRANCH"
-          else
-            git clone "https://github.com/RatnadeepRoy01/Resume-Maker.git" "$REPO_DIR"
-            cd "$REPO_DIR"
-          fi
-
-          # Create .env file with all environment variables
-          cat > .env << EOT
-          EMAIL_USER=${EMAIL_USER}
-          EMAIL_PASS=${EMAIL_PASS}
-          NEXT_PUBLIC_SECRET_KEY=${NEXT_PUBLIC_SECRET_KEY}
-          NEXT_PUBLIC_GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
-          NEXT_PUBLIC_GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
-          NEXT_PUBLIC_MONGODB_URL=${MONGODB_URL}
-          NEXT_PUBLIC_RESUME_PARSER=${RESUME_PARSER}
-          NEXT_PUBLIC_LINKEDIN_PARSER=${LINKEDIN_PARSER}
-          NEXT_PUBLIC_LINKEDIN_BEARER_TOKEN=${LINKEDIN_BEARER_TOKEN}
-          NEXT_PUBLIC_AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-          NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-          NEXT_PUBLIC_AWS_REGION=${AWS_REGION}
-          NEXT_PUBLIC_AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
-          NEXT_PUBLIC_DOMAIN_NAME=${DOMAIN_NAME}
-          EOT
-
-          # Install Node.js and PM2
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          nvm install 22
-          npm install -g pm2
-
-          # Install dependencies and build
-          npm install
-          npm run build
-
-          # Start/Restart application
-          pm2 restart npm -- start || pm2 start npm -- start
-          EOF
+        BUILD: 'We are currently running the Build job'
