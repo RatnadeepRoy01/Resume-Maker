@@ -79,4 +79,4 @@ jobs:
 
           # Start/Restart application
           pm2 restart npm -- start || pm2 start npm -- start
-EOF
+          EOF
