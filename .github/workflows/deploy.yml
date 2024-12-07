@@ -26,8 +26,13 @@ jobs:
           # Create the SSH private key file
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
 
-          # SSH into EC2 instance and test the environment variables
+          # SSH into EC2 instance and pass environment variables explicitly
           ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
+            # Export the environment variables inside the SSH session
+            export DOMAIN_NAME="${DOMAIN_NAME}"
+            export EMAIL_USER="${EMAIL_USER}"
+            export EMAIL_PASS="${EMAIL_PASS}"
+
             # Check current directory and environment variables
             echo "Current directory: $(pwd)"
             echo "Listing home directory:"
