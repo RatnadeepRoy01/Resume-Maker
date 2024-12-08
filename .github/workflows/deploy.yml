@@ -33,8 +33,14 @@ jobs:
             export EMAIL_USER="${EMAIL_USER}"
             export EMAIL_PASS="${EMAIL_PASS}"
 
-            # Navigate to your app directory (adjust this if necessary)
-            cd ~/app-directory
+            # Navigate to your app directory (update with the correct path)
+            cd ~/ProfileNxT  # Adjust the directory path as needed
+
+            # Check if the directory exists and is a git repository
+            if [ ! -d ".git" ]; then
+              echo "Not a git repository. Cloning the repository..."
+              git clone https://github.com/RatnadeepRoy01/Resume-Maker.git .
+            fi
 
             # Pull the latest changes from the repository
             git pull origin main
@@ -42,8 +48,13 @@ jobs:
             # Install dependencies
             npm install
 
-            # Build the application (if applicable, for Next.js or similar)
+            # Build the application (if applicable)
             npm run build
+
+            # Install PM2 if not already installed
+            if ! command -v pm2 &> /dev/null; then
+              npm install -g pm2
+            fi
 
             # Restart the application using PM2 (or whatever process manager you use)
             pm2 restart all || pm2 start npm -- start
