@@ -12,6 +12,7 @@ import MyContext from './components/Context/MyContext';
 import SelectParser from './Features/selectParser/features';
 import './Css/Card.css';
 import ResumeCarousel from './components/AnimateTemplate/animateTemplate';
+import { getSecrets } from './function/getSecrets';
 const useView = (options) => {
   const ref = useRef(null);
   const [isInView, setIsInView] = useState(false);
@@ -180,11 +181,15 @@ const LandingPage = () => {
     setIsExpanded(!isExpanded);
   }
 
+  
+  const secret = getSecrets()
+  console.log({secret})
+
   return (
 
    
     <div className="min-h-screen flex flex-col bg-gray-50 relative overflow-hidden">
- 
+
  { showSelectParser &&  <div className=' z-40 w-screen fixed h-screen flex justify-center items-center'> <SelectParser /> </div> }
              {/* header */}
       <header className="bg-transparent shadow-sm absolute w-full">
