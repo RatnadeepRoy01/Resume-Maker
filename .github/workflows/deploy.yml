@@ -91,6 +91,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: production  # This links the job to the 'production' environment in GitHub Actions
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -119,6 +120,14 @@ jobs:
 
           # SSH into EC2 and deploy
           ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
+            echo "Starting deployment process..."
+
+            # Set environment to production for the Node.js application
+            export NODE_ENV=production
+            echo "NODE_ENV set to $NODE_ENV"
+
+            # Enable debugging (set -x will log all commands and their arguments)
+            set -x
             echo "Current directory: $(pwd)"
             echo "Listing home directory:"
             ls -la ~
@@ -131,12 +140,14 @@ jobs:
               [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Load nvm
             fi
             nvm install 22  # Install Node.js version 22
+            echo "Node.js version installed: $(node -v)"
 
             # Install PM2 if not installed
             echo "Installing PM2..."
             if ! command -v pm2 &> /dev/null; then
               npm install -g pm2
             fi
+            echo "PM2 version: $(pm2 -v)"
 
             # Setup repository directory
             REPO_URL="https://github.com/RatnadeepRoy01/Resume-Maker.git"
@@ -151,6 +162,7 @@ jobs:
               git clone "$REPO_URL" "$REPO_DIR"
               cd "$REPO_DIR"
             fi
+            echo "Repository cloned/pulled successfully."
 
             # Export environment variables
             echo "Exporting environment variables..."
@@ -168,6 +180,7 @@ jobs:
             export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
             export AWS_REGION=${AWS_REGION}
             export AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+            echo "Environment variables exported."
 
             # Write environment variables to a .env file
             echo "Writing environment variables to .env file..."
@@ -187,6 +200,7 @@ jobs:
             echo "AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}" >> .env
 
             # Install dependencies and build the app
+            echo "Installing dependencies..."
             npm install
             echo "Building Next.js application..."
             npm run build  # Builds the Next.js application
@@ -194,4 +208,5 @@ jobs:
             # Restart the application using PM2
             echo "Starting/restarting application..."
             pm2 restart npm -- start || pm2 start npm -- start  # Runs the Next.js production server
+            echo "Deployment finished."
           EOF
