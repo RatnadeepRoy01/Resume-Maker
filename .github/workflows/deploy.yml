@@ -1,9 +1,8 @@
-name: Deploy to EC2
+name: ProfileNxT
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   deploy:
@@ -17,23 +16,86 @@ jobs:
 
       - name: Deploy to EC2
         env:
-          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
           HOST: ${{ secrets.EC2_HOST }}
           USER: ${{ secrets.EC2_USER }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY }}
+          GITHUB_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          GITHUB_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          RESUME_PARSER: ${{ secrets.RESUME_PARSER }}
+          LINKEDIN_PARSER: ${{ secrets.LINKEDIN_PARSER }}
+          LINKEDIN_BEARER_TOKEN: ${{ secrets.LINKEDIN_BEARER_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
         run: |
+          # Save the private key and set permissions
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
 
-          # Pass environment variables explicitly to SSH session
+          # SSH into EC2 and deploy
           ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << EOF
-            export DOMAIN_NAME="${DOMAIN_NAME}"
+            # Export environment variables
             export EMAIL_USER="${EMAIL_USER}"
             export EMAIL_PASS="${EMAIL_PASS}"
+            export NEXT_PUBLIC_SECRET_KEY="${NEXT_PUBLIC_SECRET_KEY}"
+            export GITHUB_CLIENT_ID="${GITHUB_CLIENT_ID}"
+            export GITHUB_CLIENT_SECRET="${GITHUB_CLIENT_SECRET}"
+            export MONGODB_URL="${MONGODB_URL}"
+            export RESUME_PARSER="${RESUME_PARSER}"
+            export LINKEDIN_PARSER="${LINKEDIN_PARSER}"
+            export LINKEDIN_BEARER_TOKEN="${LINKEDIN_BEARER_TOKEN}"
+            export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
+            export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
+            export AWS_REGION="${AWS_REGION}"
+            export AWS_S3_BUCKET_NAME="${AWS_S3_BUCKET_NAME}"
+            export DOMAIN_NAME="${DOMAIN_NAME}"
 
-            # Test the environment variables
-            echo "Domain Name: \$DOMAIN_NAME"
-            echo "Email User: \$EMAIL_USER"
-            echo "Email Pass: \$EMAIL_PASS"
+            # Debug: Verify exported variables
+            echo "EMAIL_USER=\$EMAIL_USER"
+            echo "AWS_REGION=\$AWS_REGION"
+            echo "DOMAIN_NAME=\$DOMAIN_NAME"
+
+            # Setup Node.js and PM2
+            echo "Installing Node.js using NVM..."
+            if ! command -v nvm &> /dev/null; then
+              curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+              export NVM_DIR="\$HOME/.nvm"
+              [ -s "\$NVM_DIR/nvm.sh" ] && \. "\$NVM_DIR/nvm.sh"  # Load nvm
+            fi
+            nvm install 22  # Install Node.js version 22
+
+            # Install PM2 if not already installed
+            echo "Installing PM2..."
+            if ! command -v pm2 &> /dev/null; then
+              npm install -g pm2
+            fi
+
+            # Repository setup
+            REPO_URL="https://github.com/RatnadeepRoy01/Resume-Maker.git"
+            REPO_DIR="\$HOME/ProfileNxT"
+            BRANCH="main"
+
+            # Clone or update repository
+            if [ -d "\$REPO_DIR/.git" ]; then
+              cd "\$REPO_DIR"
+              git pull origin "\$BRANCH"
+            else
+              git clone "\$REPO_URL" "\$REPO_DIR"
+              cd "\$REPO_DIR"
+            fi
+
+            # Install dependencies and build the project
+            echo "Installing dependencies..."
+            npm install
+            echo "Building Next.js application..."
+            npm run build
+
+            # Restart or start application using PM2
+            echo "Starting/restarting application..."
+            pm2 restart npm -- start || pm2 start npm -- start
           EOF
