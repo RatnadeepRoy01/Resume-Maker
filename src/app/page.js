@@ -22,9 +22,11 @@ const useView = (options) => {
   useEffect(()=>{
   
     const secret = getSecrets()
+    
     console.log({secret})
 
     },[userData1])
+
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
       setIsInView(entry.isIntersecting);
