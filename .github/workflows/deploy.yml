@@ -1,3 +1,87 @@
+# name: ProfileNxT
+
+# on:
+#   push:
+#     branches: [ main ]
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: Deploy to EC2
+#         env:
+#           PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
+#           HOST: ${{ secrets.EC2_HOST }}
+#           USER: ${{ secrets.EC2_USER }}
+#           EMAIL_USER: ${{ secrets.EMAIL_USER }}
+#           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+#           NEXT_PUBLIC_SECRET_KEY: ${{ secrets.NEXT_PUBLIC_SECRET_KEY }}
+#           GITHUB_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+#           GITHUB_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+#           MONGODB_URL: ${{ secrets.MONGODB_URL }}
+#           RESUME_PARSER: ${{ secrets.RESUME_PARSER }}
+#           LINKEDIN_PARSER: ${{ secrets.LINKEDIN_PARSER }}
+#           LINKEDIN_BEARER_TOKEN: ${{ secrets.LINKEDIN_BEARER_TOKEN }}
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_REGION: ${{ secrets.AWS_REGION }}
+#           AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+#           DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+#         run: |
+#           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
+
+#           # SSH into EC2 and deploy
+#           ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
+#             echo "Current directory: $(pwd)"
+#             echo "Listing home directory:"
+#             ls -la ~
+
+#             # Install Node Version Manager (NVM) if not present
+#             echo "Installing Node.js using NVM..."
+#             if ! command -v nvm &> /dev/null; then
+#               curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+#               export NVM_DIR="$HOME/.nvm"
+#               [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Load nvm
+#             fi
+#             nvm install 22  # Install Node.js version 22
+
+#             # Install PM2 if not installed
+#             echo "Installing PM2..."
+#             if ! command -v pm2 &> /dev/null; then
+#               npm install -g pm2
+#             fi
+
+#             # Setup repository directory
+#             REPO_URL="https://github.com/RatnadeepRoy01/Resume-Maker.git"
+#             REPO_DIR="$HOME/ProfileNxT"
+#             BRANCH="main"
+
+#             # Clone or pull repository
+#             if [ -d "$REPO_DIR/.git" ]; then
+#               cd "$REPO_DIR"
+#               git pull origin "$BRANCH"
+#             else
+#               git clone "$REPO_URL" "$REPO_DIR"
+#               cd "$REPO_DIR"
+#             fi
+
+#             # Write environment variables to a .env file
+#             echo "Writing environment variables to .env file..."
+#             echo "DOMAIN_NAME=${DOMAIN_NAME}" > .env
+#             echo "The domain name is: $DOMAIN_NAME"
+
+#             # Install dependencies and build the app
+#             npm install
+#             echo "Building Next.js application..."
+#             npm run build  # Builds the Next.js application
+
+#             # Restart the application using PM2
+#             echo "Starting/restarting application..."
+#             pm2 restart npm -- start || pm2 start npm -- start  # Runs the Next.js production server
+#           EOF
 name: ProfileNxT
 
 on:
@@ -68,10 +152,39 @@ jobs:
               cd "$REPO_DIR"
             fi
 
+            # Export environment variables
+            echo "Exporting environment variables..."
+            export DOMAIN_NAME=${DOMAIN_NAME}
+            export EMAIL_USER=${EMAIL_USER}
+            export EMAIL_PASS=${EMAIL_PASS}
+            export NEXT_PUBLIC_SECRET_KEY=${NEXT_PUBLIC_SECRET_KEY}
+            export GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+            export GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+            export MONGODB_URL=${MONGODB_URL}
+            export RESUME_PARSER=${RESUME_PARSER}
+            export LINKEDIN_PARSER=${LINKEDIN_PARSER}
+            export LINKEDIN_BEARER_TOKEN=${LINKEDIN_BEARER_TOKEN}
+            export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            export AWS_REGION=${AWS_REGION}
+            export AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+
             # Write environment variables to a .env file
             echo "Writing environment variables to .env file..."
             echo "DOMAIN_NAME=${DOMAIN_NAME}" > .env
-            echo "The domain name is: $DOMAIN_NAME"
+            echo "EMAIL_USER=${EMAIL_USER}" >> .env
+            echo "EMAIL_PASS=${EMAIL_PASS}" >> .env
+            echo "NEXT_PUBLIC_SECRET_KEY=${NEXT_PUBLIC_SECRET_KEY}" >> .env
+            echo "GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}" >> .env
+            echo "GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}" >> .env
+            echo "MONGODB_URL=${MONGODB_URL}" >> .env
+            echo "RESUME_PARSER=${RESUME_PARSER}" >> .env
+            echo "LINKEDIN_PARSER=${LINKEDIN_PARSER}" >> .env
+            echo "LINKEDIN_BEARER_TOKEN=${LINKEDIN_BEARER_TOKEN}" >> .env
+            echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" >> .env
+            echo "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" >> .env
+            echo "AWS_REGION=${AWS_REGION}" >> .env
+            echo "AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}" >> .env
 
             # Install dependencies and build the app
             npm install
