@@ -18,8 +18,12 @@ const useView = (options) => {
   const [isInView, setIsInView] = useState(false);
   const { userData1 } =  useContext(MyContext);
   
+   
   useEffect(()=>{
-  console.log("userDataPage",userData1)
+  
+    const secret = getSecrets()
+    console.log({secret})
+
     },[userData1])
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -182,13 +186,13 @@ const LandingPage = () => {
   }
 
   
-  const secret = getSecrets()
-  console.log({secret})
+ 
 
   return (
 
    
     <div className="min-h-screen flex flex-col bg-gray-50 relative overflow-hidden">
+      
 
  { showSelectParser &&  <div className=' z-40 w-screen fixed h-screen flex justify-center items-center'> <SelectParser /> </div> }
              {/* header */}
@@ -354,7 +358,7 @@ const LandingPage = () => {
         </p>
 
         {/* On Desktop (Always visible) */}
-        <p className="mt-4 text-lg md:mt-10 md:block hidden md:block">
+        <p className="mt-4 text-lg md:mt-10 md:block hidden ">
           Design a visually cohesive journey that showcases your unique identity and skills. With ProfileNxT, you can craft an application that reflects who you are professionally, making a lasting impression on potential employers. Begin building your personal brand today and take the next step toward your dream career!
         </p>
         
