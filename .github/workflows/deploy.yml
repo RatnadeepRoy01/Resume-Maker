@@ -1,4 +1,4 @@
-name: Test Env Vars on EC2
+name: Deploy to EC2
 
 on:
   push:
@@ -8,11 +8,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    environment: production  # References the "production" environment
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Test Env Vars on EC2
+      - name: Deploy to EC2
         env:
           DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
@@ -21,37 +24,20 @@ jobs:
           HOST: ${{ secrets.EC2_HOST }}
           USER: ${{ secrets.EC2_USER }}
         run: |
-          # Create the SSH private key file
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
-          
-          # SSH into EC2 with environment variables explicitly passed
-          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} \
-            DOMAIN_NAME="$DOMAIN_NAME" \
-            EMAIL_USER="$EMAIL_USER" \
-            EMAIL_PASS="$EMAIL_PASS" \
-            bash -c '
-              # Print out environment variables to verify
-              echo "Debugging Environment Variables:"
-              echo "DOMAIN_NAME from SSH: $DOMAIN_NAME"
-              echo "EMAIL_USER from SSH: $EMAIL_USER"
-              
-              # Create .env file
-              cat > ~/.env << EOT
-              DOMAIN_NAME=$DOMAIN_NAME
-              EMAIL_USER=$EMAIL_USER
-              EMAIL_PASS=$EMAIL_PASS
-              EOT
-              
-              # Verify .env file contents
-              echo "Contents of .env file:"
-              cat ~/.env
-              
-              # Source the .env file
-              source ~/.env
-              
-              # Final verification
-              echo "After sourcing .env:"
-              echo "Domain Name: $DOMAIN_NAME"
-              echo "Email User: $EMAIL_USER"
-              echo "Email Pass: $EMAIL_PASS"
-            '
+
+          # SSH into EC2 and explicitly pass environment variables
+          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
+            # Write secrets to a .env file
+            echo "DOMAIN_NAME=${DOMAIN_NAME}" > ~/app/.env
+            echo "EMAIL_USER=${EMAIL_USER}" >> ~/app/.env
+            echo "EMAIL_PASS=${EMAIL_PASS}" >> ~/app/.env
+
+            # Load variables from .env file
+            source ~/app/.env
+
+            # Test the environment variables
+            echo "Domain Name: $DOMAIN_NAME"
+            echo "Email User: $EMAIL_USER"
+            echo "Email Pass: $EMAIL_PASS"
+          EOF
