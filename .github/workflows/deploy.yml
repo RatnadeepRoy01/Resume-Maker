@@ -26,11 +26,30 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
 
-          # Pass environment variables explicitly to SSH session
+          # SSH into EC2 and deploy the application
           ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << EOF
+            # Export environment variables
             export DOMAIN_NAME="${DOMAIN_NAME}"
             export EMAIL_USER="${EMAIL_USER}"
             export EMAIL_PASS="${EMAIL_PASS}"
+
+            # Navigate to your app directory (adjust this if necessary)
+            cd ~/app-directory
+
+            # Pull the latest changes from the repository
+            git pull origin main
+
+            # Install dependencies
+            npm install
+
+            # Build the application (if applicable, for Next.js or similar)
+            npm run build
+
+            # Restart the application using PM2 (or whatever process manager you use)
+            pm2 restart all || pm2 start npm -- start
+
+            # Optionally, restart the web server if needed (e.g., Nginx or Apache)
+            sudo systemctl restart nginx
 
             # Test the environment variables
             echo "Domain Name: \$DOMAIN_NAME"
