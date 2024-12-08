@@ -26,18 +26,14 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
 
-          # SSH into EC2 and explicitly pass environment variables
-          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
-            # Write secrets to a .env file
-            echo "DOMAIN_NAME=${DOMAIN_NAME}" > ~/app/.env
-            echo "EMAIL_USER=${EMAIL_USER}" >> ~/app/.env
-            echo "EMAIL_PASS=${EMAIL_PASS}" >> ~/app/.env
-
-            # Load variables from .env file
-            source ~/app/.env
+          # Pass environment variables explicitly to SSH session
+          ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << EOF
+            export DOMAIN_NAME="${DOMAIN_NAME}"
+            export EMAIL_USER="${EMAIL_USER}"
+            export EMAIL_PASS="${EMAIL_PASS}"
 
             # Test the environment variables
-            echo "Domain Name: $DOMAIN_NAME"
-            echo "Email User: $EMAIL_USER"
-            echo "Email Pass: $EMAIL_PASS"
+            echo "Domain Name: \$DOMAIN_NAME"
+            echo "Email User: \$EMAIL_USER"
+            echo "Email Pass: \$EMAIL_PASS"
           EOF
