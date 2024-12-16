@@ -2,7 +2,7 @@
 
 import React, { useContext, useState } from 'react'
 import Image from 'next/image';
-import MyContext from '@/app/components/Context/MyContext';
+import MyContext from '@/app/Context/MyContext';
 const SelectTemplate = () => {
 
   const { setSelectTemplate } = useContext(MyContext) 

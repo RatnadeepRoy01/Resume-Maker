@@ -1,11 +1,11 @@
 "use client"
 
 import React, { useContext , useState , useEffect, Suspense } from 'react'
-import Name from '../Features/ResumeName/Name';
+import Name from '../../Features/ResumeName/Name';
 import Image from 'next/image';
 import Footer from '@/components/footer';
 import LoadingProgress from '@/components/loading';
-import MyContext from '../components/Context/MyContext';
+import MyContext from '../../Context/MyContext';
 import { useSearchParams } from "next/navigation";
 import { useRouter } from 'next/navigation';
 
@@ -72,11 +72,6 @@ const SelectTemplate = () => {
     </div>
     )})}
     </div>
-    
-  
-
-
-
     </div>
     <Footer/>
     </div>

@@ -1,6 +1,6 @@
 "use client"
 import React, { useContext } from "react";
-import MyContext from "@/app/components/Context/MyContext";
+import MyContext from "@/app/Context/MyContext";
 
 export default function PersonalInfo({ personalInfo,styles,Zindex }) {
   

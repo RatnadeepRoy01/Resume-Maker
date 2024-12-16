@@ -1,15 +1,23 @@
 "use client"
 import React, { useState, useEffect, useContext , useRef } from 'react';
 import { Eye, EyeOff, Copy, CheckCircle  } from 'lucide-react';
-import MyContext from '@/app/components/Context/MyContext';
+import MyContext from '@/app/Context/MyContext';
 import { useSession } from "next-auth/react";
-import SignIn from '@/app/TwoStepSignin/page';
+import SignIn from '@/app/(pages)/TwoStepSignin/page';
 import { postData } from '@/app/function/postData';
 import { toPng } from 'html-to-image';
 
-const generatePDF = async (imgRef, formData, session) => {
+const generatePDF = async (imgRef, formData, session , uniqueID  ) => {
   try {
-    
+
+     const url = "../../api/checkResume";
+     const responseResume = await postData({uniqueID},url)
+     let dataID;
+     if(responseResume.state == "same"){
+          dataID = responseResume.text
+          console.log({dataID})
+     }
+      console.log(responseResume)
     const imageDataUrl = await toPng(imgRef, {
       quality: 1.0, 
       pixelRatio: 3, 
@@ -28,7 +36,7 @@ const generatePDF = async (imgRef, formData, session) => {
     const response = await fetch("../../api/preSignedUrl", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fileName, fileType }),
+      body: JSON.stringify({ fileName, fileType , dataID }),
     });
 
     const { uploadUrl, viewUrl } = await response.json();
@@ -48,7 +56,7 @@ const generatePDF = async (imgRef, formData, session) => {
 
       
       const url = "../../api/resumeURL";
-      const insertData = await postData({ viewUrl, session, formData }, url);
+      const insertData = await postData({ viewUrl, session, formData , uniqueID ,resumeURL:responseResume.resumeURL }, url);
 
       if (insertData.state === "success") {
        
@@ -72,7 +80,7 @@ const Name = () => {
 
   const { data: session } = useSession({
     required: true,
-    refetchInterval: 0,
+    refetchInterval: false,
     refetchOnWindowFocus: false,
     onUnauthenticated() {
       setShowComponent(true);
@@ -93,7 +101,7 @@ const Name = () => {
   const [Loading , setLoading] = useState(false)
   const [copied, setCopied] = useState(false);
  
-  const { setTemplateName , setTemplatePassword , saveRef } = useContext(MyContext);
+  const { setTemplateName , setTemplatePassword , saveRef , uniqueKey } = useContext(MyContext);
   const codeRef = useRef(null);
 
   const phrases = [
@@ -117,11 +125,13 @@ const Name = () => {
   }, [phrases.length]);
 
   const handleSubmit = async() => {
+
+    const submitData = async() => {
      
     setClick(true)
     setIsSubmitting(true);
     console.log("Ref",saveRef)
-     const getUrl = await generatePDF(saveRef , formData , session);
+     const getUrl = await generatePDF(saveRef , formData , session ,uniqueKey , setFormData );
      setLoading(`https://dev.profilenxt/pfx/${getUrl}`)
      console.log({getUrl})
 
@@ -129,6 +139,18 @@ const Name = () => {
       setIsSubmitting(false);
      }
  
+    }
+
+
+    const checkResumeID = () => {
+      if (uniqueKey) {
+        submitData();
+      } else {
+        setTimeout(checkResumeID, 50);
+      }
+    };
+    checkResumeID();
+      
   };
 
   const togglePasswordVisibility = () => {

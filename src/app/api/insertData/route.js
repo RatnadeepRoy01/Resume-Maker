@@ -3,17 +3,24 @@ import { getCollection } from "@/app/function/Mongodb";
 
 export async function POST(request){
 
+    console.log("inside insert data now")
     const data = await request.json();
-    const collection = await getCollection("userData");
+    let collection;
 
+    if(data.type == "css")
+        collection = await getCollection("userCssData");
+    else
+        collection = await getCollection("userData");
+      
   
      if(data.keyId ){
 
     try{
         
         const response =  await collection.findOne({key:data.keyId});
+        console.log({response})
         return NextResponse.json(response,{status:200})
-       
+        
     }catch(err){
 
         console.log(err)

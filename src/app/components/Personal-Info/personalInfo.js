@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { AiOutlineUser, AiOutlineMail, AiOutlinePhone, AiOutlineHome, AiOutlineLink, AiOutlineGithub, AiOutlineGlobal } from "react-icons/ai";
 import { BsCardText } from "react-icons/bs"; // For headline icon
 import { Editor } from "@/app/function/Editor/editor"; // Import the Editor component
-import MyContext from "../Context/MyContext";
+import MyContext from "../../Context/MyContext";
 import Image from "next/image";
 
 const PersonalInfoComponent = ({ register, setValue, getValues,errors }) => {

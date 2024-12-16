@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaGlobe, FaLinkedin, FaGithub } from "react-icons/fa"; // Import icons from react-icons
-import MyContext from "@/app/components/Context/MyContext";
+import MyContext from "@/app/Context/MyContext";
 
 export default function PersonalInfo1({ personalInfo, styles , fontSubset , stylesExtra }) {
   const { profilePic } = useContext(MyContext);

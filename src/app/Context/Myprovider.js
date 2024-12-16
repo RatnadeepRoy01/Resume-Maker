@@ -51,12 +51,16 @@ const MyProvider = ({ children }) => {
     //saveTemplateRef
     const[ saveRef , setSaveRef ] = useState(null)
 
+    //uniqueKey for resume hosting
+    const[uniqueKey , setUniqueKey] = useState(null)
+
   return (
     <MyContext.Provider value={{format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
       primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
       fontVariant, setFontVariant , fontSize, setFontSize , lineHeight, setLineHeight , hideIcons, setHideIcons , underlineLinks, setUnderlineLinks,
       isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1 ,  templeName ,  setTemplateName  , selectTemplate , setSelectTemplate ,
-      showComponent, setShowComponent , showComponent1 , setShowComponent1 , templePassword , setTemplatePassword , saveRef , setSaveRef
+      showComponent, setShowComponent , showComponent1 , setShowComponent1 , templePassword , setTemplatePassword , saveRef , setSaveRef ,uniqueKey, 
+      setUniqueKey
     }} >
       {children}
     </MyContext.Provider>

@@ -14,7 +14,7 @@ import References from "@/app/TemplateComponent/Reference/reference";
 import Awards from "@/app/TemplateComponent/Awards/awards";
 import Interests from "@/app/TemplateComponent/Interests/interest";
 import Languages from "@/app/TemplateComponent/Language/language";
-import MyContext from "@/app/components/Context/MyContext";
+import MyContext from "@/app/Context/MyContext";
 import A4ResumeWrapper from "@/app/components/Zoom/zoom";
 import { StylesData } from "@/app/function/Styles";
 
@@ -28,76 +28,91 @@ import "@fontsource/merriweather"
 import "@fontsource/roboto"
 import "@fontsource/roboto-mono"
 
-export default function Template1({ getValues, preview , save }) {
+export default function Template1({ getValues, preview , save , profileID }) {
   
 
   const {format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
     primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
     fontVariant, setFontVariant , fontSize, setFontSize , lineHeight, setLineHeight , hideIcons, setHideIcons , underlineLinks, setUnderlineLinks,
     } = useContext(MyContext)
-  
-     const savingData = {format, margin, showBreakLine, showPageNumbers,
-      primaryColor, backgroundColor, textColor,fontFamily,fontSubset,
-      fontVariant, fontSize, lineHeight, hideIcons,underlineLinks
-     }  
+
     const [scale, setScale] = useState(1);
 
 
-        // useEffect(()=>{
+        useEffect(()=>{  
          
-        //  const  insertCssdata = async() =>{
-        //      console.log("savingCssData1111111111111111111111111111111111111111111111111")
-        //   if(save?.dataType == "oldData"){
+         const  insertCssdata = async() =>{
+           
+          if(save?.dataType == "oldData"){
 
-        //      const oldData =  await get(`${save.IdData}Css`);
-        //      console.log(oldData,"oldData")      
-        //     const update = (()=>{
+            console.log("inside1111111111111111111111111111111")
+             const oldData =  await get(`${save.IdData}Css`);
+             console.log(oldData,"oldData")      
+            const update = (()=>{
 
-        //      setFormat(oldData.format); 
-        //      setMargin(oldData.margin);
-        //      setShowBreakLine(oldData.showBreakLine);
-        //      setShowPageNumbers(oldData.showPageNumbers),
-        //      setPrimaryColor(oldData.primaryColor);
-        //      setBackgroundColor(oldData.backgroundColor);
-        //      setTextColor(oldData.textColor);
-        //      setFontFamily(oldData.fontFamily);
-        //      setFontSubset(oldData.fontSubset);
-        //      setFontVariant(oldData.fontVariant);
-        //      setFontSize(oldData.fontSize);
-        //      setLineHeight(oldData.lineHeight);
-        //      setHideIcons(oldData.hideIcons);  
-        //      setUnderlineLinks(oldData.underlineLinks);
+             setFormat(oldData.format); 
+             setMargin(oldData.margin);
+             setShowBreakLine(oldData.showBreakLine);
+             setShowPageNumbers(oldData.showPageNumbers),
+             setPrimaryColor(oldData.primaryColor);
+             setBackgroundColor(oldData.backgroundColor);
+             setTextColor(oldData.textColor);
+             setFontFamily(oldData.fontFamily);
+             setFontSubset(oldData.fontSubset);
+             setFontVariant(oldData.fontVariant);
+             setFontSize(oldData.fontSize);
+             setLineHeight(oldData.lineHeight);
+             setHideIcons(oldData.hideIcons);  
+             setUnderlineLinks(oldData.underlineLinks);
       
-        //     });
+            });
 
-        //     update();
+            update();
 
-        //   }          
-        //   else if(save?.updateData == true){
+          }          
+          
+         }
+         insertCssdata();
+
+        },[save , setFormat, setMargin, setShowBreakLine, setShowPageNumbers,
+         setPrimaryColor,setBackgroundColor, setTextColor,setFontFamily,setFontSubset,
+         setFontVariant ,setFontSize ,setLineHeight , setHideIcons , setUnderlineLinks,profileID])
+
+         useEffect(()=>{
+
+          const savingData = {format, margin, showBreakLine, showPageNumbers,
+            primaryColor, backgroundColor, textColor,fontFamily,fontSubset,
+            fontVariant, fontSize, lineHeight, hideIcons,underlineLinks
+           }
+
+          const saveData = async() => {   
+           if(save?.updateData == true){
+            console.log("inside22222222222222222222222222")
+
+            if(!save?.IdData) return;
+            else savingData.key = save.IdData;
+            savingData.profileID = profileID   
+            const url = "../../api/insertCssData"     
+            set(`${save?.IdData}Css`,savingData)
+            const response = await postData({savingData,id:save?.IdData} , url)     
+            }
+           else if(save?.IdData && !save.dataType ){
+
+            console.log("inside333333333333333")
                
-        //     if(!save?.IdData) return;
-        //     else savingData.key = save.IdData;
+            savingData.key = save.IdData;
+            savingData.profileID = profileID         
+            const url = "../../api/insertCssData" 
+            const IdData = `${save.IdData}Css`    
+            set(IdData,savingData)
+            const response = await postData({savingData} , url)    
 
-        //     const url = "../../api/insertCssData"     
-        //     set(`${save?.IdData}Css`,savingData)
-        //     const response = await postData({savingData,id:save?.IdData} , url)     
-            
-        //   }else{
-
-        //     if(!save?.IdData) return;
-        //     else savingData.key = save.IdData;
-
-        //     const url = "../../api/insertCssData" 
-        //     const IdData = `${save.IdData}Css`    
-        //     set(IdData,savingData)
-        //     const response = await postData({savingData} , url)    
-
-        //   }
-        //  }
-        //  insertCssdata();
-
-        // },[save])
-
+          }
+        }
+          saveData()
+        },[save, profileID ,format, margin, showBreakLine, showPageNumbers,
+          primaryColor, backgroundColor, textColor,fontFamily,fontSubset,
+          fontVariant, fontSize, lineHeight, hideIcons,underlineLinks ])
        
 
   useEffect(()=>{

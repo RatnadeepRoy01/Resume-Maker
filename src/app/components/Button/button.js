@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect } from 'react'
 import html2pdf from "html2pdf.js";
-import MyContext from '../Context/MyContext';
+import MyContext from '../../Context/MyContext';
 import { useContext } from "react";
 
  const generatePDF = (pdfRef) => {

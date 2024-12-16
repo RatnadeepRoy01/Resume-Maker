@@ -13,7 +13,7 @@ import References from "@/app/TemplateComponent/Reference/reference";
 import Awards from "@/app/TemplateComponent/Awards/awards";
 import Interests from "@/app/TemplateComponent/Interests/interest";
 import Languages from "@/app/TemplateComponent/Language/language";
-import MyContext from "@/app/components/Context/MyContext";
+import MyContext from "@/app/Context/MyContext";
 import A4ResumeWrapper from "@/app/components/Zoom/zoom";
 import { StylesData } from "@/app/function/Styles";
 import { set , get } from "idb-keyval";

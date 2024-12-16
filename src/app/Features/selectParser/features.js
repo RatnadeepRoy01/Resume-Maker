@@ -3,7 +3,7 @@ import React, { useState,useRef , useContext} from "react";
 import { Upload, PlusCircle  } from "lucide-react";
 import Image from "next/image";
 import { getUserData } from "@/app/function/matching";
-import MyContext from "@/app/components/Context/MyContext";
+import MyContext from "@/app/Context/MyContext";
 import { useRouter } from "next/navigation";
 import { postData } from "@/app/function/postData";
 

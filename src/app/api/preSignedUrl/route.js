@@ -20,16 +20,25 @@ export async function POST(request) {
     }
     console.log(fileName , fileType)
     const randomNum = Math.floor(1000 + Math.random() * 9000) ;
+    let key = fileName + randomNum
+
+  
+    if(body?.dataID){
+        
+      key = body.dataID
+     
+    } 
+
     const command = new PutObjectCommand({
       Bucket: process.env.AWS_S3_BUCKET_NAME,
-      Key: `resume/${fileName + randomNum }`,
+      Key: `resume/${key}`,
       ContentType: fileType,
     });
  
     const uploadUrl = await getSignedUrl(s3Client, command,{expiresIn:900 } );
    console.log({uploadUrl})
 
-    const viewUrl = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_S3_BUCKET_NAME}/resume/${fileName + randomNum}`;
+    const viewUrl = `https://s3.${process.env.AWS_REGION}.amazonaws.com/${process.env.AWS_S3_BUCKET_NAME}/resume/${key}`;
   
     return NextResponse.json({ uploadUrl, viewUrl });
   } catch (error) {

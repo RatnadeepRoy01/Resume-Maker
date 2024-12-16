@@ -13,7 +13,18 @@ export async function POST(request){
     console.log("User:-",user)
     if( user ){
 
-        const proxyURL = data.formData.text + Math.floor(1000 + Math.random() * 9000) ;
+    let proxyURL = data.formData.text + Math.floor(1000 + Math.random() * 9000) ;
+
+    if (data.resumeURL) {
+      
+      proxyURL = data.resumeURL
+      const result = await collection.updateOne(
+        { email:data.session.user.email },
+        { $pull: { resumeArray: { uniqueID:data.uniqueID } } }
+    );
+      console.log('Delete result:', result);
+
+    }
 
         try{
 
@@ -26,6 +37,7 @@ export async function POST(request){
                       origURL: data.viewUrl, 
                       resumeURL: proxyURL, 
                       resumaPASS: data.formData.password,
+                      uniqueID: data.uniqueID
                     }
                   }
                 },

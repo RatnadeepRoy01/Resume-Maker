@@ -1,29 +1,29 @@
 "use client"
 
-import React, { useEffect , useContext, useState , Suspense, useRef, useCallback } from "react";
+import React, { useEffect , useContext, useState , Suspense, useCallback } from "react";
 import { Menu , X } from 'lucide-react';
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import PersonalInfoComponent from "../components/Personal-Info/personalInfo";
-import EducationComponent from "../components/Education/education";
-import WorkExperienceComponent from "../components/Work-experience/workExperience";
-import SkillsComponent from "../components/Skills/skills";
-import ProjectsComponent from "../components/Projects/projects";
-import PublicationsComponent from "../components/Publication/publication";
-import VolunteeringComponent from "../components/Volunteering/volunteer";
-import ReferencesComponent from "../components/Reference/reference";
-import LanguagesComponent from "../components/Languages/languages";
-import InterestsComponent from "../components/Interest/interest";
-import CertificationsComponent from "../components/Certifications/certification";
-import AwardsComponent from "../components/Awards/awards";
+import PersonalInfoComponent from "../../components/Personal-Info/personalInfo";
+import EducationComponent from "../../components/Education/education";
+import WorkExperienceComponent from "../../components/Work-experience/workExperience";
+import SkillsComponent from "../../components/Skills/skills";
+import ProjectsComponent from "../../components/Projects/projects";
+import PublicationsComponent from "../../components/Publication/publication";
+import VolunteeringComponent from "../../components/Volunteering/volunteer";
+import ReferencesComponent from "../../components/Reference/reference";
+import LanguagesComponent from "../../components/Languages/languages";
+import InterestsComponent from "../../components/Interest/interest";
+import CertificationsComponent from "../../components/Certifications/certification";
+import AwardsComponent from "../../components/Awards/awards";
 import ResumeTemplate from "../ResumeTemplates/page";
 import SettingsPage from "../customizeResume/page";
-import Name from "../Features/ResumeName/Name";
-import { postData } from "../function/postData";
+import Name from "../../Features/ResumeName/Name";
+import { postData } from "../../function/postData";
 import { set , get } from "idb-keyval"
 import { useSearchParams } from "next/navigation";
-import MyContext from "../components/Context/MyContext";
+import MyContext from "../../Context/MyContext";
 import { useSession } from "next-auth/react";
 
 // Zod Schema for form validation
@@ -151,12 +151,12 @@ const ResumeBuilder = () => {
   const{data: session , status }=useSession({
 
     required:false,
-    refetchInterval: 0,
+    refetchInterval:false,
     refetchOnWindowFocus: false,
     })
  console.log(status,"status here")
  
-  const{ setIsOpen , userData1 , setTemplateName , selectTemplate , setSelectTemplate} = useContext(MyContext);
+  const{ setIsOpen , userData1 , setTemplateName , selectTemplate , setSelectTemplate , setUniqueKey } = useContext(MyContext);
   const searchParams = useSearchParams();
   const template = searchParams.get('template');
   const id = searchParams.get("id");  
@@ -257,7 +257,7 @@ const ResumeBuilder = () => {
   const[show,setShow] = useState(false)
   const [ Error , setError ] = useState(Object.keys(errors).length === 0,)
   const [ tempData , setTempData ] = useState(null)
-  
+ 
 
   useEffect(()=>{ setError( Object.keys(errors).length === 0, ) },[errors])
 
@@ -305,12 +305,13 @@ const ResumeBuilder = () => {
     let response;
     let IdData;
     let updateData = false;
+    data.profileID = session?.user.id
 
   if(id){
  
     //for updating the already made resume
-      response = await postData({data,updateData:id},url);
       data.key = id;
+      response = await postData({data,updateData:id},url);
       IdData = id;
       updateData = true;
       
@@ -327,13 +328,14 @@ const ResumeBuilder = () => {
     
   }
    if(response.state == "success"){
-    
+
+    setUniqueKey(IdData)
     set(IdData,data).then(()=>{
       console.log("Data saved ")
     })
     setSave({IdData , updateData})
   }
-},[status , id , template ]);
+},[status , id , template , setUniqueKey , session]);
 
 useEffect(()=>{ if(show && Error && status == "authenticated" && tempData ) { onSubmit(tempData) }},[ status , onSubmit , show , Error , tempData ])
 
@@ -360,7 +362,7 @@ removePublication(0);
     <div className=" flex md:flex-row-reverse flex-col h-screen w-screen " >
      { show && Error && <div className="z-40 w-screen fixed h-screen flex justify-center items-center"><Name /></div> }
     <div className="fixed h-[110vh]  z-10 top-2 left-2 "><SettingsPage/></div>
-    <div className="h-full w-full md:w-[50%]  overflow-y-auto md:fixed " onClick={()=>{setIsOpen(false) , setOpen(false) }}> <ResumeTemplate getValues={watch()} template={selectTemplate} save={save} /> </div>
+    <div className="h-full w-full md:w-[50%]  overflow-y-auto md:fixed " onClick={()=>{setIsOpen(false) , setOpen(false) }}> <ResumeTemplate getValues={watch()} template={selectTemplate} save={save} profileID = {session?.user.id} /> </div>
   
     
 
