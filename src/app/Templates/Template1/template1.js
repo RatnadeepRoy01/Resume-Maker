@@ -67,7 +67,7 @@ export default function Template1({ getValues, preview , save , profileID }) {
       
             });
 
-            update();
+            update(); 
 
           }          
           
