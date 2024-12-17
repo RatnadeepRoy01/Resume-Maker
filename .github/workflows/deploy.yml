@@ -83,7 +83,6 @@
 #             pm2 restart npm -- start || pm2 start npm -- start  # Runs the Next.js production server
 #           EOF
 name: ProfileNxT
-
 on:
   push:
     branches: [ main ]
@@ -94,7 +93,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+      
       - name: Deploy to EC2
         env:
           PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
@@ -116,7 +115,7 @@ jobs:
           DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
         run: |
           echo "$PRIVATE_KEY" > github-ec2.pem && chmod 600 github-ec2.pem
-
+          
           # SSH into EC2 and deploy
           ssh -o StrictHostKeyChecking=no -i github-ec2.pem ${USER}@${HOST} << 'EOF'
             echo "Writing environment variables to .env file..."
@@ -136,7 +135,7 @@ jobs:
             AWS_S3_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
             DOMAIN_NAME=${DOMAIN_NAME}
             EOT
-
+            
             # Install Node Version Manager (NVM) if not present
             echo "Installing Node.js using NVM..."
             if ! command -v nvm &> /dev/null; then
@@ -145,18 +144,18 @@ jobs:
               [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Load nvm
             fi
             nvm install 22  # Install Node.js version 22
-
+            
             # Install PM2 if not installed
             echo "Installing PM2..."
             if ! command -v pm2 &> /dev/null; then
               npm install -g pm2
             fi
-
+            
             # Setup repository directory
             REPO_URL="https://github.com/RatnadeepRoy01/Resume-Maker.git"
             REPO_DIR="$HOME/ProfileNxT"
             BRANCH="main"
-
+            
             # Clone or pull repository
             if [ -d "$REPO_DIR/.git" ]; then
               cd "$REPO_DIR"
@@ -165,12 +164,12 @@ jobs:
               git clone "$REPO_URL" "$REPO_DIR"
               cd "$REPO_DIR"
             fi
-
+            
             # Install dependencies and build the app
             npm install
             echo "Building Next.js application..."
             npm run build  # Builds the Next.js application
-
+            
             # Restart the application using PM2
             echo "Starting/restarting application..."
             pm2 restart npm -- start || pm2 start npm -- start  # Runs the Next.js production server
