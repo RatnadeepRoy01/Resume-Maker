@@ -25,7 +25,7 @@ import "@fontsource/merriweather"
 import "@fontsource/roboto"
 import "@fontsource/roboto-mono"
 
-export default function Template1({ getValues, preview  }) {
+export default function Template1({ getValues, preview , save , profileID }) {
  
 
   const {format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,

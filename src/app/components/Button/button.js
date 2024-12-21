@@ -8,7 +8,7 @@ import { useContext } from "react";
     const options = { 
       margin: 0,
       filename: "Mydocument",
-      image: { type: "pdf", quality: 1 },
+      image: { type: "jpeg", quality: 1 },
       html2canvas: { scale: 3 },
       jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
     };

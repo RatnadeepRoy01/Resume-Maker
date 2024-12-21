@@ -11,30 +11,36 @@ export async function POST(request) {
       const data=await request.formData();
       console.log(data)
       console.log(data.get("file"))
-
-    try {
-
-        const response = await fetch(process.env.RESUME_PARSER,{
-
-          method:"POST",
-          body:data
-          }); 
-       
-        if(!response.ok){
-          throw new Error(`Error: ${response.status}`);
-        }
-        const response1 = await response.json();  
-        console.log(response1,"response")
-        return NextResponse.json(response1,{status:200})
-        
       
-      } catch (error) {
-        console.error('Error:', error);
-        return NextResponse.json({state:"Failed"},{status:504})
-      }
-    }else{
-         
-       
+
+      try {
+        const response = await fetch(process.env.RESUME_PARSER, {
+            method: "POST",
+            body: data,
+        });
+    
+        console.log("Response Status:", response);
+    
+        if (response.ok) { 
+            const response1 = await response.json();
+            console.log("Parsed Response:", response1);
+            return NextResponse.json(response1, { status: 200 });
+        } else {
+           
+            const errorData = await response.json();
+            console.log("Error Response Data:",response.status);
+            return NextResponse.json({ status1: response.status }, { status:response.status});
+        }
+    } catch (err) {
+        
+        console.error("Fetch Error:", err);
+        return NextResponse.json({ status1: 500 }, { status:500 });
+    }
+    
+
+      
+        
+    }else{     
         const data=await request.json();
         console.log("inside server", data)
         try {
@@ -46,6 +52,7 @@ export async function POST(request) {
              'Authorization': `Bearer ${process.env.LINKEDIN_BEARER_TOKEN}`
               }
             });
+            console.log("Data",response)
           if(response.ok){
 
             const responseJSON = await response.json()
@@ -56,6 +63,7 @@ export async function POST(request) {
           
           return NextResponse.json({state:"Failed"},{status:500})
         } catch (error) {
+          console.log("Error",error)
          return NextResponse.json({ message: 'Failed to fetch LinkedIn data', error: error.message } , {status:500});
         }
 

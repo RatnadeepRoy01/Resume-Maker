@@ -11,7 +11,7 @@ const SelectParser = () => {
   const [file, setFile] = useState(null); // State to hold the uploaded file
   const[show,setShow] = useState(false)
   const [urlData,setUrlData] = useState("https://www.linkedin.com/in/")
-  const { userData1 , setUserData1 }= useContext(MyContext);
+  const { userData1 , setUserData1 , setError }= useContext(MyContext);
   const Router = useRouter();
   const ref = useRef();
 
@@ -32,6 +32,16 @@ const SelectParser = () => {
       }
     
       obj.personalInfo = personalInfo;
+
+      obj.references.forEach((data, index) => {
+        const splitData = data.split("\n").filter(line => line.trim() !== "");
+        obj.references[index] = {
+            name: splitData[0],
+            summary: splitData.slice(1).join(" ")
+        };
+    });
+    
+
       return obj;
     }
    
@@ -90,6 +100,7 @@ const SelectParser = () => {
   const handleFileChange = async (event) => {
     
     setUserData1(null);
+    setError(null)
     Router.push("./SelectTemplate?parser=resumeParser")
 
     const selectedFile = event.target.files[0];
@@ -109,6 +120,8 @@ const SelectParser = () => {
         })
         
         const response1 = await response.json();
+        console.log("Response1Data:-",response1.status1)
+        setError(response1.status1)
        
         const data = await getUserData(response1);
 
@@ -125,10 +138,12 @@ const SelectParser = () => {
           }
         
           obj.personalInfo = personalInfo;
+
           return obj;
         }
-
-        const filteredData = await collectPersonalInfo(data)
+ 
+        let filteredData = await collectPersonalInfo(data)
+        
         setUserData1(filteredData);
         console.log("Uploaded file:", selectedFile); // Handle the file as needed
       

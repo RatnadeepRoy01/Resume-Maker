@@ -99,31 +99,6 @@ const keyLinkedin=
   "company_linkedin_profile_url": "website"
 }
 
-
-
-//  const mapKeys = (data,keyMap) => {
-
-   
-//   if (data == null) return data;
-  
-//   if (Array.isArray(data)) {
-//     return data.map(item => mapKeys(item, keyMap));
-//   }
-  
-//   if (typeof data === 'object') {
-//     return Object.entries(data).reduce((acc, [key, value]) => {
-//       const newKey = keyMap[key] || key;
-//       acc[newKey] = mapKeys(value, keyMap);
-//       return acc;
-      
-//     }, {});
-//   }
-  
-  
-// return data;
-  
-// }
-
 const mapKeys = (data, keyMap) => {
   if (data == null) return data;
 

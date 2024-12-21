@@ -30,7 +30,8 @@ const animatedTexts = [
       
 ];
 
-const LoadingProgress = ({loaded}) => {
+const LoadingProgress = ({loaded , error}) => {
+ 
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState("loading");
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -89,23 +90,36 @@ const LoadingProgress = ({loaded}) => {
      Router.push("/")
   };
 
-  if (status === "timeout") {
+  if (status === "timeout" || (error && error != 200) ) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-red-100 to-red-200 p-4">
         <div className="bg-white shadow-2xl rounded-2xl p-8 text-center w-full max-w-xl">
           <AlertCircle className="mx-auto mb-4 text-red-500" size={48} />
           <h2 className="text-lg font-bold text-red-600 mb-4">
-            Loading Timeout
+                   { error == 400 ? <div>Bad Request</div> :
+                    error == 413 ? <div>File Too Large</div> :
+                    error == 406 ? <div>Not Acceptable </div> :
+                    error == 408 ? <div> Loading Timeout </div> :
+                    error == 502 ? <div> Bad Gateway </div>:
+                    error == 503 ? <div> Service Unavailable</div>:
+                    <div>Internal Server Error</div> }
+
           </h2>
-          <p className="text-gray-700 mb-6">The process is taking too long.</p>
+          <p className="text-gray-700 mb-6">
+
+          {
+          error == 400 ? <div>The request could not be understood by the server. Please check your input.</div> :
+          error == 413 ? <div>The file you uploaded is too large. Please try a smaller file.</div> :
+          error == 406 ? <div>The requested resource is not acceptable. Please modify your request.</div> :
+          error == 408 ? <div>The process is taking too long. Please try again later.</div> :
+          error == 502 ? <div>The server encountered an issue while acting as a gateway. Please try again later.</div> :
+          error == 503 ? <div>The service is currently unavailable. Please try again later.</div> :
+          <div>An unexpected error occurred. Please try again later.</div>
+          }
+
+
+          </p>
           <div className="flex justify-center space-x-4">
-            {/* <button
-              onClick={handleRetry}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full flex items-center"
-            >
-              <RefreshCw className="mr-2" size={20} />
-              Retry
-            </button> */}
             <button
               onClick={handleBack}
               className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full flex items-center"
@@ -161,10 +175,9 @@ const LoadingProgress = ({loaded}) => {
               />
             </div>
 
+         
+          <div>
             <div className="text-center text-gray-700 font-medium">
-             
-           
-
               <motion.p
                 key={currentTextIndex}
                 className="text-lg "
@@ -179,7 +192,6 @@ const LoadingProgress = ({loaded}) => {
               <p className="text-sm text-gray-500 mt-2">
                 {Math.floor(progress)}% Completed
               </p>
-
             </div>
 
             {status === "warning" && (
@@ -187,6 +199,8 @@ const LoadingProgress = ({loaded}) => {
                   This is taking longer than expected...
               </div>
             )}
+            </div>
+            
           </div>
         </div>
       </div>

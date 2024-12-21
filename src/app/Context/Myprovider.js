@@ -54,13 +54,16 @@ const MyProvider = ({ children }) => {
     //uniqueKey for resume hosting
     const[uniqueKey , setUniqueKey] = useState(null)
 
+    //Error for resume parsing
+    const[error , setError] = useState(null)
+
   return (
     <MyContext.Provider value={{format, setFormat,margin, setMargin,showBreakLine, setShowBreakLine, showPageNumbers, setShowPageNumbers,
       primaryColor, setPrimaryColor,backgroundColor, setBackgroundColor,textColor, setTextColor,fontFamily, setFontFamily,fontSubset, setFontSubset,
       fontVariant, setFontVariant , fontSize, setFontSize , lineHeight, setLineHeight , hideIcons, setHideIcons , underlineLinks, setUnderlineLinks,
       isOpen,setIsOpen,profilePic , setProfilePic ,userData1 , setUserData1 ,  templeName ,  setTemplateName  , selectTemplate , setSelectTemplate ,
       showComponent, setShowComponent , showComponent1 , setShowComponent1 , templePassword , setTemplatePassword , saveRef , setSaveRef ,uniqueKey, 
-      setUniqueKey
+      setUniqueKey, error , setError
     }} >
       {children}
     </MyContext.Provider>

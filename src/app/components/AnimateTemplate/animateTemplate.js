@@ -45,7 +45,7 @@ const ResumeCarousel = () => {
   }, [spread]); // Depend on `spread` to ensure it's only triggered once
 
   return (
-    <div className="carousel-container md:h-100vh md:py-[300px] h-10vh">
+    <div className="carousel-container md:h-[90vh] md:py-[300px] h-[60vh] overflow-y-hidden ">
       <div ref={carouselRef} className={`carousel ${spread ? "spread" : ""}`}>
         {resumes.map((resume, index) => (
           <div
