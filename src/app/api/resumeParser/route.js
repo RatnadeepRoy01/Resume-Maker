@@ -11,8 +11,8 @@ export async function POST(request) {
       const data=await request.formData();
       console.log(data)
       console.log(data.get("file"))
-      
-
+      console.log(process.env.RESUME_PARSER)  
+     
       try {
         const response = await fetch(process.env.RESUME_PARSER, {
             method: "POST",

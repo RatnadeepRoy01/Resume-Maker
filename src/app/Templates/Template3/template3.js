@@ -141,11 +141,11 @@ export default function Template3({ getValues, preview , save }) {
         </div>
         </div>
         <div className={ styles.page } style={{ fontFamily:fontFamily }}   >
-          <div className = {styles.sidebar} style={{ backgroundColor:backgroundColor , padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem`,color:textColor }}>
+          <div className = {`${styles.sidebar}`} style={{ backgroundColor:backgroundColor , padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem`,color:textColor }}>
              <div className="text-white absolute ">{showPageNumbers && <p>Page:1</p>}</div>
             {/* Personal Info */}
             
-            <PersonalInfo personalInfo={personalInfo} styles={styles} Zindex={40} /> 
+           <PersonalInfo personalInfo={personalInfo} styles={styles} Zindex={40} extraData={"mt-[200px]"} extraImgData={"fixed top-2"} /> 
             
             {/* Education */}
            { education?.length>0 && <Education education={education} styles={styles} /> }
@@ -165,7 +165,7 @@ export default function Template3({ getValues, preview , save }) {
            
            <div className="flex flex-col break-words "  >
            
-            <div className={styles.text.text} style={{fontSize:styles.text.textStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
+           <div className={`break-words ${styles.title.title}`} style={{fontSize:styles.title.tileStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
             </div>
 
             {/* Work Experience */}

@@ -22,7 +22,7 @@ export default function PersonalInfo1({ personalInfo, styles , fontSubset , styl
         <div className=" break-words mb-2 ">
           <p className={styles.name.name} style={{ fontSize: styles.name.nameStyle }}>{personalInfo.fullName}</p>
           <p className={styles.title.title} style={{ fontSize: styles.title.tileStyle }}>{personalInfo.headline}</p>
-          <div className={styles.text.text} style={{fontSize:styles.text.textStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
+          <div className={`break-words ${styles.title.title}`} style={{fontSize:styles.title.tileStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
         </div>
        
         {/* Right: Contact Information */}

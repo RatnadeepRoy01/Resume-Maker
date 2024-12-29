@@ -48,101 +48,101 @@ const schema = z.object({
   }),
   education: z.array(
     z.object({
-      institution: z.string().min(1, "Institution is required"),
-      degree: z.string().min(1, "Degree is required"),
-      startYear: z.string().min(1, "Start year is required"),
-      endYear: z.string().min(1, "End year is required"),
-      score:z.string().min(1, "End year is required"),
-      summary: z.string().optional()
-      }),
+      institution: z.string(),
+      degree: z.string(),
+      startYear: z.string(),
+      endYear: z.string(),
+      score: z.string(),
+      summary: z.string().optional(),
+    })
   ),
   workExperience: z.array(
     z.object({
-      company: z.string().min(1, "Company is required"),
-      role: z.string().min(1, "Role is required"),
-      startDate: z.string().min(1, "Start date is required"),
-      endDate: z.string().min(1, "End date is required"),
-      website:z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
+      company: z.string(),
+      role: z.string(),
+      startDate: z.string(),
+      endDate: z.string(),
+      website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
         message: "Invalid url format", 
       }),
-      summary: z.string().optional()
+      summary: z.string().optional(),
     })
   ),
   skills: z.array(
     z.object({
-      name: z.string().min(1, "Skill is required"),
+      name: z.string(),
       level: z.string(),
     })
   ),
   projects: z.array(
     z.object({
-      title: z.string().min(1, "Project title is required"),
-      startDate: z.string().min(1, "Start date is required"),
-      endDate: z.string().min(1, "End date is required"),
+      title: z.string(),
+      startDate: z.string(),
+      endDate: z.string(),
       website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
         message: "Invalid url format", 
       }),
-      summary: z.string().optional()
+      summary: z.string().optional(),
     })
   ),
-
   publications: z.array(
     z.object({
-      title: z.string().min(1, "Publication title is required"),
-      publisher: z.string().min(1, "Publisher is required"),
-      date: z.string().min(1, "Date is required"),
+      title: z.string(),
+      publisher: z.string(),
+      date: z.string(),
       website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
         message: "Invalid url format", 
       }),
-      summary: z.string().optional()
+      summary: z.string().optional(),
     })
   ).optional(),
   volunteering: z.array(
     z.object({
-      title: z.string().min(1, "Volunteering title is required"),
-      organization: z.string().min(1, "Organization is required"),
-      role: z.string().min(1, "Role is required"),
-      date: z.string().min(1, "Date is required"),
+      title: z.string(),
+      organization: z.string(),
+      role: z.string(),
+      date: z.string(),
       website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
         message: "Invalid url format", 
       }),
-      summary: z.string().optional()
+      summary: z.string().optional(),
     })
   ).optional(),
   references: z.array(
     z.object({
-      name: z.string().min(1, "Reference name is required"),
+      name: z.string(),
       email: z.string().email("Invalid email").optional(),
-      position: z.string().min(4,"Position is required"),
-      summary: z.string().optional()
+      position: z.string(),
+      summary: z.string().optional(),
     })
   ).optional(),
   languages: z.array(
     z.object({
-      name: z.string().min(1, "Language is required"),
-      level: z.string().min(1, "Proficiency level is required"),
+      name: z.string(),
+      level: z.string(),
     })
   ),
   interests: z.array(
     z.object({
-      title: z.string().min(1, "Interest is required"),
+      title: z.string(),
     })
   ),
   certifications: z.array(
     z.object({
-      certification: z.string().min(1, "Certification is required"),
-      issuer: z.string().min(1, "Issuer is required"),
-      issueDate: z.string().min(1, "Issue date is required"),
+      certification: z.string(),
+      issuer: z.string(),
+      issueDate: z.string(),
     })
   ),
   awards: z.array(
     z.object({
-      award: z.string().min(1, "Award is required"),
-      organization: z.string().min(1, "Organization is required"),
-      year: z.string().min(1, "Year is required"),
-      summary: z.string().optional()
+      award: z.string(),
+      organization: z.string(),
+      year: z.string(),
+      summary: z.string().optional(),
     })
- ),
+  ),
+
  });
 
 const ResumeBuilder = () => {

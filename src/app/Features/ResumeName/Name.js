@@ -88,10 +88,14 @@ const Name = () => {
   });
 
 
-  const [formData, setFormData] = useState({
-    text: '',
-    password: ''
-  });
+  // const [formData, setFormData] = useState({
+  //   text: 'EZcarrers_Resume',
+  //   password: ''
+  // });
+  const formData = {
+    text:"EZcarrers_Resume",
+    password:''
+  }
   const [showPassword, setShowPassword] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -103,6 +107,8 @@ const Name = () => {
  
   const { setTemplateName , setTemplatePassword , saveRef , uniqueKey } = useContext(MyContext);
   const codeRef = useRef(null);
+
+ 
 
   const phrases = [
     "Create your professional resume ✨",
@@ -123,6 +129,11 @@ const Name = () => {
     
     return () => clearInterval(interval);
   }, [phrases.length]);
+
+  useEffect((prev)=>{
+   
+    
+  formData.password=Math.floor(1000 + Math.random() * 9000);
 
   const handleSubmit = async() => {
 
@@ -151,7 +162,9 @@ const Name = () => {
     };
     checkResumeID();
       
-  };
+  }
+  handleSubmit();
+},[])
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -191,9 +204,9 @@ const Name = () => {
               <p className="text-gray-600 text-base md:text-lg">Start crafting your perfect resume</p>
             </div>
 
-            <div className="space-y-4">
+            {/* <div className="space-y-4"> */}
               {/* Resume Name Input */}
-              <div className="relative group">
+              {/* <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                 <input
                   type="text"
@@ -202,10 +215,10 @@ const Name = () => {
                   placeholder="Enter your resume name"
                   className="w-full px-6 py-4 text-lg md:text-xl border-2 border-blue-200 rounded-full focus:outline-none focus:border-blue-400 transition-all duration-300 shadow-md hover:shadow-lg bg-white relative"
                 />
-              </div>
+              </div> */}
 
               {/* Password Input */}
-              <div className="relative group">
+              {/* <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                 <div className="relative">
                   <input
@@ -227,12 +240,12 @@ const Name = () => {
                     )}
                   </button>
                 </div>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
 
             <div className="mt-6 text-center h-8 md:h-10 overflow-hidden">
              
-            {
+            {/* {
                 !click ?
               <div
                   className={`transform transition-all duration-1000 ease-in-out ${
@@ -244,7 +257,7 @@ const Name = () => {
                 </p>
                </div>
                 
-                :
+                : */}
 
                 <div className='w-full flex justify-center'>
             {
@@ -271,15 +284,35 @@ const Name = () => {
                      <Copy size={20} />
                    )}
                  </button>
+
+                 <div className='mt-4'>
+
+                 <div className="relative bg-gray-300 rounded-lg overflow-hidden shadow-xl flex-grow">
+                   <pre className="p-4  text-sm overflow-x-auto font-mono">
+                     <code>{password}</code>
+                   </pre>
+                 </div>
+                 <button 
+                   onClick={handleCopy} 
+                   className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition-colors shadow-md"
+                 >
+                   {copied ? (
+                     <CheckCircle className="" size={20} />
+                   ) : (
+                     <Copy size={20} />
+                   )}
+                 </button>
+
+                 </div>
                </div>     
             }
              </div>
              
-              }
+              {/* } */}
               
             </div>
 
-            <button               
+            {/* <button               
                onClick={handleSubmit}               
                disabled={!formData.text.trim() || !formData.password.trim() || isSubmitting}               
                className={`w-full mt-6 px-8 py-4 md:py-5 rounded-full font-semibold text-white text-lg md:text-xl shadow-lg                  
@@ -291,7 +324,7 @@ const Name = () => {
             ${isSubmitting ? 'animate-pulse' : ''}`}
             >
            {isSubmitting ? 'Creating...' : 'Create Resume'}
-           </button> 
+           </button>  */}
 
           </div>
         </div>

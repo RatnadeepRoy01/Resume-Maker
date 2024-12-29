@@ -2,16 +2,16 @@
 import React, { useContext } from "react";
 import MyContext from "@/app/Context/MyContext";
 
-export default function PersonalInfo({ personalInfo,styles,Zindex }) {
+export default function PersonalInfo({ personalInfo,styles,Zindex ,extraData , extraImgData }) {
   
   const{ profilePic } = useContext(MyContext)
-
+ console.log(extraImgData)
   return ( 
-  <div style={{zIndex:Zindex}} >
+  <div  style={{zIndex:Zindex}} >
            
           {profilePic && (
         <div
-         className={`w-[200px] h-[200px] overflow-hidden bg-cover bg-center ${styles.image} `}
+         className={`w-[200px] h-[200px] overflow-hidden bg-cover bg-center ${styles.image} ${extraImgData} `}
          style={{
          backgroundImage: profilePic ? `url(${profilePic})` : 'none' // Dynamically set the background image
       }}
@@ -19,7 +19,7 @@ export default function PersonalInfo({ personalInfo,styles,Zindex }) {
        </div>
      )}  
 
-       <div className={styles.sidebarSection}>
+       <div className={`${styles.sidebarSection} ${extraData}`}>
       
         <p className={styles.sidebarSectionTitle.sidebarTitle} style={{fontSize:styles.sidebarSectionTitle.sidebarTitleStyle}}>Contact</p>
          <p className={styles.sideText.sideText} style={{fontSize:styles.sideText.sideTextStyle}}> Phone: <p className={styles.small.small} style={{fontSize:styles.small.smallStyle}}>{personalInfo.phoneNumber}</p></p>

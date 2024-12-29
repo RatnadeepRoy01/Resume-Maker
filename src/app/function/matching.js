@@ -13,9 +13,10 @@ const keyResume = {
   "location": "location",
   "current_company": "currentCompany",
   "current_designation": "currentDesignation",
+  "headline" : "headline",
   "profile_summary": "summary",
   "photo": "photo",
-
+   
   // Education mappings
   "education": "education",
   "degree": "degree",

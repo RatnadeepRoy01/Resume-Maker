@@ -142,6 +142,15 @@ const SelectParser = () => {
           return obj;
         }
  
+        console.log("DATA_RETRIVAL",data)
+        if( (data.curentDesignation || data.currentCompany ) && !data.headline ){
+          if(data.currentDesignation && !data.currentCompany){
+            data.headline = data.currentDesignation  
+          }else{
+            data.headline = `${data.currentDesignation} at ${data.currentCompany}`
+          }
+        } 
+
         let filteredData = await collectPersonalInfo(data)
         
         setUserData1(filteredData);

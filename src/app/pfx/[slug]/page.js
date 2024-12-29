@@ -71,8 +71,24 @@ const PFX = ({params}) => {
           
         }
       };
-        html2pdf().from(imageRef.current).set(options).save();        
-  } 
+      html2pdf()
+        .from(imageRef.current)
+        .set(options)
+        .toPdf()
+        .get('pdf')
+        .then((pdf) => {
+          const totalPages = pdf.internal.pages.length;
+          console.log({totalPages})
+      
+          
+          if (totalPages > 2) {
+            pdf.deletePage(totalPages - 1);    
+          }
+      
+          const random = Math.floor(Math.random() * 9000) + 1000;
+          pdf.save(`EZcarrers_Resume${random}`);
+        });
+      }
 
   useEffect(() => {
     
