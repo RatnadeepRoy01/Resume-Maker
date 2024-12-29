@@ -14,7 +14,10 @@ module.exports = {
       },
       fontFamily: {
         OpenSans : ["Open Sans" , "sans-serif"]
-      }
+      },
+      screens: {
+        'custom-range': { min: '760px', max: '1230px' },
+      },
     },
   },
   plugins: [],
