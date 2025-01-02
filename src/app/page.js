@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState,useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { Check, Mail, Lock, Eye, FileText, PenTool } from 'lucide-react';
-import FAQSection from '../components/faq';
+import FAQSection from '@/components/faq';
 import Footer from '@/components/footer';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -12,21 +12,14 @@ import MyContext from './Context/MyContext';
 import SelectParser from './Features/selectParser/features';
 import './Css/Card.css';
 import ResumeCarousel from './components/AnimateTemplate/animateTemplate';
-import { getSecrets } from './function/getSecrets';
 const useView = (options) => {
   const ref = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const { userData1 } =  useContext(MyContext);
   
-   
   useEffect(()=>{
-  
-    const secret = getSecrets()
-    
-    console.log({secret})
-
+  console.log("userDataPage",userData1)
     },[userData1])
-
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
       setIsInView(entry.isIntersecting);
@@ -187,15 +180,11 @@ const LandingPage = () => {
     setIsExpanded(!isExpanded);
   }
 
-  
- 
-
   return (
 
    
     <div className="min-h-screen flex flex-col bg-gray-50 relative overflow-hidden">
-      
-
+ 
  { showSelectParser &&  <div className=' z-40 w-screen fixed h-screen flex justify-center items-center'> <SelectParser /> </div> }
              {/* header */}
       <header className="bg-transparent shadow-sm absolute w-full">
@@ -215,12 +204,12 @@ const LandingPage = () => {
 
       <main className="flex-grow">
        
-<section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 flex flex-col">
+<section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-20 flex flex-col ">
   <div className="container mx-auto px-4">
     <div className="flex flex-col md:flex-row items-center">
       <AnimatedSection>
         <div className=" md:w-[1/2] mb-8 md:mb-0  ">
-          <h1 className="mt-6 text-4xl leading-none md:max-w-[500px] lg:mt-8 lg:max-w-[460px]  lg:text-[72px] xl:max-w-[700px] xl:text-[96px] 2xl:mt-7 2xl:max-w-[800px] 2xl:text-[128px] 2xl:leading-[92%] 2xl:tracking-[-2px]">Create Your Resume in Minutes</h1>
+          <h1 className="mt-6 text-2xl leading-none max-w-full md:max-w-[500px] lg:max-w-[460px] lg:text-[72px] xl:max-w-[700px] xl:text-[96px] 2xl:max-w-[800px] 2xl:text-[128px] 2xl:leading-[92%] 2xl:tracking-[-2px]">Create Your Resume in Minutes</h1>
           <p className="mt-6 w-full max-w-[600px] text-xl lg:mt-10 lg:w-[500px] xl:w-full xl:text-2xl hidden md:block mb-2">Professional templates, easy customization, and instant PDF download. Get noticed by employers today!</p>
          
           <button className="bg-white text-blue-600 px-6 py-3 rounded-md hover:bg-blue-50 transition duration-300 text-lg font-semibold" onClick={handleClick }>
@@ -247,7 +236,7 @@ const LandingPage = () => {
                 alt="Resume builder illustration" 
                 width={500} // Replace with the original width of the image
                 height={500} // Replace with the original height of the image
-                className="rounded-lg shadow-lg"
+                className="rounded-lg shadow-lg max-h-[80vh] w-auto"
             />
       </motion.div>
     </div>
@@ -342,7 +331,7 @@ const LandingPage = () => {
 </section>
 
        {/* Unleash your potential */}
-<section className=" justify-center mx-6 md:mx-20 lg:mt-25 3xl:grid-cols-[475px_800px] 3xl:gap-16 mt-20 grid grid-cols-1 gap-10 lg:grid-cols-[375px_auto] lg:items-center 2xl:grid-cols-[475px_700px] 2xl:gap-12 ">
+<section className=" mx-6 md:mx-20 lg:mt-25 3xl:grid-cols-[475px_800px] 3xl:gap-16 mt-20 grid grid-cols-1 gap-10 lg:grid-cols-[375px_auto] lg:items-center 2xl:grid-cols-[475px_700px] 2xl:gap-12">
   <h2 className="text-[72px] leading-none 2xl:text-[96px]">Unleash Your Potential</h2>
   <div className="-mb-3 pt-1 text-xl">
     <p>ProfileNxT is not just another resume tool –it&apos;s a cutting-edge platform that revolutionizes the way you approach your job search. Designed to help you highlight your unique strengths, it empowers you to present a compelling narrative of your skills and experiences, helping you secure the career you&apos;ve always wanted. All this, with a process that&apos;s efficient and enjoyable.</p>
@@ -360,7 +349,7 @@ const LandingPage = () => {
         </p>
 
         {/* On Desktop (Always visible) */}
-        <p className="mt-4 text-lg md:mt-10 md:block hidden ">
+        <p className="mt-4 text-lg md:mt-10 md:block hidden md:block">
           Design a visually cohesive journey that showcases your unique identity and skills. With ProfileNxT, you can craft an application that reflects who you are professionally, making a lasting impression on potential employers. Begin building your personal brand today and take the next step toward your dream career!
         </p>
         
@@ -368,7 +357,7 @@ const LandingPage = () => {
 </section>
 
 {/* motive boxes */}
-<section className="  justify-center mx-8 text-white md:mx-20 5xl:mt-40 6xl:mt-48 xssm:grid-cols-[280px_auto] text-specialLightGray mt-16 grid  grid-cols-1 gap-x-[13px] gap-y-[10px] text-2xl md:grid-cols-[340px_auto] lg:mt-36 lg:grid-cols-[auto_auto] lg:grid-rows-3 2xl:mt-28 2xl:gap-4 2xl:gap-x-[16px] 2xl:gap-y-[13px] 2xl:text-4xl">
+<section className=" mx-8 text-white md:mx-20 5xl:mt-40 6xl:mt-48 xssm:grid-cols-[280px_auto] text-specialLightGray mt-16 grid  grid-cols-1 gap-x-[13px] gap-y-[10px] text-2xl md:grid-cols-[340px_auto] lg:mt-36 lg:grid-cols-[auto_auto] lg:grid-rows-3 2xl:mt-28 2xl:gap-4 2xl:gap-x-[16px] 2xl:gap-y-[13px] 2xl:text-4xl">
   <div
     className="lazybg 5xl:w-[490px] 5xl:bg-[length:148%] xssm:h-[420px] h-[480px] w-full rounded-3xl bg-[length:152%] bg-center bg-no-repeat md:h-[480px] lg:row-span-3 lg:h-[580px] lg:w-[350px] lg:bg-[length:168%] 2xl:h-[725px] 2xl:w-[402px] 2xl:bg-[length:180%]"
     data-lazybg="https://assets.flowcvassets.com/landing/woman-smiling-1024.webp"
@@ -404,22 +393,20 @@ const LandingPage = () => {
 
     {/* template redirect */}
 
-    <section className=" mt-24 justify-center items-center  lg:mt-18 2xl:mt-38  grid grid-cols-1 overflow-hidden lg:grid-cols-[4fr_5fr] lg:pl-14 2xl:grid-cols-[520px_1fr] 2xl:pl-[98px] ">
-   
-      <div className=" flex  items-end lg:order-2 xssm:justify-center md:mr-6 -mr-3  w-0  ">
-        <Image alt="Customizable templates by ProfileNxT" 
-         className="  2xl:ml-25 xssm:max-w-[600px] lgxl:w-[900px] xssm:-mr-8 -mr-36 w-[160%] max-w-none sm:w-[560px] md:mr-0 lg:ml-12 lg:min-h-[600px] lg:w-[800px] lg:max-w-none xl:ml-20 xl:w-[1100px] 2xl:min-h-[700px] 2xl:w-[1100px]" 
-         width="2000" height="1924" src="https://assets.flowcvassets.com/landing/templates-600.webp" srcset="
+    <section className=" mt-24 lg:mt-18 2xl:mt-38 grid w-full grid-cols-1 overflow-hidden lg:grid-cols-[4fr_5fr] lg:pl-14 2xl:grid-cols-[520px_1fr] 2xl:pl-[98px]"><div className="2xl:-mr-25 xssm:-mr-0 xssm:justify-center -mr-3 flex w-full items-end  justify-end md:-mr-6 lg:order-2 lg:justify-end"><Image alt="Customizable templates by ProfileNxT" data-src="https://assets.flowcvassets.com/landing/templates-600.webp" data-srcset="
+          https://assets.flowcvassets.com/landing/templates-600.webp 600w,
+          https://assets.flowcvassets.com/landing/templates-1100.webp 1100w,
+          https://assets.flowcvassets.com/landing/templates-1600.webp 1600w,
+          https://assets.flowcvassets.com/landing/templates-2000.webp 2000w" data-sizes="(min-width: 1800px) 65vw,
+         (min-width: 1024px)  80vw,
+         100vw" className="2xl:ml-25 xssm:max-w-[600px] lgxl:w-[900px] xssm:-mr-8 -mr-36 w-[160%] max-w-none sm:w-[560px] md:mr-0 lg:ml-12 lg:min-h-[600px] lg:w-[800px] lg:max-w-none xl:ml-20 xl:w-[1100px] 2xl:min-h-[700px] 2xl:w-[1100px]" width="2000" height="1924" src="https://assets.flowcvassets.com/landing/templates-600.webp" srcset="
           https://assets.flowcvassets.com/landing/templates-600.webp 600w, 
           https://assets.flowcvassets.com/landing/templates-1100.webp 1100w,
           https://assets.flowcvassets.com/landing/templates-1600.webp 1600w,
-          https://assets.flowcvassets.com/landing/templates-2000.webp 2000w" 
-          sizes="(min-width: 1800px) 65vw,(min-width: 1024px)  80vw,100vw"
-          />
-         </div>
-        
-        
-         <div className=" flex flex-col  md:m-0  ml-24  justify-center  ">
+          https://assets.flowcvassets.com/landing/templates-2000.webp 2000w" sizes="(min-width: 1800px) 65vw,
+         (min-width: 1024px)  80vw,
+         100vw"/></div>
+         <div className="lg:pt-34 flex flex-col justify-center md:m-0 mx-8">
           <h2 className="text-[48px] leading-none lg:w-[410px] xl:text-[54px] 2xl:text-[60px]">Customizable Templates</h2>
           <p className="mt-6 text-xl ">
           Unlock your potential with ProfileNxT&apos;s expertly crafted templates. Whether you&apos;re creating a standout resume, compelling cover letter, personal portfolio, or more, our fully customizable designs empower you to leave a lasting impression </p>
@@ -444,9 +431,7 @@ const LandingPage = () => {
   
 </button>
 
-</div> </section>
-
-
+</div>  </section>
 
 
 
@@ -458,9 +443,9 @@ const LandingPage = () => {
 
           {/* Teemplates */}
 
-          <section id="templates" className="py-20 md:mx-20 mx-8 flex flex-col "> 
-          <div className='w-full  flex flex-col items-center'>
-          <div className=" flex flex-col items-center lg:flex-row lg:items-end lg:space-x-4   ">
+          <section id="templates" className="py-20 md:mx-20 mx-8 "> 
+
+          <div className="flex flex-col items-center lg:flex-row lg:items-end lg:space-x-4">
   <p className="text-3xl lg:text-5xl text-center lg:text-right font-bold">
     <span>Choose Your</span>
   </p>
@@ -468,7 +453,7 @@ const LandingPage = () => {
     Professional<span className="lg:hidden"> Templates</span>
   </p>
 </div>
-<div className="flex flex-col items-center lg:flex-row lg:space-x-8  ">
+<div className="flex flex-col items-center lg:flex-row lg:space-x-8">
   <p className="hidden lg:block text-6xl lg:text-9xl font-extrabold leading-none">
     Templates
   </p>
@@ -476,10 +461,9 @@ const LandingPage = () => {
     Find the perfect design to showcase your professional profile with our curated selection of resume and portfolio templates.
   </p>
 </div>
-</div>
               <ResumeCarousel/>
 
-              <section className=" justify-center mx-6 md:mx-20 lg:mt-25 3xl:grid-cols-[475px_800px] 3xl:gap-16 mt-20 grid grid-cols-1 gap-10 lg:grid-cols-[375px_auto] lg:items-center 2xl:grid-cols-[475px_700px] 2xl:gap-12">
+              <section className="mx-6 md:mx-20 lg:mt-25 3xl:grid-cols-[475px_800px] 3xl:gap-16 mt-20 grid grid-cols-1 gap-10 lg:grid-cols-[375px_auto] lg:items-center 2xl:grid-cols-[475px_700px] 2xl:gap-12">
   <h2 className="text-[72px] leading-none 2xl:text-[96px]">Achieve Career Success</h2>
   <div className="-mb-3 pt-1 text-xl">
     <p className='md:block hidden'>
@@ -502,10 +486,10 @@ const LandingPage = () => {
        {/* Getting started   */}
 
        <section
-  className="py-20 bg-cover bg-center text-white mx-8 rounded-lg h-[60vh]  "
+  className="py-20 bg-cover bg-center text-white mx-8 rounded-lg h-[60vh]"
   style={{ backgroundImage: 'url("https://plus.unsplash.com/premium_photo-1666700698946-fbf7baa0134a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8bmlnaHQlMjByYWluJTIwYW5pbWUlMjBzdHJlZXR8ZW58MHx8MHx8fDA%3D")' }} // Add your image URL here
 >
-  <div className="container mx-auto px-4 text-left flex flex-col justify-center items-start  w-full h-full ">
+  <div className="container mx-auto px-4 text-left flex flex-col justify-center items-start">
     <AnimatedSection>
       <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight">
         Ready to Build Your Perfect Resume?
@@ -545,9 +529,9 @@ const LandingPage = () => {
     </section>
    
 
-    
-    <section className="md:mx-0 mx-8 mt-25 flex md:flex-row flex-col bg-gray-100 space-x-12 justify-center">
-  <div className="w-full max-w-[521px] lg:pl-12 xl:pl-10 2xl:pl-0 ">
+
+    {/* <section className="md:mx-0 mx-8 mt-25 2xl:gap-18 xl:gap-26 xl:grid xl:grid-cols-[auto_auto] bg-gray-100">
+  <div className="w-full max-w-[521px] lg:pl-12 xl:pl-10 2xl:pl-0">
     <h2 className=" leading-none lg:text-[72px] xl:min-w-[520px]">
       Turn your job hunt into a career success story
     </h2>
@@ -556,7 +540,7 @@ const LandingPage = () => {
       <span className="text-pink-600 whitespace-pre-line"> unforgettable</span>
     </h3>
   </div>
-  <div className="  md:pr-18 lg:max-w-[770px] lg:pl-12 lg:pr-0 xl:pl-0 xl:pr-8 2xl:pr-0 ">
+  <div className="md:pr-18 lg:max-w-[770px] lg:pl-12 lg:pr-0 xl:pl-0 xl:pr-8 2xl:pr-0">
     <div className="mt-10 text-2xl lg:mt-14 xl:mt-4">
       <p className="w-full font-bold">Revolutionize Your Career Trajectory</p>
       <p>
@@ -593,7 +577,7 @@ const LandingPage = () => {
       </p>
     </div>
   </div>
-</section>
+</section> */}
 
 
 
