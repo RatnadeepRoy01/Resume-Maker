@@ -31,13 +31,13 @@ import { useSession } from "next-auth/react";
 const schema = z.object({
   personalInfo: z.object({
     fullName: z.string().min(1, "Full name is required"),
-    headline: z.string().min(1, "Headline is required"),
-    email: z.string().email("Invalid Email"),
-    phoneNumber: z.string().min(1, "Phone number is required"),
+    headline: z.string(),
+    email: z.string(),
+    phoneNumber: z.string(),
     website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
       message: "Invalid url format", 
     }),
-    address: z.optional(z.string().min(1, "Address is required")),
+    address: z.string(),
     linkedIn: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
       message: "Invalid url format", 
     }),
@@ -111,7 +111,7 @@ const schema = z.object({
   references: z.array(
     z.object({
       name: z.string(),
-      email: z.string().email("Invalid email").optional(),
+      email: z.string(),
       position: z.string(),
       summary: z.string().optional(),
     })
