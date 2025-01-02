@@ -28,122 +28,179 @@ import { useSession } from "next-auth/react";
 
 // Zod Schema for form validation
 
-const schema = z.object({
-  personalInfo: z.object({
-    fullName: z.string().min(1, "Full name is required"),
-    headline: z.string(),
-    email: z.string(),
-    phoneNumber: z.string(),
-    website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
-      message: "Invalid url format", 
-    }),
-    address: z.string(),
-    linkedIn: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
-      message: "Invalid url format", 
-    }),
-    github: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
-      message: "Invalid url format", 
-    }),
-    summary: z.string().optional()
-  }),
-  education: z.array(
-    z.object({
-      institution: z.string(),
-      degree: z.string(),
-      startYear: z.string(),
-      endYear: z.string(),
-      score: z.string(),
-      summary: z.string().optional(),
-    })
-  ),
-  workExperience: z.array(
-    z.object({
-      company: z.string(),
-      role: z.string(),
-      startDate: z.string(),
-      endDate: z.string(),
-      website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
-        message: "Invalid url format", 
-      }),
-      summary: z.string().optional(),
-    })
-  ),
-  skills: z.array(
-    z.object({
-      name: z.string(),
-      level: z.string(),
-    })
-  ),
-  projects: z.array(
-    z.object({
-      title: z.string(),
-      startDate: z.string(),
-      endDate: z.string(),
-      website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
-        message: "Invalid url format", 
-      }),
-      summary: z.string().optional(),
-    })
-  ),
-  publications: z.array(
-    z.object({
-      title: z.string(),
-      publisher: z.string(),
-      date: z.string(),
-      website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
-        message: "Invalid url format", 
-      }),
-      summary: z.string().optional(),
-    })
-  ).optional(),
-  volunteering: z.array(
-    z.object({
-      title: z.string(),
-      organization: z.string(),
-      role: z.string(),
-      date: z.string(),
-      website: z.string().refine((value) => value === "" || z.string().url().safeParse(value).success, {
-        message: "Invalid url format", 
-      }),
-      summary: z.string().optional(),
-    })
-  ).optional(),
-  references: z.array(
-    z.object({
-      name: z.string(),
-      email: z.string(),
-      position: z.string(),
-      summary: z.string().optional(),
-    })
-  ).optional(),
-  languages: z.array(
-    z.object({
-      name: z.string(),
-      level: z.string(),
-    })
-  ),
-  interests: z.array(
-    z.object({
-      title: z.string(),
-    })
-  ),
-  certifications: z.array(
-    z.object({
-      certification: z.string(),
-      issuer: z.string(),
-      issueDate: z.string(),
-    })
-  ),
-  awards: z.array(
-    z.object({
-      award: z.string(),
-      organization: z.string(),
-      year: z.string(),
-      summary: z.string().optional(),
-    })
-  ),
+// const schema = z.object({
+//   personalInfo: z.object({
+//     fullName: z.string().or(z.literal("")).optional(),
+//     headline: z.string().or(z.literal("")).optional(),
+//     email: z.string().or(z.literal("")).optional(),
+//     phoneNumber: z.string().or(z.literal("")).optional(),
+//     website: z
+//       .string()
+//       .or(z.literal(""))
+//       .optional()
+//       .refine(
+//         (value) => value === "" || z.string().url().safeParse(value).success,
+//         { message: "Invalid URL format" }
+//       ),
+//     address: z.string().or(z.literal("")).optional(),
+//     linkedIn: z
+//       .string()
+//       .or(z.literal(""))
+//       .optional()
+//       .refine(
+//         (value) => value === "" || z.string().url().safeParse(value).success,
+//         { message: "Invalid URL format" }
+//       ),
+//     github: z
+//       .string()
+//       .or(z.literal(""))
+//       .optional()
+//       .refine(
+//         (value) => value === "" || z.string().url().safeParse(value).success,
+//         { message: "Invalid URL format" }
+//       ),
+//     summary: z.string().or(z.literal("")).optional(),
+//   }),
+//   education: z.array(
+//     z.object({
+//       institution: z.string().or(z.literal("")).optional(),
+//       degree: z.string().or(z.literal("")).optional(),
+//       startYear: z.string().or(z.literal("")).optional(),
+//       endYear: z.string().or(z.literal("")).optional(),
+//       score: z.string().or(z.literal("")).optional(),
+//       summary: z.string().or(z.literal("")).optional(),
+//     })
+//   ),
+//   workExperience: z.array(
+//     z.object({
+//       company: z.string().or(z.literal("")).optional(),
+//       role: z.string().or(z.literal("")).optional(),
+//       startDate: z.string().or(z.literal("")).optional(),
+//       endDate: z.string().or(z.literal("")).optional(),
+//       website: z
+//         .string()
+//         .or(z.literal(""))
+//         .optional()
+//         .refine(
+//           (value) => value === "" || z.string().url().safeParse(value).success,
+//           { message: "Invalid URL format" }
+//         ),
+//       summary: z.string().or(z.literal("")).optional(),
+//     })
+//   ),
+//   skills: z.array(
+//     z.object({
+//       name: z.string().or(z.literal("")).optional(),
+//       level: z.string().or(z.literal("")).optional(),
+//     })
+//   ),
+//   projects: z.array(
+//     z.object({
+//       title: z.string().or(z.literal("")).optional(),
+//       startDate: z.string().or(z.literal("")).optional(),
+//       endDate: z.string().or(z.literal("")).optional(),
+//       website: z
+//         .string()
+//         .or(z.literal(""))
+//         .optional()
+//         .refine(
+//           (value) => value === "" || z.string().url().safeParse(value).success,
+//           { message: "Invalid URL format" }
+//         ),
+//       summary: z.string().or(z.literal("")).optional(),
+//     })
+//   ),
+//   publications: z
+//     .array(
+//       z.object({
+//         title: z.string().or(z.literal("")).optional(),
+//         publisher: z.string().or(z.literal("")).optional(),
+//         date: z.string().or(z.literal("")).optional(),
+//         website: z
+//           .string()
+//           .or(z.literal(""))
+//           .optional()
+//           .refine(
+//             (value) => value === "" || z.string().url().safeParse(value).success,
+//             { message: "Invalid URL format" }
+//           ),
+//         summary: z.string().or(z.literal("")).optional(),
+//       })
+//     )
+//     .optional(),
+//   volunteering: z
+//     .array(
+//       z.object({
+//         title: z.string().or(z.literal("")).optional(),
+//         organization: z.string().or(z.literal("")).optional(),
+//         role: z.string().or(z.literal("")).optional(),
+//         date: z.string().or(z.literal("")).optional(),
+//         website: z
+//           .string()
+//           .or(z.literal(""))
+//           .optional()
+//           .refine(
+//             (value) => value === "" || z.string().url().safeParse(value).success,
+//             { message: "Invalid URL format" }
+//           ),
+//         summary: z.string().or(z.literal("")).optional(),
+//       })
+//     )
+//     .optional(),
+//   references: z
+//     .array(
+//       z.object({
+//         name: z.string().or(z.literal("")).optional(),
+//         email: z.string().or(z.literal("")).optional(),
+//         position: z.string().or(z.literal("")).optional(),
+//         summary: z.string().or(z.literal("")).optional(),
+//       })
+//     )
+//     .optional(),
+//   languages: z.array(
+//     z.object({
+//       name: z.string().or(z.literal("")).optional(),
+//       level: z.string().or(z.literal("")).optional(),
+//     })
+//   ),
+//   interests: z.array(
+//     z.object({
+//       title: z.string().or(z.literal("")).optional(),
+//     })
+//   ),
+//   certifications: z.array(
+//     z.object({
+//       certification: z.string().or(z.literal("")).optional(),
+//       issuer: z.string().or(z.literal("")).optional(),
+//       issueDate: z.string().or(z.literal("")).optional(),
+//     })
+//   ),
+//   awards: z.array(
+//     z.object({
+//       award: z.string().or(z.literal("")).optional(),
+//       organization: z.string().or(z.literal("")).optional(),
+//       year: z.string().or(z.literal("")).optional(),
+//       summary: z.string().or(z.literal("")).optional(),
+//     })
+//   ),
+// });
 
- });
+const schema = z.object({
+  personalInfo: z.any(),
+  education: z.any(),
+  workExperience: z.any(),
+  skills: z.any(),
+  projects: z.any(),
+  publications: z.any().optional(),
+  volunteering: z.any().optional(),
+  references: z.any().optional(),
+  languages: z.any(),
+  interests: z.any(),
+  certifications: z.any(),
+  awards: z.any(),
+});
+
+
 
 const ResumeBuilder = () => {
 
@@ -339,7 +396,7 @@ const ResumeBuilder = () => {
 //},[status , id , template , setUniqueKey , session]);
 
 
-const onSubmit = useCallback(async(data) => {  })
+const onSubmit = (data) => { console.log("DATA HERE:-",data) }
 
 //useEffect(()=>{ if(show && Error && status == "authenticated" && tempData ) { onSubmit(tempData) }},[ status , onSubmit , show , Error , tempData ])
 

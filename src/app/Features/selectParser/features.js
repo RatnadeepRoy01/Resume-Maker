@@ -141,8 +141,7 @@ const SelectParser = () => {
 
           return obj;
         }
- 
-        console.log("DATA_RETRIVAL",data)
+
         if( (data.curentDesignation || data.currentCompany ) && !data.headline ){
           if(data.currentDesignation && !data.currentCompany){
             data.headline = data.currentDesignation  
@@ -151,9 +150,15 @@ const SelectParser = () => {
           }
         } 
 
-        let filteredData = await collectPersonalInfo(data)
+        let filterData = await collectPersonalInfo(data)
         
-        setUserData1(filteredData);
+       if( typeof filterData.languages[0] == "string" ){
+        filterData.languages.forEach((key , index)=>{
+          filterData.languages[index] = {name:key}
+        })
+      }
+        console.log("DATA_RETRIVAL",filterData)
+        setUserData1(filterData);
         console.log("Uploaded file:", selectedFile); // Handle the file as needed
       
       } catch (error) {

@@ -197,7 +197,7 @@ const Name = () => {
     <>
       {showComponent ? <SignIn fromName={true} /> : 
         
-        <div className="flex flex-col items-center justify-center min-h-[500px] md:w-[50%] ">
+        <div className="flex flex-col items-center justify-center min-h-[500px] md:w-[50%]  ">
           
 
             {
@@ -220,7 +220,7 @@ const Name = () => {
              
                  :
 
-                 <div className='popup-modal custom-range:w-full  flex-col md:w-[60%]  bg-white min-h-[500px] items-center p-4 rounded-xl flex justify-center shadow-2xl '>
+                 <div className='popup-modal  cus  flex-col  custom-range:w-full w-[60%] bg-white min-h-[500px] items-center p-4 rounded-xl flex justify-center shadow-2xl '>
                  
                  <div className="text-center mb-8 ">
               <h2 className="text-2xl mx-4 md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
@@ -234,6 +234,7 @@ const Name = () => {
                   
             <div className="space-y-4">
               {/* Resume Name Input */}
+              
               <div className="relative group flex">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
                 <div
@@ -242,19 +243,21 @@ const Name = () => {
                 
                           
                 </div>
+                  
                 <button 
                    onClick={handleCopy} 
-                   className=" z-40 bg-blue-500 text-white p-2 rounded-full ml-2 hover:bg-blue-600 transition-colors shadow-md absolute top-1/2 right-4 transform -translate-y-1/2"
+                   className=" z-40 bg-blue-500 text-white p-2 rounded-full ml-2 hover:bg-blue-600 transition-colors shadow-md  absolute top-1/2 right-4 transform -translate-y-1/2 "
                  >
                    {copied ? (
                      <CheckCircle className="" size={20} />
                    ) : (
                      <Copy size={20} />
                    )}
-                 </button>    
-                
-              </div>
+                 </button>  
+               
 
+                </div>
+               
               {/* Password Input */}
               <div className="relative group flex">
                 <div className="absolute -inset-1 bg-white rounded-full blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
