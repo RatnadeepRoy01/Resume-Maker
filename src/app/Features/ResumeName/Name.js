@@ -9,7 +9,7 @@ import { toPng } from 'html-to-image';
 import "../../../style.css"
 import "../../Css/popUp.css"
 
-const generatePDF = async (imgRef, formData, session) => {
+const generatePDF = async (imgRef, formData, session = "undefined") => {
   try {
     
     const imageDataUrl = await toPng(imgRef, {
@@ -39,7 +39,7 @@ const generatePDF = async (imgRef, formData, session) => {
       
       await fetch(uploadUrl, {
         method: "PUT",
-        headers: {
+        headers: { 
           "Content-Type": fileType,
         },
         body: imageBlob,
@@ -72,14 +72,14 @@ const generatePDF = async (imgRef, formData, session) => {
 const Name = () => {
   const { showComponent, setShowComponent } = useContext(MyContext);
 
-  const { data: session } = useSession({
-    required: true,
-    refetchInterval: 0,
-    refetchOnWindowFocus: false,
-    onUnauthenticated() {
-      setShowComponent(true);
-    }
-  });
+  // const { data: session } = useSession({
+  //   required: true,
+  //   refetchInterval: 0,
+  //   refetchOnWindowFocus: false,
+  //   onUnauthenticated() {
+  //     setShowComponent(true);
+  //   }
+  // });
 
 
   const [formData, setFormData] = useState({
@@ -125,8 +125,8 @@ const Name = () => {
     setClick(true)
     setIsSubmitting(true);
     console.log("Ref",saveRef)
-     const getUrl = await generatePDF(saveRef , formData , session);
-     setLoading(`https://dev.profilenxt/pfx/${getUrl}`)
+     const getUrl = await generatePDF(saveRef , formData);
+     setLoading(`https://dev.profilenxt.com/pfx/${getUrl}`)
      console.log({getUrl})
 
      if(getUrl){
@@ -220,7 +220,7 @@ const Name = () => {
              
                  :
 
-                 <div className='popup-modal flex custom-range:w-full  flex-col md:w-[60%]  bg-white min-h-[500px] items-center p-4 rounded-xl flex justify-center shadow-2xl '>
+                 <div className='popup-modal custom-range:w-full  flex-col md:w-[60%]  bg-white min-h-[500px] items-center p-4 rounded-xl flex justify-center shadow-2xl '>
                  
                  <div className="text-center mb-8 ">
               <h2 className="text-2xl mx-4 md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
@@ -229,7 +229,7 @@ const Name = () => {
               <p className="text-gray-600 text-base md:text-lg">Start crafting your perfect resume</p>
             </div>
                  
-                 <div className="w-[75%]  flex flex-col  space-y-8 flex ">
+                 <div className="w-[75%]  flex flex-col  space-y-8">
                  
                   
             <div className="space-y-4">

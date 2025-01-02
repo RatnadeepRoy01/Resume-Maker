@@ -293,51 +293,51 @@ const ResumeBuilder = () => {
   
   const onSubmit = useCallback(async(data) => {
     
-    if( status != "authenticated") 
-    {
+//     if( status != "authenticated") 
+//     {
     
-      setTempData(data)
-      return ;
+//       setTempData(data)
+//       return ;
     
-    }
+//     }
 
-    const url="../api/insertData"
-    let response;
-    let IdData;
-    let updateData = false;
-    data.profileID = session?.user.id
+//     const url="../api/insertData"
+//     let response;
+//     let IdData;
+//     let updateData = false;
+//    // data.profileID = session?.user.id
 
-  if(id){
+//   if(id){
  
-    //for updating the already made resume
-      data.key = id;
-      response = await postData({data,updateData:id},url);
-      IdData = id;
-      updateData = true;
+//     //for updating the already made resume
+//       data.key = id;
+//       response = await postData({data,updateData:id},url);
+//       IdData = id;
+//       updateData = true;
       
       
-    }
- else {
+//     }
+//  else {
    
-  //for first time submit
-    const uniqueId=  `${template}@`+Math.random().toString(36).slice(2,12);
-    data.key = uniqueId;
-    console.log("dataInside:-",data)
-    response= await postData(data,url)
-    IdData = uniqueId;
+//   //for first time submit
+//     const uniqueId=  `${template}@`+Math.random().toString(36).slice(2,12);
+//     data.key = uniqueId;
+//     console.log("dataInside:-",data)
+//     response= await postData(data,url)
+//     IdData = uniqueId;
     
-  }
-   if(response.state == "success"){
+//   }
+//    if(response.state == "success"){
 
-    setUniqueKey(IdData)
-    set(IdData,data).then(()=>{
-      console.log("Data saved ")
-    })
-    setSave({IdData , updateData})
-  }
+//     setUniqueKey(IdData)
+//     set(IdData,data).then(()=>{
+//       console.log("Data saved ")
+//     })
+//     setSave({IdData , updateData})
+//   }
 },[status , id , template , setUniqueKey , session]);
 
-useEffect(()=>{ if(show && Error && status == "authenticated" && tempData ) { onSubmit(tempData) }},[ status , onSubmit , show , Error , tempData ])
+//useEffect(()=>{ if(show && Error && status == "authenticated" && tempData ) { onSubmit(tempData) }},[ status , onSubmit , show , Error , tempData ])
 
 useEffect(()=>{
 removeEducation(0);
@@ -362,8 +362,8 @@ removePublication(0);
     <div className=" flex md:flex-row-reverse flex-col h-screen w-screen " >
      { show && Error && <div className="z-40 w-screen fixed h-screen flex justify-center items-center"><Name /></div> }
     <div className="fixed h-[110vh]  z-10 top-2 left-2 "><SettingsPage/></div>
-    <div className="h-full w-full md:w-[50%]  overflow-y-auto md:fixed " onClick={()=>{setIsOpen(false) , setOpen(false) }}> <ResumeTemplate getValues={watch()} template={selectTemplate} save={save} profileID = {session?.user.id} /> </div>
-  
+    <div className="h-full w-full md:w-[50%]  overflow-y-auto md:fixed " onClick={()=>{setIsOpen(false) , setOpen(false) }}> <ResumeTemplate getValues={watch()} template={selectTemplate} save={save}  /> </div>
+    {/* profileID = {session?.user.id} this is to be sent alog with <ResumeTemplate/> if the template is to be saved in the database*/}
     
 
     <button 

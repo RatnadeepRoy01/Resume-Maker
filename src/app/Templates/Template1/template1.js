@@ -39,80 +39,80 @@ export default function Template1({ getValues, preview , save , profileID }) {
     const [scale, setScale] = useState(1);
 
 
-        useEffect(()=>{  
+        // useEffect(()=>{  
          
-         const  insertCssdata = async() =>{
+        //  const  insertCssdata = async() =>{
            
-          if(save?.dataType == "oldData"){
+        //   if(save?.dataType == "oldData"){
 
-            console.log("inside11111111111111111111111111111111")
-             const oldData =  await get(`${save.IdData}Css`);
-             console.log(oldData,"oldData")      
-            const update = (()=>{
+        //     console.log("inside11111111111111111111111111111111")
+        //      const oldData =  await get(`${save.IdData}Css`);
+        //      console.log(oldData,"oldData")      
+        //     const update = (()=>{
 
-             setFormat(oldData.format); 
-             setMargin(oldData.margin);
-             setShowBreakLine(oldData.showBreakLine);
-             setShowPageNumbers(oldData.showPageNumbers),
-             setPrimaryColor(oldData.primaryColor);
-             setBackgroundColor(oldData.backgroundColor);
-             setTextColor(oldData.textColor);
-             setFontFamily(oldData.fontFamily);
-             setFontSubset(oldData.fontSubset);
-             setFontVariant(oldData.fontVariant);
-             setFontSize(oldData.fontSize);
-             setLineHeight(oldData.lineHeight);
-             setHideIcons(oldData.hideIcons);  
-             setUnderlineLinks(oldData.underlineLinks);
+        //      setFormat(oldData.format); 
+        //      setMargin(oldData.margin);
+        //      setShowBreakLine(oldData.showBreakLine);
+        //      setShowPageNumbers(oldData.showPageNumbers),
+        //      setPrimaryColor(oldData.primaryColor);
+        //      setBackgroundColor(oldData.backgroundColor);
+        //      setTextColor(oldData.textColor);
+        //      setFontFamily(oldData.fontFamily);
+        //      setFontSubset(oldData.fontSubset);
+        //      setFontVariant(oldData.fontVariant);
+        //      setFontSize(oldData.fontSize);
+        //      setLineHeight(oldData.lineHeight);
+        //      setHideIcons(oldData.hideIcons);  
+        //      setUnderlineLinks(oldData.underlineLinks);
       
-            });
+        //     });
 
-            update(); 
+        //     update(); 
 
-          }          
+        //   }          
           
-         }
-         insertCssdata();
+        //  }
+        //  insertCssdata();
 
-        },[save , setFormat, setMargin, setShowBreakLine, setShowPageNumbers,
-         setPrimaryColor,setBackgroundColor, setTextColor,setFontFamily,setFontSubset,
-         setFontVariant ,setFontSize ,setLineHeight , setHideIcons , setUnderlineLinks,profileID])
+        // },[save , setFormat, setMargin, setShowBreakLine, setShowPageNumbers,
+        //  setPrimaryColor,setBackgroundColor, setTextColor,setFontFamily,setFontSubset,
+        //  setFontVariant ,setFontSize ,setLineHeight , setHideIcons , setUnderlineLinks,profileID])
 
-         useEffect(()=>{
+        //  useEffect(()=>{
 
-          const savingData = {format, margin, showBreakLine, showPageNumbers,
-            primaryColor, backgroundColor, textColor,fontFamily,fontSubset,
-            fontVariant, fontSize, lineHeight, hideIcons,underlineLinks
-           }
+        //   const savingData = {format, margin, showBreakLine, showPageNumbers,
+        //     primaryColor, backgroundColor, textColor,fontFamily,fontSubset,
+        //     fontVariant, fontSize, lineHeight, hideIcons,underlineLinks
+        //    }
 
-          const saveData = async() => {   
-           if(save?.updateData == true){
-            console.log("inside22222222222222222222222222")
+        //   const saveData = async() => {   
+        //    if(save?.updateData == true){
+        //     console.log("inside22222222222222222222222222")
 
-            if(!save?.IdData) return;
-            else savingData.key = save.IdData;
-            savingData.profileID = profileID   
-            const url = "../../api/insertCssData"     
-            set(`${save?.IdData}Css`,savingData)
-            const response = await postData({savingData,id:save?.IdData} , url)     
-            }
-           else if(save?.IdData && !save.dataType ){
+        //     if(!save?.IdData) return;
+        //     else savingData.key = save.IdData;
+        //     savingData.profileID = profileID   
+        //     const url = "../../api/insertCssData"     
+        //     set(`${save?.IdData}Css`,savingData)
+        //     const response = await postData({savingData,id:save?.IdData} , url)     
+        //     }
+        //    else if(save?.IdData && !save.dataType ){
 
-            console.log("inside333333333333333")
+        //     console.log("inside333333333333333")
                
-            savingData.key = save.IdData;
-            savingData.profileID = profileID         
-            const url = "../../api/insertCssData" 
-            const IdData = `${save.IdData}Css`    
-            set(IdData,savingData)
-            const response = await postData({savingData} , url)    
+        //     savingData.key = save.IdData;
+        //     savingData.profileID = profileID         
+        //     const url = "../../api/insertCssData" 
+        //     const IdData = `${save.IdData}Css`    
+        //     set(IdData,savingData)
+        //     const response = await postData({savingData} , url)    
 
-          }
-        }
-          saveData()
-        },[save, profileID ,format, margin, showBreakLine, showPageNumbers,
-          primaryColor, backgroundColor, textColor,fontFamily,fontSubset,
-          fontVariant, fontSize, lineHeight, hideIcons,underlineLinks ])
+        //   }
+        // }
+        //   saveData()
+        // },[save, profileID ,format, margin, showBreakLine, showPageNumbers,
+        //   primaryColor, backgroundColor, textColor,fontFamily,fontSubset,
+        //   fontVariant, fontSize, lineHeight, hideIcons,underlineLinks ])
        
 
   useEffect(()=>{
@@ -120,6 +120,7 @@ export default function Template1({ getValues, preview , save , profileID }) {
     setPrimaryColor("#2B3A55");
     setBackgroundColor("#ffffff");
     setTextColor("#000000") 
+    setFontFamily()
 
    },[setBackgroundColor,setPrimaryColor,setTextColor])
 
@@ -174,7 +175,7 @@ export default function Template1({ getValues, preview , save , profileID }) {
           <div className={styles.main} style={{backgroundColor:backgroundColor , color:textColor , padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
             <p className={styles.name.name} style={{fontSize:styles.name.nameStyle}}>{personalInfo.fullName}</p>
             <p className={styles.title.title} style={{fontSize:styles.title.tileStyle}}>{personalInfo.headline}</p>
-            <div className={`break-words ${styles.title.title}`} style={{fontSize:styles.title.tileStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
+            <div className={`break-words ${styles.text.text}`} style={{fontSize:styles.text.textStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
             {/* Work Experience */}
             {workExperience?.length > 0 && (
               <WorkExperience

@@ -6,16 +6,20 @@ import { ObjectId } from "mongodb";
 export async function POST(request){
 
     const data = await request.json();
-    const collection = await getCollection("UserProfile");
+   
+    let proxyURL = data.formData.text +"_User"+ Math.floor(1000 + Math.random() * 9000) ;
     console.log(data)
 
+    if(data.session != "undefined"){
+
+    const collection = await getCollection("UserProfile");
     const user = await collection.findOne({ _id: new ObjectId(data.session.user.id) });
     console.log("User:-",user)
     if( user ){
 
-    let proxyURL = data.formData.text + Math.floor(1000 + Math.random() * 9000) ;
+    
 
-    if (data.resumeURL) {
+    if (data.resumeURL ) {
       
       proxyURL = data.resumeURL
       const result = await collection.updateOne(
@@ -25,7 +29,6 @@ export async function POST(request){
       console.log('Delete result:', result);
 
     }
-
         try{
 
         
@@ -50,8 +53,31 @@ export async function POST(request){
             console.log("Error:-",err);
             throw new Error(err)
         }
+      }else{
+        return NextResponse.json({ state:"Failed"} , { status:500 } ) 
+
+      }
+      
     }else{
 
-        return NextResponse.json( {message:"Internal server Error"} , {status:500} )
+      const collection1 = await getCollection("General");
+      const result = await collection1.updateOne(
+      
+        { _id: new ObjectId("66d4c7f3806721e4984b3125") },
+        {
+          $push: {
+            resumeArray: { 
+              origURL: data.viewUrl, 
+              resumeURL: proxyURL, 
+              resumaPASS: data.formData.password,
+              
+            }
+          }
+        },
+        { upsert: true }
+      );
+
+      return NextResponse.json({ state:"success" , text:proxyURL } , { status:200 } )
+     
     }
 }

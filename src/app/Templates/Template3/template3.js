@@ -138,7 +138,7 @@ export default function Template3({ getValues, preview , save }) {
         <div className={ `${styles.main} w-[2/3]  ml-[33%] ` }>
         <p className={styles.name.name} style={{fontSize:styles.name.nameStyle ,color:"white"}}>{personalInfo.fullName}</p>
         <p className={styles.title.title} style={{fontSize:styles.title.tileStyle,color:"white"}}>{personalInfo.headline}</p>
-        </div>
+        </div> 
         </div>
         <div className={ styles.page } style={{ fontFamily:fontFamily }}   >
           <div className = {`${styles.sidebar}`} style={{ backgroundColor:backgroundColor , padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem`,color:textColor }}>
@@ -164,8 +164,8 @@ export default function Template3({ getValues, preview , save }) {
           <div className={`${styles.main} pt-[100px] `} style={{backgroundColor:backgroundColor , color:textColor , padding:margin , display:"flex" , flexDirection:"column" , gap: `${lineHeight}rem` }}>
            
            <div className="flex flex-col break-words "  >
-           
-           <div className={`break-words ${styles.title.title}`} style={{fontSize:styles.title.tileStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
+          
+           <div className={`break-words ${styles.text.text}`} style={{fontSize:styles.text.textStyle}} dangerouslySetInnerHTML={{ __html:personalInfo.summary }}></div>
             </div>
 
             {/* Work Experience */}

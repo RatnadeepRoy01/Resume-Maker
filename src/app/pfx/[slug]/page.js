@@ -9,7 +9,6 @@ import {
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Footer from '@/components/footer'
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Image from 'next/image'
 import  html2pdf  from 'html2pdf.js'
  
@@ -108,7 +107,7 @@ const PFX = ({params}) => {
 
   return (
     <div className='flex flex-col'>
-    <div className="  min-h-screen w-screen  bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center p-4">
+    <div className="  min-h-screen w-screen  bg-gradient-to-br from-amber-50 to-orange-50 flex items-center justify-center p-4">
         <AnimatePresence>
           {!pdfUrl ? ( 
             <motion.form

@@ -15,8 +15,13 @@ export async function POST(request){
 
    
     let data = await request.json();
-    const collection = await getCollection("UserProfile");
+    let collection;
 
+    if(data.URL.includes("User"))
+     collection = await getCollection("General");
+    else
+     collection = await getCollection("UserProfile")
+     
          
     const result = await collection.findOne(
         {
