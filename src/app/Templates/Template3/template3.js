@@ -104,8 +104,9 @@ export default function Template3({ getValues, preview , save }) {
     setPrimaryColor("#2596be");
     setBackgroundColor("inherit");
     setTextColor("inherit")  
+    setFontFamily("Merriweather")
 
-   },[setBackgroundColor,setPrimaryColor,setTextColor])
+   },[setBackgroundColor,setPrimaryColor,setTextColor,setFontFamily])
 
   const pdfRef = useRef();
   const styles = StylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )

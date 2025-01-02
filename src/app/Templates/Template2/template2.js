@@ -40,8 +40,9 @@ export default function Template1({ getValues, preview , save , profileID }) {
     setPrimaryColor("#1c4487");
     setBackgroundColor("#ffffff");
     setTextColor("#000000") 
+    setFontFamily("Merriweather")
 
-   },[setPrimaryColor,setBackgroundColor,setTextColor])
+   },[setPrimaryColor,setBackgroundColor,setTextColor,setFontFamily])
 
   const pdfRef = useRef();
   const styles = StylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )

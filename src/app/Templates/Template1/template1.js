@@ -120,9 +120,9 @@ export default function Template1({ getValues, preview , save , profileID }) {
     setPrimaryColor("#2B3A55");
     setBackgroundColor("#ffffff");
     setTextColor("#000000") 
-    setFontFamily()
+    setFontFamily("Merriweather")
 
-   },[setBackgroundColor,setPrimaryColor,setTextColor])
+   },[setBackgroundColor,setPrimaryColor,setTextColor,setFontFamily])
 
   const pdfRef = useRef();
   const styles = StylesData(pdfRef,setScale, fontVariant , fontSubset , fontSize , underlineLinks )

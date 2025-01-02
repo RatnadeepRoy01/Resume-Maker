@@ -291,7 +291,7 @@ const ResumeBuilder = () => {
   useEffect(()=>{ console.log(formData1,"server");reset(userData1) },[reset,formData1,userData1])
   
   
-  const onSubmit = useCallback(async(data) => {
+ // const onSubmit = useCallback(async(data) => {
     
 //     if( status != "authenticated") 
 //     {
@@ -335,7 +335,11 @@ const ResumeBuilder = () => {
 //     })
 //     setSave({IdData , updateData})
 //   }
-},[status , id , template , setUniqueKey , session]);
+
+//},[status , id , template , setUniqueKey , session]);
+
+
+const onSubmit = useCallback(async(data) => {  })
 
 //useEffect(()=>{ if(show && Error && status == "authenticated" && tempData ) { onSubmit(tempData) }},[ status , onSubmit , show , Error , tempData ])
 
