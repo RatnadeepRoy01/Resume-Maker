@@ -4,7 +4,7 @@ const client = new SecretsManagerClient({ region: "ap-south-1" }); // Replace 'y
 
 export const getSecrets = async (event) => {
   try {
-    const secretName = "profilenxtSecrets"; // Replace with your secret name
+    const secretName = "EzCareersSecrets"; // Replace with your secret name
 
     // Create a command to get the secret value
     const command = new GetSecretValueCommand({ SecretId: secretName });

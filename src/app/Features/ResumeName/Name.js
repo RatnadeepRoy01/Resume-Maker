@@ -83,7 +83,7 @@ const Name = () => {
 
 
   const [formData, setFormData] = useState({
-    text: 'EzCarrers_Resume',
+    text: 'EzCareers_Resume',
     password: Math.floor(1000 + Math.random() * 9000)
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -126,7 +126,7 @@ const Name = () => {
     setIsSubmitting(true);
     console.log("Ref",saveRef)
      const getUrl = await generatePDF(saveRef , formData);
-     setLoading(`https://dev.profilenxt.com/pfx/${getUrl}`)
+     setLoading(`https://dev.EzCareers.com/pfx/${getUrl}`)
      console.log({getUrl})
 
      if(getUrl){

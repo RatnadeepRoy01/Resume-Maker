@@ -1,4 +1,4 @@
-name: ProfileNxT
+name: EzCareers
 on:
   push:
     branches: [ main ]
@@ -69,7 +69,7 @@ jobs:
             
             # Setup repository directory
             REPO_URL="https://github.com/RatnadeepRoy01/Resume-Maker.git"
-            REPO_DIR="$HOME/ProfileNxT"
+            REPO_DIR="$HOME/EzCareers"
             BRANCH="main"
             
             # Clone or pull repository

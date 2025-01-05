@@ -28,7 +28,7 @@ import { useContext } from "react";
     }
 
     const random = Math.floor(Math.random() * 9000) + 1000;
-    pdf.save(`EZcarrers_Resume${random}`);
+    pdf.save(`EzCareers_Resume${random}`);
   });
  }  
  

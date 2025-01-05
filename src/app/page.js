@@ -334,7 +334,7 @@ const LandingPage = () => {
 <section className=" mx-6 md:mx-20 lg:mt-25 3xl:grid-cols-[475px_800px] 3xl:gap-16 mt-20 grid grid-cols-1 gap-10 lg:grid-cols-[375px_auto] lg:items-center 2xl:grid-cols-[475px_700px] 2xl:gap-12">
   <h2 className="text-[72px] leading-none 2xl:text-[96px]">Unleash Your Potential</h2>
   <div className="-mb-3 pt-1 text-xl">
-    <p>ProfileNxT is not just another resume tool –it&apos;s a cutting-edge platform that revolutionizes the way you approach your job search. Designed to help you highlight your unique strengths, it empowers you to present a compelling narrative of your skills and experiences, helping you secure the career you&apos;ve always wanted. All this, with a process that&apos;s efficient and enjoyable.</p>
+    <p>EzCareers is not just another resume tool –it&apos;s a cutting-edge platform that revolutionizes the way you approach your job search. Designed to help you highlight your unique strengths, it empowers you to present a compelling narrative of your skills and experiences, helping you secure the career you&apos;ve always wanted. All this, with a process that&apos;s efficient and enjoyable.</p>
     
   { !isExpanded &&  <button aria-expanded={isExpanded}
           className="mt-8 text-xl underline hover:opacity-80 lg:hidden"
@@ -345,12 +345,12 @@ const LandingPage = () => {
         <p
           className={`mt-4 text-lg md:mt-10  ${isExpanded ? "block" : "hidden"} md:hidden`}
         >
-          Design a visually cohesive journey that showcases your unique identity and skills. With ProfileNxT, you can craft an application that reflects who you are professionally, making a lasting impression on potential employers. Begin building your personal brand today and take the next step toward your dream career!
+          Design a visually cohesive journey that showcases your unique identity and skills. With EzCareers, you can craft an application that reflects who you are professionally, making a lasting impression on potential employers. Begin building your personal brand today and take the next step toward your dream career!
         </p>
 
         {/* On Desktop (Always visible) */}
         <p className="mt-4 text-lg md:mt-10 md:block hidden md:block">
-          Design a visually cohesive journey that showcases your unique identity and skills. With ProfileNxT, you can craft an application that reflects who you are professionally, making a lasting impression on potential employers. Begin building your personal brand today and take the next step toward your dream career!
+          Design a visually cohesive journey that showcases your unique identity and skills. With EzCareers, you can craft an application that reflects who you are professionally, making a lasting impression on potential employers. Begin building your personal brand today and take the next step toward your dream career!
         </p>
         
         </div>
@@ -393,7 +393,7 @@ const LandingPage = () => {
 
     {/* template redirect */}
 
-    <section className=" mt-24 lg:mt-18 2xl:mt-38 grid w-full grid-cols-1 overflow-hidden lg:grid-cols-[4fr_5fr] lg:pl-14 2xl:grid-cols-[520px_1fr] 2xl:pl-[98px]"><div className="2xl:-mr-25 xssm:-mr-0 xssm:justify-center -mr-3 flex w-full items-end  justify-end md:-mr-6 lg:order-2 lg:justify-end"><Image alt="Customizable templates by ProfileNxT" data-src="https://assets.flowcvassets.com/landing/templates-600.webp" data-srcset="
+    <section className=" mt-24 lg:mt-18 2xl:mt-38 grid w-full grid-cols-1 overflow-hidden lg:grid-cols-[4fr_5fr] lg:pl-14 2xl:grid-cols-[520px_1fr] 2xl:pl-[98px]"><div className="2xl:-mr-25 xssm:-mr-0 xssm:justify-center -mr-3 flex w-full items-end  justify-end md:-mr-6 lg:order-2 lg:justify-end"><Image alt="Customizable templates by EzCareers" data-src="https://assets.flowcvassets.com/landing/templates-600.webp" data-srcset="
           https://assets.flowcvassets.com/landing/templates-600.webp 600w,
           https://assets.flowcvassets.com/landing/templates-1100.webp 1100w,
           https://assets.flowcvassets.com/landing/templates-1600.webp 1600w,
@@ -409,7 +409,7 @@ const LandingPage = () => {
          <div className="lg:pt-34 flex flex-col justify-center md:m-0 mx-8">
           <h2 className="text-[48px] leading-none lg:w-[410px] xl:text-[54px] 2xl:text-[60px]">Customizable Templates</h2>
           <p className="mt-6 text-xl ">
-          Unlock your potential with ProfileNxT&apos;s expertly crafted templates. Whether you&apos;re creating a standout resume, compelling cover letter, personal portfolio, or more, our fully customizable designs empower you to leave a lasting impression </p>
+          Unlock your potential with EzCareers&apos;s expertly crafted templates. Whether you&apos;re creating a standout resume, compelling cover letter, personal portfolio, or more, our fully customizable designs empower you to leave a lasting impression </p>
             
              <button 
   className="border-none cursor-pointer flex items-center justify-center focus:outline-none mt-6 text-white bg-black h-[72px] w-auto rounded-xl px-4 py-2 text-2xl font-bold lg:mt-8"
@@ -467,17 +467,17 @@ const LandingPage = () => {
   <h2 className="text-[72px] leading-none 2xl:text-[96px]">Achieve Career Success</h2>
   <div className="-mb-3 pt-1 text-xl">
     <p className='md:block hidden'>
-      ProfileNxT goes beyond traditional resume tools – it’s a dynamic platform that helps you craft a personalized career profile. With an emphasis on showcasing your achievements, skills, and potential, we empower you to present a compelling story that captures the attention of employers. The process is seamless, efficient, and enjoyable.
+      EzCareers goes beyond traditional resume tools – it’s a dynamic platform that helps you craft a personalized career profile. With an emphasis on showcasing your achievements, skills, and potential, we empower you to present a compelling story that captures the attention of employers. The process is seamless, efficient, and enjoyable.
     </p>
 
     {/* Mobile only */}
     <p className="mt-4 text-lg md:mt-10 md:hidden">
-      Build an application that reflects your unique identity, and make a lasting impression on employers. Start shaping your personal brand today with ProfileNxT and take your career to new heights.
+      Build an application that reflects your unique identity, and make a lasting impression on employers. Start shaping your personal brand today with EzCareers and take your career to new heights.
     </p>
 
     {/* Desktop only (always visible on larger screens) */}
     <p className="mt-4 text-lg md:mt-10 hidden md:block">
-      Build an application that reflects your unique identity, and make a lasting impression on employers. Start shaping your personal brand today with ProfileNxT and take your career to new heights.
+      Build an application that reflects your unique identity, and make a lasting impression on employers. Start shaping your personal brand today with EzCareers and take your career to new heights.
     </p>
   </div>
 </section>
@@ -544,7 +544,7 @@ const LandingPage = () => {
     <div className="mt-10 text-2xl lg:mt-14 xl:mt-4">
       <p className="w-full font-bold">Revolutionize Your Career Trajectory</p>
       <p>
-        Don&apos;t settle for mediocrity when you can achieve greatness with ProfileNxT. Don&apos;t just apply for a job. Take control of your career. Tired of anonymous applications and forgettable resumes? Unlock your potential with ProfileNxT, your key to mastering the job market. We&apos;re not just a resume builder; we&apos;re your career accelerator.
+        Don&apos;t settle for mediocrity when you can achieve greatness with EzCareers. Don&apos;t just apply for a job. Take control of your career. Tired of anonymous applications and forgettable resumes? Unlock your potential with EzCareers, your key to mastering the job market. We&apos;re not just a resume builder; we&apos;re your career accelerator.
       </p>
     </div>
 
@@ -567,13 +567,13 @@ const LandingPage = () => {
     <div className={` mt-10 ${isExpanded1 ? `block`:`hidden`} text-2xl lg:mt-14 lg:block`}>
       <p className="font-bold">Stand Out as More Than Just an Applicant</p>
       <p>
-        Join the ranks of achievers who&apos;ve used ProfileNxT to become unforgettable to employers. This isn&apos;t about job hunting; it&apos;s about building a lasting personal brand that opens doors and captures attention.
+        Join the ranks of achievers who&apos;ve used EzCareers to become unforgettable to employers. This isn&apos;t about job hunting; it&apos;s about building a lasting personal brand that opens doors and captures attention.
       </p>
     </div>
     <div className={` mt-10 hidden text-2xl ${isExpanded1 ? `block`:`hidden`} lg:mt-14 lg:block`}>
       <p className="font-bold">Make the Complex Simple and Amplify Your Impact</p>
       <p>
-        We understand—creating impressive job materials can feel overwhelming. That&apos;s why we&apos;ve crafted an intuitive, user-friendly experience. With ProfileNxT, focus on what really matters: presenting your achievements in a way that stands out and can&apos;t be ignored.
+        We understand—creating impressive job materials can feel overwhelming. That&apos;s why we&apos;ve crafted an intuitive, user-friendly experience. With EzCareers, focus on what really matters: presenting your achievements in a way that stands out and can&apos;t be ignored.
       </p>
     </div>
   </div>
