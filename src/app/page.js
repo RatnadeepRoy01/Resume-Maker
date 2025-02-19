@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState,useContext } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { Check, Mail, Lock, Eye, FileText, PenTool } from 'lucide-react';
+import { Check, Mail, Lock, Eye, FileText, PenTool ,Menu, X } from 'lucide-react';
 import FAQSection from '@/components/faq';
 import Footer from '@/components/footer';
 import { useRouter } from 'next/navigation';
@@ -169,6 +169,29 @@ const LandingPage = () => {
   const [showSelectParser, setShowSelectParser] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isExpanded1, setIsExpanded1] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMenuOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Prevent scroll when menu is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [menuOpen]);
 
   const handleClick = () => {
     setShowSelectParser(true);
@@ -189,14 +212,82 @@ const LandingPage = () => {
              {/* header */}
       <header className="bg-transparent shadow-sm absolute w-full">
         <div className="container mx-auto px-4 py-4">
-          <nav className="flex justify-between items-center">
-            <div className="text-2xl font-bold text-white  md:block hidden">ResumeBuilder</div>
-            <ul className="flex space-x-6">
-              <li><a href="#features" className="text-white hover:text-gray-900">Features</a></li>
-              <li><a href="#templates" className="text-white hover:text-gray-900">Templates</a></li>
-              <li><a href="#" className="text-white hover:text-gray-900">Sign Up</a></li>
-            </ul>
-          </nav>
+          
+        <nav className="fixed mx-4 mt-4 left-0 right-0 bg-white shadow-lg rounded-lg z-50 md:backdrop-blur-lg md:bg-white/80">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0">
+            <span className="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              EzCareers
+            </span>
+          </div>
+
+          {/* Desktop Navigation */}
+          <ul className="hidden md:flex items-center space-x-8">
+            {['Features', 'Templates', 'Sign Up'].map((item, index) => (
+              <li key={index}>
+                <a
+                  href={item === 'Sign Up' ? '#' : `#${item.toLowerCase()}`}
+                  className={`text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200
+                    ${item === 'Sign Up' ? 'px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 hover:text-white' : ''}`}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-200"
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div
+        className={`fixed top-0 right-0 bottom-0 w-64 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 
+          ${menuOpen ? 'translate-x-0' : 'translate-x-full'} md:hidden`}
+      >
+        <div className="flex justify-end p-4">
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="p-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-colors duration-200"
+          >
+            <X size={24} />
+          </button>
+        </div>
+        <ul className="flex flex-col space-y-4 p-6">
+          {['Features', 'Templates', 'Sign Up'].map((item, index) => (
+            <li key={index}>
+              <a
+                href={item === 'Sign Up' ? '#' : `#${item.toLowerCase()}`}
+                onClick={() => setMenuOpen(false)}
+                className={`block text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200
+                  ${item === 'Sign Up' ? 'mt-6 px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 hover:text-white text-center' : ''}`}
+              >
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Overlay */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 bg-black/20 md:hidden"
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
+    </nav>
+ 
         </div>
       </header>
       
@@ -208,7 +299,7 @@ const LandingPage = () => {
   <div className="container mx-auto px-4">
     <div className="flex flex-col md:flex-row items-center">
       <AnimatedSection>
-        <div className=" md:w-[1/2] mb-8 md:mb-0  ">
+        <div className=" md:w-[1/2] mb-8 md:mb-0 ">
           <h1 className="mt-6 text-2xl leading-none max-w-full md:max-w-[500px] lg:max-w-[460px] lg:text-[72px] xl:max-w-[700px] xl:text-[96px] 2xl:max-w-[800px] 2xl:text-[128px] 2xl:leading-[92%] 2xl:tracking-[-2px]">Create Your Resume in Minutes</h1>
           <p className="mt-6 w-full max-w-[600px] text-xl lg:mt-10 lg:w-[500px] xl:w-full xl:text-2xl hidden md:block mb-2">Professional templates, easy customization, and instant PDF download. Get noticed by employers today!</p>
          
@@ -236,7 +327,7 @@ const LandingPage = () => {
                 alt="Resume builder illustration" 
                 width={500} // Replace with the original width of the image
                 height={500} // Replace with the original height of the image
-                className="rounded-lg shadow-lg max-h-[80vh] w-auto"
+                className="rounded-lg shadow-lg max-h-[80vh] w-auto mt-4"
             />
       </motion.div>
     </div>
